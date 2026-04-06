@@ -25,7 +25,7 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "My Extensions — Bộ sưu tập Extension cá nhân",
+  title: "My Extensions - Zero",
   description:
     "Không gian lưu trữ, chia sẻ và theo dõi cập nhật các extension do chính mình phát triển.",
   icons: {
