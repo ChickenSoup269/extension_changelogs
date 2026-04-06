@@ -48,8 +48,8 @@ export const EXTENSIONS: Extension[] = [
       en: "Powerful, minimalist bookmark manager with smart search, folder organization, and easy data export/import.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "5K+",
-    stars: "4.8",
+    downloads: "181",
+    stars: "3.7",
     featured: true,
     author: "ChickenSoup269",
     homepage:
@@ -59,7 +59,7 @@ export const EXTENSIONS: Extension[] = [
     id: 2,
     icon: "/images/startpage_icon.png",
     name: "Zero Startpage",
-    version: "1.1.0",
+    version: "1.1.1",
     status: "stable",
     category: "ui",
     description: {
@@ -67,8 +67,8 @@ export const EXTENSIONS: Extension[] = [
       en: "Replacement for the new tab page with a minimalist interface focusing on elegance. Supports custom widgets and HD wallpapers.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "2K+",
-    stars: "4.9",
+    downloads: "140",
+    stars: "5.0",
     author: "ChickenSoup269",
     homepage:
       "https://chromewebstore.google.com/detail/zero-startpage-newtab-rep/ogdbkgoionmjnlinbmmjncnhafhaenck",

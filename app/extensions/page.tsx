@@ -215,16 +215,16 @@ export default function ExtensionsPage() {
               ))}
             </div>
             <div className="flex gap-3">
-              <button
-                className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white transition-opacity hover:opacity-90"
+              <a
+                href={selected.homepage || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white transition-opacity hover:opacity-90 flex justify-center items-center gap-2"
                 style={{ background: "var(--accent)" }}
-                onClick={() => {
-                  alert(`Cài đặt ${selected.name}!`)
-                  setSelected(null)
-                }}
               >
-                Cài đặt ngay
-              </button>
+                <i className="fa-brands fa-chrome text-lg"></i>{" "}
+                {t("common.install_now")}
+              </a>
               <button
                 className="px-5 py-2.5 rounded-xl text-sm transition-all duration-200"
                 style={{

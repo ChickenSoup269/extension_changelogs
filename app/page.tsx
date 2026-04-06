@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Loader from "@/components/Loader"
 import ExtensionCard from "@/components/ExtensionCard"
 import FeaturedBanner from "@/components/FeaturedBanner"
 import { EXTENSIONS } from "@/lib/data"
@@ -14,8 +13,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Loader />
-
       {/* HERO */}
       <section className="max-w-[1200px] mx-auto px-10 pt-28 pb-20 text-center">
         <div

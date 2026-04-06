@@ -3,10 +3,13 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useLanguage } from "../context/LanguageContext"
+import { useState } from "react"
+import SettingsModal from "./SettingsModal"
 
 export default function Navbar() {
   const pathname = usePathname()
   const { t, locale, setLocale } = useLanguage()
+  const [showSettings, setShowSettings] = useState(false)
 
   const links = [
     { href: "/", label: t("nav.home") },
@@ -19,7 +22,7 @@ export default function Navbar() {
     <nav
       className="sticky top-0 z-50 flex items-center justify-between px-10 h-[60px]"
       style={{
-        background: "rgba(8,9,10,0.85)",
+        background: "var(--bg-glass)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid var(--border)",
@@ -54,6 +57,14 @@ export default function Navbar() {
 
       <div className="flex items-center gap-3">
         <button
+          onClick={() => setShowSettings(true)}
+          className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
+          style={{ color: "var(--muted)" }}
+          title="Cài đặt"
+        >
+          <i className="fa-solid fa-gear"></i>
+        </button>
+        <button
           onClick={() => setLocale(locale === "vi" ? "en" : "vi")}
           className="text-sm font-medium px-3 py-1.5 rounded-lg transition-all duration-200"
           style={{
@@ -82,6 +93,8 @@ export default function Navbar() {
           {t("nav.explore")}
         </Link>
       </div>
+
+      {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </nav>
   )
 }

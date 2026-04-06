@@ -162,12 +162,12 @@ export default function ExtensionCard({ ext, onClick }: Props) {
             ★ {ext.stars}
           </span>
         </div>
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            alert(`✓ Đang cài đặt ${ext.name}...`)
-          }}
-          className="text-xs font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200 hover:text-white"
+        <a
+          href={ext.homepage || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="text-xs font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200 hover:text-white inline-flex items-center gap-1.5"
           style={{
             background: "var(--bg4)",
             border: "1px solid var(--border2)",
@@ -184,8 +184,8 @@ export default function ExtensionCard({ ext, onClick }: Props) {
             el.style.borderColor = "var(--border2)"
           }}
         >
-          Cài đặt
-        </button>
+          <i className="fa-brands fa-chrome"></i> {t("common.install")}
+        </a>
       </div>
     </div>
   )

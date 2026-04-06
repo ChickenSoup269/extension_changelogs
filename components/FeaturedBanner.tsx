@@ -34,13 +34,16 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
           {ext.description[locale]}
         </p>
         <div className="flex gap-3 mt-6">
-          <button
-            className="text-sm font-medium px-5 py-2.5 rounded-xl text-white transition-all duration-200 hover:opacity-90"
+          <a
+            href={ext.homepage || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium px-5 py-2.5 rounded-xl text-white transition-all duration-200 hover:opacity-90 flex items-center gap-2"
             style={{ background: "var(--accent)" }}
-            onClick={() => alert(`${t("common.installing")} ${ext.name}...`)}
           >
+            <i className="fa-brands fa-chrome text-lg"></i>{" "}
             {t("common.free_install")}
-          </button>
+          </a>
           <Link
             href="/changelog"
             className="text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200"
@@ -59,7 +62,10 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <span>{ext.icon}</span>
+            <i
+              className={`${ext.icon} text-4xl`}
+              style={{ color: "var(--accent)" }}
+            ></i>
           )}
         </div>
         <div className="text-sm" style={{ color: "var(--muted)" }}>
