@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { CHANGELOG, type ChangeType } from '@/lib/data'
+import { useLanguage } from '@/context/LanguageContext'
 
 const TYPE_CONFIG: Record<ChangeType, { label: string; bg: string; color: string }> = {
   feat: { label: 'FEAT', bg: 'rgba(124,106,247,0.15)', color: '#a594ff' },
@@ -18,6 +19,7 @@ const RELEASE_TYPE_LABELS = {
 }
 
 export default function ChangelogPage() {
+  const { t, locale } = useLanguage()
   const [filter, setFilter] = useState<ChangeType | 'all'>('all')
   const [extFilter, setExtFilter] = useState<string>('all')
 
@@ -126,7 +128,7 @@ export default function ChangelogPage() {
                           {rel.label}
                         </span>
                         <span className="ml-auto text-xs" style={{ color: 'var(--muted2)' }}>
-                          {item.date}
+                          {item.date[locale]}
                         </span>
                       </div>
 
@@ -143,7 +145,7 @@ export default function ChangelogPage() {
                                 >
                                   {cfg.label}
                                 </span>
-                                <span style={{ color: 'var(--muted)' }}>{change.text}</span>
+                                <span style={{ color: 'var(--muted)' }}>{change.text[locale]}</span>
                               </li>
                             )
                           })}
