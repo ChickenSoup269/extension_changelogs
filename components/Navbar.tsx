@@ -54,7 +54,6 @@ export default function Navbar() {
           )
         })}
       </div>
-
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowSettings(true)}
@@ -65,15 +64,34 @@ export default function Navbar() {
           <i className="fa-solid fa-gear"></i>
         </button>
         <button
+          title="Change language"
           onClick={() => setLocale(locale === "vi" ? "en" : "vi")}
-          className="text-sm font-medium px-3 py-1.5 rounded-lg transition-all duration-200"
+          className="text-sm font-medium px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-2"
           style={{
             background: "var(--bg2)",
             color: "var(--text)",
             border: "1px solid var(--border)",
           }}
         >
-          {locale === "vi" ? "EN" : "VI"}
+          {locale === "vi" ? (
+            <>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg"
+                alt="VN"
+                className="w-5 h-[14px] rounded-[2px] object-cover"
+              />
+              <span>VI</span>
+            </>
+          ) : (
+            <>
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg"
+                alt="EN"
+                className="w-5 h-[14px] rounded-[2px] object-cover"
+              />
+              <span>EN</span>
+            </>
+          )}
         </button>
         <span
           className="text-[10px] font-semibold px-2 py-1 rounded-full tracking-wide"
@@ -83,7 +101,7 @@ export default function Navbar() {
             color: "var(--accent2)",
           }}
         >
-          v2.4 {t("nav.new")}
+          v1.0.0 {t("nav.new")}
         </span>
         <Link
           href="/extensions"
@@ -93,7 +111,6 @@ export default function Navbar() {
           {t("nav.explore")}
         </Link>
       </div>
-
       {showSettings && <SettingsModal onClose={() => setShowSettings(false)} />}
     </nav>
   )

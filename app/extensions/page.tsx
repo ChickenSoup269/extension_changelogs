@@ -142,7 +142,9 @@ export default function ExtensionsPage() {
         </div>
       ) : (
         <div className="text-center py-20" style={{ color: "var(--muted)" }}>
-          <div className="text-4xl mb-4">🔍</div>
+          <div className="text-4xl mb-4">
+            <i className="fas fa-search"></i>
+          </div>
           <p className="text-lg font-syne">{t("extensions.not_found")}</p>
           <p className="text-sm mt-2">{t("extensions.not_found_sub")}</p>
         </div>

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -21,10 +22,26 @@ const RELEASE_TYPE_LABELS = {
   patch: { label: "Patch", color: "var(--muted)" },
 }
 
-export default function ChangelogPage() {
+function ChangelogContent() {
   const { t, locale } = useLanguage()
-  const [filter, setFilter] = useState<ChangeType | "all">("all")
-  const [extFilter, setExtFilter] = useState<string>("all")
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const [filter, setFilter] = useState<ChangeType | "all">(
+    (searchParams.get("type") as ChangeType) || "all",
+  )
+  const [extFilter, setExtFilter] = useState<string>(
+    searchParams.get("ext") || "all",
+  )
+
+  useEffect(() => {
+    const params = new URLSearchParams()
+    if (filter !== "all") params.set("type", filter)
+    if (extFilter !== "all") params.set("ext", extFilter)
+
+    const newUrl = params.toString() ? `?${params.toString()}` : "/changelog"
+    router.replace(newUrl, { scroll: false })
+  }, [filter, extFilter, router])
 
   const extensions = [
     "all",
@@ -37,6 +54,51 @@ export default function ChangelogPage() {
       filter === "all" || item.changes.some((c) => c.type === filter)
     return matchExt && matchType
   })
+
+  // Group by extension
+  const grouped = extensions
+    .filter((e) => e !== "all" && (extFilter === "all" || e === extFilter))
+    .map((ext) => ({
+      extension: ext,
+      items: filtered.filter((item) => item.extension === ext),
+    }))
+    .filter((g) => g.items.length > 0)
+
+  // Stats calculation
+  const currentMonthStr = locale === "vi" ? "Tháng 4 2026" : "Apr"
+  const thisMonthChanges = CHANGELOG.filter(
+    (c) =>
+      c.date[locale]?.includes(currentMonthStr) ||
+      c.date["en"]?.includes("Apr"),
+  )
+
+  let totalPatches = 0
+  let newFeatures = 0
+  let bugFixes = 0
+  let breakingChanges = 0
+
+  thisMonthChanges.forEach((log) => {
+    totalPatches++
+    log.changes.forEach((change) => {
+      if (change.type === "feat") newFeatures++
+      if (change.type === "fix") bugFixes++
+      if (change.type === "break") breakingChanges++
+    })
+  })
+
+  // Get unique extensions updated this month
+  const extensionsUpdatedCount = new Set(
+    thisMonthChanges.map((c) => c.extension),
+  ).size
+
+  // Get latest versions for each extension
+  const latestVersionsMap = new Map<string, (typeof CHANGELOG)[0]>()
+  CHANGELOG.forEach((item) => {
+    if (!latestVersionsMap.has(item.extension)) {
+      latestVersionsMap.set(item.extension, item)
+    }
+  })
+  const latestVersions = Array.from(latestVersionsMap.values())
 
   return (
     <section className="max-w-[1200px] mx-auto px-10 py-14">
@@ -90,113 +152,117 @@ export default function ChangelogPage() {
 
           {/* Timeline */}
           <div className="relative">
-            {/* Timeline line */}
-            <div
-              className="absolute left-5 top-0 bottom-0 w-px"
-              style={{
-                background:
-                  "linear-gradient(180deg, var(--accent), var(--border) 60%, transparent)",
-              }}
-            />
-
-            <div className="flex flex-col gap-8">
-              {filtered.map((item, i) => {
-                const rel = RELEASE_TYPE_LABELS[item.releaseType]
-                return (
-                  <div
-                    key={i}
-                    className="grid gap-4"
-                    style={{ gridTemplateColumns: "42px 1fr" }}
+            <div className="flex flex-col gap-12">
+              {grouped.map((group) => (
+                <div key={group.extension} className="relative">
+                  <h2
+                    className="text-xl font-bold mb-6 flex items-center gap-2"
+                    style={{ color: "var(--text)" }}
                   >
-                    {/* Dot */}
-                    <div className="flex justify-center pt-1.5">
-                      <div
-                        className="w-3.5 h-3.5 rounded-full flex-shrink-0 relative z-10"
-                        style={{
-                          background:
-                            item.releaseType === "major"
-                              ? "var(--accent)"
-                              : "var(--bg)",
-                          border: `2px solid ${item.releaseType === "major" ? "var(--accent)" : item.releaseType === "minor" ? "#3ecf8e" : "var(--muted2)"}`,
-                        }}
-                      />
-                    </div>
-
-                    {/* Content */}
+                    <i
+                      className={`${group.items[0]?.extensionIcon} text-lg text-[var(--accent)]`}
+                    ></i>
+                    {group.extension}
+                  </h2>
+                  <div className="relative pl-5">
+                    {/* Timeline line */}
                     <div
-                      className="rounded-xl p-5"
+                      className="absolute left-0 top-0 bottom-0 w-px"
                       style={{
-                        background: "var(--bg2)",
-                        border: "1px solid var(--border)",
+                        background:
+                          "linear-gradient(180deg, var(--accent), var(--border) 60%, transparent)",
                       }}
-                    >
-                      <div className="flex items-center flex-wrap gap-2.5 mb-4">
-                        <span
-                          className="font-mono text-sm font-medium"
-                          style={{
-                            color: "var(--accent2)",
-                            fontFamily: "var(--font-dm-mono)",
-                          }}
-                        >
-                          {item.version}
-                        </span>
-                        <span
-                          className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full"
-                          style={{
-                            background: "var(--bg4)",
-                            border: "1px solid var(--border)",
-                            color: "var(--muted)",
-                          }}
-                        >
-                          <i
-                            className={`${item.extensionIcon} text-[10px] text-[var(--accent)]`}
-                          ></i>
-                          <span>{item.extension}</span>
-                        </span>
-                        <span
-                          className="text-xs font-semibold"
-                          style={{ color: rel.color }}
-                        >
-                          {rel.label}
-                        </span>
-                        <span
-                          className="ml-auto text-xs"
-                          style={{ color: "var(--muted2)" }}
-                        >
-                          {item.date[locale]}
-                        </span>
-                      </div>
+                    />
 
-                      <ul className="space-y-2">
-                        {item.changes
-                          .filter((c) => filter === "all" || c.type === filter)
-                          .map((change, j) => {
-                            const cfg = TYPE_CONFIG[change.type]
-                            return (
-                              <li
-                                key={j}
-                                className="flex items-baseline gap-2.5 text-sm"
-                              >
+                    <div className="flex flex-col gap-8">
+                      {group.items.map((item, i) => {
+                        const rel = RELEASE_TYPE_LABELS[item.releaseType]
+                        return (
+                          <div
+                            key={i}
+                            className="grid gap-4"
+                            style={{ gridTemplateColumns: "1fr" }}
+                          >
+                            {/* Content */}
+                            <div
+                              className="rounded-xl p-5 relative"
+                              style={{
+                                background: "var(--bg2)",
+                                border: "1px solid var(--border)",
+                              }}
+                            >
+                              {/* Dot connected to timeline */}
+                              <div
+                                className="absolute -left-[27px] top-[24px] w-3 h-3 rounded-full z-10"
+                                style={{
+                                  background:
+                                    item.releaseType === "major"
+                                      ? "var(--accent)"
+                                      : "var(--bg)",
+                                  border: `2px solid ${item.releaseType === "major" ? "var(--accent)" : item.releaseType === "minor" ? "#3ecf8e" : "var(--muted2)"}`,
+                                }}
+                              />
+                              <div className="flex items-center flex-wrap gap-2.5 mb-4">
                                 <span
-                                  className="text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0"
+                                  className="font-mono text-sm font-medium"
                                   style={{
-                                    background: cfg.bg,
-                                    color: cfg.color,
+                                    color: "var(--accent2)",
+                                    fontFamily: "var(--font-dm-mono)",
                                   }}
                                 >
-                                  {cfg.label}
+                                  {item.version}
                                 </span>
-                                <span style={{ color: "var(--muted)" }}>
-                                  {change.text[locale]}
+                                <span
+                                  className="text-xs font-semibold"
+                                  style={{ color: rel.color }}
+                                >
+                                  {rel.label}
                                 </span>
-                              </li>
-                            )
-                          })}
-                      </ul>
+                                <span
+                                  className="ml-auto text-xs"
+                                  style={{ color: "var(--muted2)" }}
+                                >
+                                  {item.date[locale]}
+                                </span>
+                              </div>
+
+                              <ul className="space-y-2">
+                                {item.changes
+                                  .filter(
+                                    (c) =>
+                                      filter === "all" || c.type === filter,
+                                  )
+                                  .map((change, j) => {
+                                    const cfg = TYPE_CONFIG[change.type]
+                                    return (
+                                      <li
+                                        key={j}
+                                        className="flex items-baseline gap-2.5 text-sm"
+                                      >
+                                        <span
+                                          className="text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0"
+                                          style={{
+                                            background: cfg.bg,
+                                            color: cfg.color,
+                                          }}
+                                        >
+                                          {cfg.label}
+                                        </span>
+                                        <span style={{ color: "var(--muted)" }}>
+                                          {change.text[locale]}
+                                        </span>
+                                      </li>
+                                    )
+                                  })}
+                              </ul>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
-                )
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -211,14 +277,34 @@ export default function ChangelogPage() {
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4">
-              Thống kê tháng này
+              {t("changelog.sidebar.stats")}
             </h3>
             {[
-              { label: "Tổng bản vá", value: "34", color: "var(--accent2)" },
-              { label: "Features mới", value: "12", color: "#3ecf8e" },
-              { label: "Bug fixes", value: "18", color: "var(--text)" },
-              { label: "Breaking changes", value: "4", color: "#ef4444" },
-              { label: "Extensions updated", value: "7", color: "var(--text)" },
+              {
+                label: t("changelog.sidebar.total_patch"),
+                value: totalPatches,
+                color: "var(--accent2)",
+              },
+              {
+                label: t("changelog.sidebar.new_features"),
+                value: newFeatures,
+                color: "#3ecf8e",
+              },
+              {
+                label: t("changelog.sidebar.bug_fixes"),
+                value: bugFixes,
+                color: "var(--text)",
+              },
+              {
+                label: t("changelog.sidebar.breaking"),
+                value: breakingChanges,
+                color: "#ef4444",
+              },
+              {
+                label: t("changelog.sidebar.updated"),
+                value: extensionsUpdatedCount,
+                color: "var(--text)",
+              },
             ].map((s) => (
               <div
                 key={s.label}
@@ -241,22 +327,28 @@ export default function ChangelogPage() {
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4">
-              Phiên bản mới nhất
+              {t("changelog.sidebar.latest_versions")}
             </h3>
-            {CHANGELOG.map((c) => (
+            {latestVersions.map((c) => (
               <div
                 key={c.extension}
                 className="flex items-center justify-between py-2.5 text-sm"
                 style={{ borderBottom: "1px solid var(--border)" }}
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2 max-w-[70%] truncate">
                   <i
-                    className={`${c.extensionIcon} text-xs text-[var(--accent)] w-4 text-center`}
+                    className={`${c.extensionIcon} text-xs text-[var(--accent)] w-4 text-center shrink-0`}
                   ></i>
-                  <span style={{ color: "var(--muted)" }}>{c.extension}</span>
+                  <span
+                    className="truncate"
+                    style={{ color: "var(--muted)" }}
+                    title={c.extension}
+                  >
+                    {c.extension}
+                  </span>
                 </span>
                 <span
-                  className="font-mono text-xs font-medium"
+                  className="font-mono text-xs font-medium shrink-0"
                   style={{
                     color: "var(--accent2)",
                     fontFamily: "var(--font-dm-mono)",
@@ -270,5 +362,22 @@ export default function ChangelogPage() {
         </div>
       </div>
     </section>
+  )
+}
+
+export default function ChangelogPage() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          className="p-10 text-center text-sm font-mono"
+          style={{ color: "var(--muted)" }}
+        >
+          Loading changelog...
+        </div>
+      }
+    >
+      <ChangelogContent />
+    </Suspense>
   )
 }

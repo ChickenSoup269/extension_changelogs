@@ -55,12 +55,13 @@ export const EXTENSIONS: Extension[] = [
     homepage:
       "https://chromewebstore.google.com/detail/zero-bookmark-manager/jhcoclfodfnchlddakkeegkogajdpgce",
   },
+
   {
     id: 2,
     icon: "/images/startpage_icon.png",
     name: "Zero Startpage",
     version: "1.1.1",
-    status: "stable",
+    status: "new",
     category: "ui",
     description: {
       vi: "Thay thế trang Tab mới bằng giao diện tối giản, tập trung vào sự tinh tế. Hỗ trợ tùy chỉnh widget và hình nền HD.",
@@ -80,21 +81,42 @@ export const CHANGELOG: ChangelogItem[] = [
     version: "1.2.2",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
-    date: { vi: "6 Tháng 4 2026", en: "Apr 6, 2026" },
+    date: { vi: "7 Tháng 4 2026", en: "Apr 7, 2026" },
     releaseType: "patch",
     changes: [
       {
         type: "feat",
         text: {
-          vi: "Cập nhật URL font DRC để cải thiện hiển thị",
-          en: "Updated DRC font URL for better rendering",
+          vi: "Thêm popup thông báo cập nhật với link Release Notes",
+          en: "Added update notification popup with release notes link",
         },
       },
       {
         type: "feat",
         text: {
-          vi: "Thêm popup thông báo khi có phiên bản mới",
-          en: "Added update notification popup",
+          vi: "Cập nhật link Release Notes",
+          en: "Updated release notes link",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cập nhật tiêu đề hiển thị theo version mới",
+          en: "Updated title to reflect new version",
+        },
+      },
+      {
+        type: "perf",
+        text: {
+          vi: "Cập nhật URL font DRC",
+          en: "Updated DRC font URL",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Xóa dòng trắng không cần thiết trong CSS",
+          en: "Removed unnecessary blank line in CSS",
         },
       },
     ],

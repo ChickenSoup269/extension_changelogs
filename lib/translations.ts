@@ -32,6 +32,7 @@ export const DICTIONARY: Record<Locale, any> = {
     },
     common: {
       install: "Cài đặt",
+      install_now: "Cài đặt ngay",
       installing: "Đang cài đặt...",
       free_install: "Cài đặt miễn phí",
       view_changelog: "Xem changelog →",
@@ -103,6 +104,7 @@ export const DICTIONARY: Record<Locale, any> = {
     },
     common: {
       install: "Install",
+      install_now: "Install Now",
       installing: "Installing...",
       free_install: "Install Free",
       view_changelog: "View changelog →",
