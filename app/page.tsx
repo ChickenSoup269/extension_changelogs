@@ -11,6 +11,21 @@ export default function HomePage() {
   const featured = EXTENSIONS.find((e) => e.featured)!
   const latest = EXTENSIONS.slice(0, 6)
 
+  const totalExtensions = EXTENSIONS.length
+  const totalDownloads = EXTENSIONS.reduce(
+    (acc, ext) => acc + parseInt(ext.downloads.replace(/,/g, "") || "0"),
+    0,
+  )
+  const averageRating =
+    totalExtensions > 0
+      ? (
+          EXTENSIONS.reduce(
+            (acc, ext) => acc + parseFloat(ext.stars || "0"),
+            0,
+          ) / totalExtensions
+        ).toFixed(1)
+      : "0.0"
+
   return (
     <>
       {/* HERO */}
@@ -73,10 +88,19 @@ export default function HomePage() {
           style={{ borderTop: "1px solid var(--border)" }}
         >
           {[
-            { num: "248", label: t("hero.stats.extensions") },
-            { num: "1.2M", label: t("hero.stats.downloads") },
-            { num: "4.9★", label: t("hero.stats.reviews") },
-            { num: "18K", label: t("hero.stats.devs") },
+            {
+              num: totalExtensions.toString(),
+              label: t("hero.stats.extensions"),
+            },
+            {
+              num: totalDownloads.toLocaleString(),
+              label: t("hero.stats.downloads"),
+            },
+            { num: `${averageRating}★`, label: t("hero.stats.reviews") },
+            {
+              num: totalDownloads.toLocaleString(),
+              label: t("hero.stats.devs"),
+            },
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div className="font-syne font-bold text-3xl">{s.num}</div>

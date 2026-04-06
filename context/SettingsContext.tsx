@@ -9,6 +9,8 @@ export type AccentColor =
   | "#f59e0b"
   | "#ef4444"
   | "#9b59b6"
+  | "#e84393"
+  | "#00cec9"
 export type FontType =
   | "var(--font-inter)"
   | "system-ui, sans-serif"
@@ -52,6 +54,16 @@ const ACCENT_COLORS = {
     accent2: "#8e44ad",
     glow: "rgba(155, 89, 182, 0.12)",
     selection: "rgba(155, 89, 182, 0.25)",
+  },
+  "#e84393": {
+    accent2: "#d63031",
+    glow: "rgba(232, 67, 147, 0.12)",
+    selection: "rgba(232, 67, 147, 0.25)",
+  },
+  "#00cec9": {
+    accent2: "#00b894",
+    glow: "rgba(0, 206, 201, 0.12)",
+    selection: "rgba(0, 206, 201, 0.25)",
   },
 }
 

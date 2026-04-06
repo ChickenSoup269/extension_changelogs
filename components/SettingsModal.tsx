@@ -25,6 +25,8 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
     "#f59e0b",
     "#ef4444",
     "#9b59b6",
+    "#e84393",
+    "#00cec9",
   ]
   const fonts: { label: string; value: FontType }[] = [
     { label: "Inter (Mặc định)", value: "var(--font-inter)" },
@@ -92,7 +94,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
         {/* Accent Color */}
         <div className="mb-6">
           <p className="text-sm font-semibold mb-3">Màu chủ đạo</p>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             {colors.map((c) => (
               <button
                 key={c}

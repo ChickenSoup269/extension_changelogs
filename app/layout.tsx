@@ -25,9 +25,9 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "ExtHub — Nền tảng Extension hiện đại",
+  title: "My Extensions — Bộ sưu tập Extension cá nhân",
   description:
-    "Khám phá, cài đặt và quản lý tất cả extension của bạn trong một nơi.",
+    "Không gian lưu trữ, chia sẻ và theo dõi cập nhật các extension do chính mình phát triển.",
   icons: {
     icon: "/images/logo2.png",
   },
@@ -65,14 +65,14 @@ export default function RootLayout({
                   <img
                     src="/images/logo2.png"
                     alt="ExtHub Logo"
-                    className="h-6 logo-img"
+                    className="h-8 logo-img"
                   />
                   <p className="text-xs text-[var(--muted)] mt-1">
-                    Nền tảng extension hiện đại • Made with ♥ in Vietnam
+                    Bộ sưu tập extension cá nhân • Made with ♥ in Vietnam
                   </p>
                 </div>
                 <p className="text-xs text-[var(--muted2)]">
-                  © 2025 ExtHub. All rights reserved.
+                  © 2026 My Extensions. All rights reserved.
                 </p>
               </div>
             </footer>

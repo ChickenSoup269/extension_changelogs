@@ -32,7 +32,7 @@ export default function Navbar() {
         <img
           src="/images/logo2.png"
           alt="ExtHub Logo"
-          className="h-7 logo-img"
+          className="h-10 logo-img"
         />
       </Link>
 
