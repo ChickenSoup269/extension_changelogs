@@ -9,15 +9,19 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
 
   return (
     <div
-      className="rounded-2xl p-10 mb-12 grid gap-6 items-center"
+      className="rounded-2xl p-10 mb-12 grid gap-6 items-center overflow-hidden relative group"
       style={{
         background:
-          "linear-gradient(135deg, rgba(46, 204, 113, 0.1) 0%, rgba(39, 174, 96, 0.05) 50%, rgba(34, 197, 94, 0.03) 100%)",
+          "linear-gradient(135deg, var(--accent-glow) 0%, transparent 100%)",
         border: "1px solid var(--accent)",
         gridTemplateColumns: "1fr auto",
       }}
     >
-      <div>
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+        style={{ boxShadow: "inset 0 0 40px var(--accent-glow)" }}
+      ></div>
+      <div className="relative z-10">
         <div
           className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full mb-4 text-white"
           style={{ background: "var(--accent)" }}
@@ -53,7 +57,7 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
           </Link>
         </div>
       </div>
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end relative z-10">
         <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-6xl mb-2 overflow-hidden shadow-lg">
           {ext.icon.startsWith("/") ? (
             <img

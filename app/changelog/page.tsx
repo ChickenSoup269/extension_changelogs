@@ -33,15 +33,19 @@ function ChangelogContent() {
   const [extFilter, setExtFilter] = useState<string>(
     searchParams.get("ext") || "all",
   )
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1,
+  )
 
   useEffect(() => {
     const params = new URLSearchParams()
     if (filter !== "all") params.set("type", filter)
     if (extFilter !== "all") params.set("ext", extFilter)
+    if (currentPage > 1) params.set("page", currentPage.toString())
 
     const newUrl = params.toString() ? `?${params.toString()}` : "/changelog"
     router.replace(newUrl, { scroll: false })
-  }, [filter, extFilter, router])
+  }, [filter, extFilter, currentPage, router])
 
   const extensions = [
     "all",
@@ -55,12 +59,30 @@ function ChangelogContent() {
     return matchExt && matchType
   })
 
-  // Group by extension
-  const grouped = extensions
+  const allGrouped = extensions
     .filter((e) => e !== "all" && (extFilter === "all" || e === extFilter))
     .map((ext) => ({
       extension: ext,
       items: filtered.filter((item) => item.extension === ext),
+    }))
+    .filter((g) => g.items.length > 0)
+
+  // Flatten the properly grouped items to paginate continuously across groups
+  const flattenedGrouped = allGrouped.flatMap((g) => g.items)
+
+  // Pagination
+  const ITEMS_PER_PAGE = 5
+  const totalPages = Math.ceil(flattenedGrouped.length / ITEMS_PER_PAGE)
+  const paginatedItems = flattenedGrouped.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  )
+
+  // Group by extension for the current page
+  const grouped = allGrouped
+    .map((g) => ({
+      ...g,
+      items: paginatedItems.filter((item) => item.extension === g.extension),
     }))
     .filter((g) => g.items.length > 0)
 
@@ -118,7 +140,10 @@ function ChangelogContent() {
               (t) => (
                 <button
                   key={t}
-                  onClick={() => setFilter(t)}
+                  onClick={() => {
+                    setFilter(t)
+                    setCurrentPage(1)
+                  }}
                   className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200"
                   style={{
                     background: filter === t ? "var(--bg4)" : "transparent",
@@ -126,7 +151,7 @@ function ChangelogContent() {
                     color: filter === t ? "var(--text)" : "var(--muted)",
                   }}
                 >
-                  {t === "all" ? "Tất cả" : t.toUpperCase()}
+                  {t === "all" ? "All" : t.toUpperCase()}
                 </button>
               ),
             )}
@@ -136,7 +161,10 @@ function ChangelogContent() {
             {extensions.map((e) => (
               <button
                 key={e}
-                onClick={() => setExtFilter(e)}
+                onClick={() => {
+                  setExtFilter(e)
+                  setCurrentPage(1)
+                }}
                 className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
                 style={{
                   background:
@@ -145,7 +173,7 @@ function ChangelogContent() {
                   color: extFilter === e ? "var(--accent2)" : "var(--muted)",
                 }}
               >
-                {e === "all" ? "Semua Extension" : e}
+                {e === "all" ? t("extensions.all") : e}
               </button>
             ))}
           </div>
@@ -264,6 +292,66 @@ function ChangelogContent() {
                 </div>
               ))}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-12">
+                <button
+                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
+                  style={{
+                    background: "var(--bg2)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text)",
+                  }}
+                >
+                  {t("common.prev")}
+                </button>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className="w-10 h-10 rounded-lg text-sm font-bold transition-all"
+                        style={{
+                          background:
+                            currentPage === page
+                              ? "var(--accent-glow)"
+                              : "transparent",
+                          border: `1px solid ${
+                            currentPage === page
+                              ? "var(--accent)"
+                              : "transparent"
+                          }`,
+                          color:
+                            currentPage === page
+                              ? "var(--accent2)"
+                              : "var(--muted)",
+                        }}
+                      >
+                        {page}
+                      </button>
+                    ),
+                  )}
+                </div>
+                <button
+                  onClick={() =>
+                    setCurrentPage((p) => Math.min(totalPages, p + 1))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
+                  style={{
+                    background: "var(--bg2)",
+                    border: "1px solid var(--border)",
+                    color: "var(--text)",
+                  }}
+                >
+                  {t("common.next")}
+                </button>
+              </div>
+            )}
           </div>
         </div>
 

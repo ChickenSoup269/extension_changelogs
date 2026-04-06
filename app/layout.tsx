@@ -3,6 +3,7 @@ import { Outfit, Inter, DM_Mono } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/Navbar"
 import ScrollToTop from "@/components/ScrollToTop"
+import Background from "@/components/Background"
 import { LanguageProvider } from "@/context/LanguageContext"
 import { SettingsProvider } from "@/context/SettingsContext"
 
@@ -52,10 +53,7 @@ export default function RootLayout({
       <body>
         <SettingsProvider>
           <LanguageProvider>
-            <div className="bg-container">
-              <div className="blob blob-1" />
-              <div className="blob blob-2" />
-            </div>
+            <Background />
             <Navbar />
             <main>{children}</main>
             <ScrollToTop />

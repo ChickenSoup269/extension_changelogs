@@ -7,11 +7,21 @@ import {
   type Theme,
   type AccentColor,
   type FontType,
+  type BgAnimType,
 } from "@/context/SettingsContext"
 import { useLanguage } from "@/context/LanguageContext"
 
 export default function SettingsModal({ onClose }: { onClose: () => void }) {
-  const { theme, setTheme, accent, setAccent, font, setFont } = useSettings()
+  const {
+    theme,
+    setTheme,
+    accent,
+    setAccent,
+    font,
+    setFont,
+    bgAnim,
+    setBgAnim,
+  } = useSettings()
   const { t, locale } = useLanguage()
   const [mounted, setMounted] = useState(false)
 
@@ -29,7 +39,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
     "#00cec9",
   ]
   const fonts: { label: string; value: FontType }[] = [
-    { label: "Inter (Mặc định)", value: "var(--font-inter)" },
+    { label: t("settings.font_default"), value: "var(--font-inter)" },
     { label: "System UI", value: "system-ui, sans-serif" },
     { label: "Segoe UI", value: "Segoe UI" },
   ]
@@ -48,7 +58,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-syne font-bold text-xl">Cài đặt giao diện</h2>
+          <h2 className="font-syne font-bold text-xl">{t("settings.title")}</h2>
           <button
             onClick={onClose}
             className="text-xl"
@@ -60,7 +70,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
 
         {/* Theme */}
         <div className="mb-6">
-          <p className="text-sm font-semibold mb-3">Chủ đề</p>
+          <p className="text-sm font-semibold mb-3">{t("settings.theme")}</p>
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => setTheme("dark")}
@@ -73,7 +83,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 color: theme === "dark" ? "var(--accent2)" : "var(--text)",
               }}
             >
-              <i className="fa-solid fa-moon"></i> Tối
+              <i className="fa-solid fa-moon"></i> {t("settings.dark")}
             </button>
             <button
               onClick={() => setTheme("light")}
@@ -86,14 +96,14 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 color: theme === "light" ? "var(--accent2)" : "var(--text)",
               }}
             >
-              <i className="fa-solid fa-sun"></i> Sáng
+              <i className="fa-solid fa-sun"></i> {t("settings.light")}
             </button>
           </div>
         </div>
 
         {/* Accent Color */}
         <div className="mb-6">
-          <p className="text-sm font-semibold mb-3">Màu chủ đạo</p>
+          <p className="text-sm font-semibold mb-3">{t("settings.accent")}</p>
           <div className="flex flex-wrap gap-3">
             {colors.map((c) => (
               <button
@@ -117,8 +127,8 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Font Selection */}
-        <div className="mb-4">
-          <p className="text-sm font-semibold mb-3">Phông chữ Chrome</p>
+        <div className="mb-6">
+          <p className="text-sm font-semibold mb-3">{t("settings.font")}</p>
           <div className="flex flex-col gap-2">
             {fonts.map((f) => (
               <button
@@ -141,6 +151,41 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 )}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* Background Animation Selection */}
+        <div className="mb-4">
+          <p className="text-sm font-semibold mb-3">
+            {t("settings.bg_animation")}
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => setBgAnim("blob")}
+              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              style={{
+                borderColor:
+                  bgAnim === "blob" ? "var(--accent)" : "var(--border2)",
+                background:
+                  bgAnim === "blob" ? "var(--accent-glow)" : "transparent",
+                color: bgAnim === "blob" ? "var(--accent2)" : "var(--text)",
+              }}
+            >
+              <i className="fa-solid fa-water"></i> {t("settings.bg_blob")}
+            </button>
+            <button
+              onClick={() => setBgAnim("shapes")}
+              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              style={{
+                borderColor:
+                  bgAnim === "shapes" ? "var(--accent)" : "var(--border2)",
+                background:
+                  bgAnim === "shapes" ? "var(--accent-glow)" : "transparent",
+                color: bgAnim === "shapes" ? "var(--accent2)" : "var(--text)",
+              }}
+            >
+              <i className="fa-solid fa-shapes"></i> {t("settings.bg_shapes")}
+            </button>
           </div>
         </div>
       </div>

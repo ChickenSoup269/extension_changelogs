@@ -15,6 +15,7 @@ export type FontType =
   | "var(--font-inter)"
   | "system-ui, sans-serif"
   | "Segoe UI"
+export type BgAnimType = "blob" | "shapes"
 
 interface SettingsContextType {
   theme: Theme
@@ -23,6 +24,8 @@ interface SettingsContextType {
   setAccent: (a: AccentColor) => void
   font: FontType
   setFont: (f: FontType) => void
+  bgAnim: BgAnimType
+  setBgAnim: (b: BgAnimType) => void
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -71,6 +74,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>("dark")
   const [accent, setAccent] = useState<AccentColor>("#2ecc71")
   const [font, setFont] = useState<FontType>("var(--font-inter)")
+  const [bgAnim, setBgAnim] = useState<BgAnimType>("blob")
 
   const [mounted, setMounted] = useState(false)
 
@@ -78,10 +82,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     const s_theme = localStorage.getItem("exthub_theme") as Theme
     const s_accent = localStorage.getItem("exthub_accent") as AccentColor
     const s_font = localStorage.getItem("exthub_font") as FontType
+    const s_bgAnim = localStorage.getItem("exthub_bgAnim") as BgAnimType
 
     if (s_theme) setTheme(s_theme)
     if (s_accent) setAccent(s_accent)
     if (s_font) setFont(s_font)
+    if (s_bgAnim) setBgAnim(s_bgAnim)
 
     setMounted(true)
   }, [])
@@ -91,19 +97,20 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("exthub_theme", theme)
     localStorage.setItem("exthub_accent", accent)
     localStorage.setItem("exthub_font", font)
+    localStorage.setItem("exthub_bgAnim", bgAnim)
 
     document.documentElement.dataset.theme = theme
 
     const root = document.documentElement
 
     if (theme === "light") {
-      root.style.setProperty("--bg", "#ffffff")
-      root.style.setProperty("--bg2", "#f8fafc")
-      root.style.setProperty("--bg3", "#f1f5f9")
+      root.style.setProperty("--bg", "#f0f4f8")
+      root.style.setProperty("--bg2", "#ffffff")
+      root.style.setProperty("--bg3", "#f8fafc")
       root.style.setProperty("--bg4", "#e2e8f0")
-      root.style.setProperty("--bg-glass", "rgba(255,255,255,0.85)")
-      root.style.setProperty("--border", "rgba(0,0,0,0.1)")
-      root.style.setProperty("--border2", "rgba(0,0,0,0.15)")
+      root.style.setProperty("--bg-glass", "rgba(255, 255, 255, 0.8)")
+      root.style.setProperty("--border", "rgba(0, 0, 0, 0.08)")
+      root.style.setProperty("--border2", "rgba(0, 0, 0, 0.15)")
       root.style.setProperty("--text", "#0f172a")
       root.style.setProperty("--muted", "#64748b")
       root.style.setProperty("--muted2", "#94a3b8")
@@ -129,11 +136,20 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       font === "var(--font-inter)"
         ? "var(--font-inter), 'Inter', sans-serif"
         : font
-  }, [theme, accent, font, mounted])
+  }, [theme, accent, font, bgAnim, mounted])
 
   return (
     <SettingsContext.Provider
-      value={{ theme, setTheme, accent, setAccent, font, setFont }}
+      value={{
+        theme,
+        setTheme,
+        accent,
+        setAccent,
+        font,
+        setFont,
+        bgAnim,
+        setBgAnim,
+      }}
     >
       {children}
     </SettingsContext.Provider>

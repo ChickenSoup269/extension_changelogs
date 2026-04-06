@@ -51,10 +51,10 @@ export default function ExtensionCard({ ext, onClick }: Props) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onClick={() => onClick?.(ext)}
-      className="relative overflow-hidden rounded-xl p-[22px] cursor-pointer group transition-all duration-300"
+      className="relative overflow-hidden rounded-xl p-[22px] cursor-pointer group transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_var(--accent-glow)]"
       style={{
         background: ext.featured
-          ? "linear-gradient(135deg, rgba(46, 204, 113, 0.05), var(--bg2))"
+          ? "linear-gradient(135deg, var(--accent-glow), var(--bg2))"
           : "var(--bg2)",
         border: `1px solid ${ext.featured ? "var(--accent)" : "var(--border)"}`,
       }}
@@ -64,14 +64,17 @@ export default function ExtensionCard({ ext, onClick }: Props) {
         className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
           background:
-            "radial-gradient(500px circle at var(--mx, 50%) var(--my, 50%), rgba(46, 204, 113, 0.06), transparent 40%)",
+            "radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--accent-glow), transparent 40%)",
         }}
       />
 
       {/* Hover border */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:-translate-y-0.5 transition-all duration-300"
-        style={{ border: "1px solid var(--border2)" }}
+        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
+        style={{
+          border: "1px solid var(--accent)",
+          boxShadow: "inset 0 0 20px var(--accent-glow)",
+        }}
       />
 
       {/* Header */}

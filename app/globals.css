@@ -78,28 +78,57 @@ body {
   background: var(--bg);
 }
 
+.bg-grid {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: -50px;
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridSlide 20s linear infinite;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    black 40%,
+    transparent 100%
+  );
+}
+
+@keyframes gridSlide {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(50px);
+  }
+}
+
 .blob {
   position: absolute;
   width: 50vw;
   height: 50vw;
   background: var(--accent-glow);
-  filter: blur(100px);
+  filter: blur(80px);
   border-radius: 50%;
-  opacity: 0.4;
+  opacity: 0.6;
   pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .blob-1 {
   top: -10%;
   left: -10%;
-  animation: drift 25s ease-in-out infinite alternate;
+  animation: drift 20s ease-in-out infinite alternate;
 }
 
 .blob-2 {
   bottom: -15%;
   right: -5%;
-  background: rgba(39, 174, 96, 0.1);
-  animation: drift 35s ease-in-out infinite alternate-reverse;
+  background: var(--accent-glow);
+  animation: drift 25s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes drift {
@@ -108,6 +137,124 @@ body {
   }
   to {
     transform: translate(15%, 10%) scale(1.1);
+  }
+}
+
+/* Shapes & Particles Background */
+.bg-shape {
+  position: absolute;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.shape-circle {
+  border-radius: 50%;
+}
+.shape-square {
+  border-radius: 12px;
+}
+
+.shape-1 {
+  width: 120px;
+  height: 120px;
+  left: 10%;
+  top: 15%;
+  animation: float-shape 20s infinite ease-in-out alternate;
+}
+.shape-2 {
+  width: 150px;
+  height: 150px;
+  right: 15%;
+  top: 25%;
+  animation: float-shape 25s infinite ease-in-out alternate-reverse;
+  transform: rotate(15deg);
+}
+.shape-3 {
+  width: 80px;
+  height: 80px;
+  left: 20%;
+  bottom: 20%;
+  animation: float-shape 18s infinite ease-in-out alternate;
+}
+.shape-4 {
+  width: 200px;
+  height: 200px;
+  right: 5%;
+  bottom: 10%;
+  animation: float-shape 30s infinite ease-in-out alternate-reverse;
+  transform: rotate(45deg);
+}
+
+.bg-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.4;
+  box-shadow: 0 0 10px var(--accent);
+  pointer-events: none;
+}
+
+.particle-1 {
+  left: 15%;
+  top: 40%;
+  animation: float-particle 15s infinite ease-in-out;
+}
+.particle-2 {
+  left: 80%;
+  top: 10%;
+  animation: float-particle 20s infinite ease-in-out -5s;
+}
+.particle-3 {
+  left: 50%;
+  top: 70%;
+  animation: float-particle 18s infinite ease-in-out -10s;
+}
+.particle-4 {
+  left: 30%;
+  top: 85%;
+  animation: float-particle 22s infinite ease-in-out -12s;
+}
+.particle-5 {
+  left: 85%;
+  top: 60%;
+  animation: float-particle 16s infinite ease-in-out -2s;
+}
+
+@keyframes float-shape {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(-40px) rotate(180deg) scale(1.1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(20px) rotate(360deg) scale(0.9);
+    opacity: 0.15;
+  }
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
+  }
+  33% {
+    transform: translate(40px, -60px) scale(1.5);
+    opacity: 0.6;
+  }
+  66% {
+    transform: translate(-30px, -30px) scale(0.8);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.2;
   }
 }
 
