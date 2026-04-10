@@ -186,6 +186,52 @@ export const CHANGELOG: ChangelogItem[] = [
     ],
   },
   {
+    version: "1.2.2",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "7 Tháng 4 2026", en: "Apr 7, 2026" },
+    releaseType: "patch",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Thêm popup thông báo cập nhật với link Release Notes",
+          en: "Added update notification popup with release notes link",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cập nhật link Release Notes",
+          en: "Updated release notes link",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cập nhật tiêu đề hiển thị theo version mới",
+          en: "Updated title to reflect new version",
+        },
+      },
+
+      {
+        type: "perf",
+        text: {
+          vi: "Cập nhật URL font DRC",
+          en: "Updated DRC font URL",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Xóa dòng trắng không cần thiết trong CSS",
+          en: "Removed unnecessary blank line in CSS",
+        },
+      },
+    ],
+  },
+
+  {
     version: "1.1.1",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-star",
