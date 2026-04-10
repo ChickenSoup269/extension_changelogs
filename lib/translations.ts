@@ -87,6 +87,42 @@ export const DICTIONARY: Record<Locale, any> = {
       prev: "Trước",
       next: "Sau",
     },
+    about: {
+      "zero-startpage": {
+        title: "Về Zero Startpage",
+        subtitle: "Giao diện Tab mới tối giản và tinh tế",
+        description: "Nâng tầm trải nghiệm trình duyệt của bạn với giao diện Startpage được lấy cảm hứng từ sự tối giản. Tích hợp nhiều widget thông minh, hình nền HD và hiệu ứng động tuyệt đẹp.",
+        preview: {
+          slider_title: "Giao diện tinh tế",
+          slider_desc: "Khám phá sự tỉ mỉ trong từng đường nét thiết kế, mang lại cảm giác mượt mà và hiện đại.",
+          video_title: "Video giới thiệu & Hướng dẫn",
+          video_desc: "Hướng dẫn chi tiết cách cài đặt và tùy chỉnh các tính năng mạnh mẽ nhất của Zero Startpage.",
+        },
+      },
+      "zero-bookmark-manager": {
+        title: "Về Zero Bookmark Manager",
+        subtitle: "Quản lý dấu trang thông minh & tối giản",
+        description: "Quản lý hàng ngàn dấu trang một cách khoa học với hệ thống thư mục và tìm kiếm thông minh. Hỗ trợ sao lưu, phân loại tag và tùy biến giao diện mạnh mẽ giúp bạn làm việc năng suất hơn.",
+        preview: {
+          slider_title: "Quản lý chuyên nghiệp",
+          slider_desc: "Giao diện trực quan giúp bạn sắp xếp và tìm kiếm dấu trang chỉ trong nháy mắt.",
+          video_title: "Hướng dẫn sử dụng",
+          video_desc: "Khám phá các tính năng quản lý nâng cao, import/export và hệ thống tag thông minh của Zero Bookmarks.",
+        },
+      },
+      stats: {
+        users: "Người dùng active",
+        rating: "Đánh giá trung bình",
+        reviews: "Số lượt đánh giá",
+        last_updated: "Cập nhật lúc: ",
+      },
+      features: {
+        title: "Tính năng nổi bật",
+        support_title: "Hỗ trợ tối ưu",
+        support_desc: "Tối ưu hóa hoàn toàn cho tính năng này, mang lại hiệu năng và trải nghiệm người dùng tốt nhất.",
+      },
+      cta: "Thêm vào Chrome - Hoàn toàn miễn phí",
+    },
   },
   en: {
     nav: {
@@ -173,6 +209,42 @@ export const DICTIONARY: Record<Locale, any> = {
       page: "Page",
       prev: "Prev",
       next: "Next",
+    },
+    about: {
+      "zero-startpage": {
+        title: "About Zero Startpage",
+        subtitle: "Minimalist & Elegant New Tab",
+        description: "Elevate your browsing experience with a minimalist-inspired Startpage. Integrated with smart widgets, HD wallpapers, and stunning visual effects.",
+        preview: {
+          slider_title: "Elegant Interface",
+          slider_desc: "Experience the meticulous attention to detail and modern design aesthetics.",
+          video_title: "Demo & Walkthrough",
+          video_desc: "Step-by-step guide on how to install and customize the powerful features of Zero Startpage.",
+        },
+      },
+      "zero-bookmark-manager": {
+        title: "About Zero Bookmark Manager",
+        subtitle: "Smart & Minimalist Bookmarking",
+        description: "Manage thousands of bookmarks scientifically with a folder system and smart search. Powerful backup, tag classification, and UI customization to boost your productivity.",
+        preview: {
+          slider_title: "Professional Management",
+          slider_desc: "An intuitive interface that helps you organize and find bookmarks in a blink of an eye.",
+          video_title: "How-to Guide",
+          video_desc: "Discover advanced management features, import/export options, and the smart tagging system of Zero Bookmarks.",
+        },
+      },
+      stats: {
+        users: "Active Users",
+        rating: "Average Rating",
+        reviews: "Total Reviews",
+        last_updated: "Last updated: ",
+      },
+      features: {
+        title: "Key Features",
+        support_title: "Optimized Support",
+        support_desc: "Fully optimized for this feature, ensuring the best performance and user experience.",
+      },
+      cta: "Add to Chrome - It's Free",
     },
   },
 }

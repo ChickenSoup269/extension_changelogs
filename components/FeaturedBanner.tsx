@@ -49,6 +49,13 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
             {t("common.free_install")}
           </a>
           <Link
+            href={`/about/${ext.slug}`}
+            className="text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200"
+            style={{ border: "1px solid var(--border2)", color: "var(--text)", background: "var(--bg3)" }}
+          >
+            {t("common.details")}
+          </Link>
+          <Link
             href="/changelog"
             className="text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200"
             style={{ border: "1px solid var(--border2)", color: "var(--text)" }}

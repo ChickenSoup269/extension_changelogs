@@ -1,6 +1,8 @@
 "use client"
 
 import { useRef } from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import type { Extension } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -165,30 +167,40 @@ export default function ExtensionCard({ ext, onClick }: Props) {
             ★ {ext.stars}
           </span>
         </div>
-        <a
-          href={ext.homepage || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          className="text-xs font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200 hover:text-white inline-flex items-center gap-1.5"
-          style={{
-            background: "var(--bg4)",
-            border: "1px solid var(--border2)",
-            color: "var(--text)",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget
-            el.style.background = "var(--accent)"
-            el.style.borderColor = "var(--accent)"
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget
-            el.style.background = "var(--bg4)"
-            el.style.borderColor = "var(--border2)"
-          }}
-        >
-          <i className="fa-brands fa-chrome"></i> {t("common.install")}
-        </a>
+        <div className="flex gap-2">
+          <Link
+            href={`/about/${ext.slug}`}
+            onClick={(e) => e.stopPropagation()}
+            className="text-[11px] font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200"
+            style={{ border: "1px solid var(--border2)", color: "var(--text)", background: "var(--bg3)" }}
+          >
+            {t("common.details")}
+          </Link>
+          <a
+            href={ext.homepage || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="text-[11px] font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200 hover:text-white inline-flex items-center gap-1.5"
+            style={{
+              background: "var(--bg4)",
+              border: "1px solid var(--border2)",
+              color: "var(--text)",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget
+              el.style.background = "var(--accent)"
+              el.style.borderColor = "var(--accent)"
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget
+              el.style.background = "var(--bg4)"
+              el.style.borderColor = "var(--border2)"
+            }}
+          >
+            <i className="fa-brands fa-chrome"></i> {t("common.install")}
+          </a>
+        </div>
       </div>
     </div>
   )

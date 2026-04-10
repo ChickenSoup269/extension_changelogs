@@ -14,6 +14,7 @@ export default function Navbar() {
   const links = [
     { href: "/", label: t("nav.home") },
     { href: "/extensions", label: t("nav.extensions") },
+    { href: "/about/zero-bookmark-manager", label: "About" },
     { href: "/changelog", label: t("nav.changelog") },
     { href: "/docs", label: t("nav.docs") },
   ]
@@ -61,7 +62,7 @@ export default function Navbar() {
           style={{ color: "var(--muted)" }}
           title="Cài đặt"
         >
-          <i className="fa-solid fa-gear"></i>
+          <i className="fa fa-cog"></i>
         </button>
         <button
           title="Change language"

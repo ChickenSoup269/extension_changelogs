@@ -1,0 +1,41 @@
+import { NextResponse } from "next/server"
+import { fetchWebstoreStats } from "@/lib/fetcher"
+import fs from "fs"
+import path from "path"
+
+const EXTENSION_IDS = [
+  "jhcoclfodfnchlddakkeegkogajdpgce", // Zero Bookmark Manager
+  "ogdbkgoionmjnlinbmmjncnhafhaenck"  // Zero Startpage
+]
+
+export async function GET(request: Request) {
+  try {
+    const results: Record<string, any> = {}
+    
+    for (const id of EXTENSION_IDS) {
+      const stats = await fetchWebstoreStats(id)
+      if (stats) {
+        results[id] = {
+          users: stats.users,
+          rating: stats.rating,
+          ratingCount: stats.ratingCount
+        }
+      }
+    }
+
+    const data = {
+      lastUpdated: new Date().toISOString(),
+      extensions: results
+    }
+
+    // Update the local JSON file
+    // Note: This only works in local development or environments with persistent FS
+    const filePath = path.join(process.cwd(), "lib", "webstore-stats.json")
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2))
+
+    return NextResponse.json({ success: true, data })
+  } catch (error) {
+    console.error("Error in update-stats API:", error)
+    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+  }
+}

@@ -17,6 +17,8 @@ export interface Extension {
   featured?: boolean
   author: string
   homepage?: string
+  slug: string
+  webstoreId: string
 }
 
 export type ChangeType = "feat" | "fix" | "perf" | "break" | "docs"
@@ -40,7 +42,7 @@ export const EXTENSIONS: Extension[] = [
     id: 1,
     icon: "/images/bookmark_icon.png",
     name: "Zero Bookmark Manager",
-    version: "1.2.1",
+    version: "1.2.2",
     status: "stable",
     category: "productivity",
     description: {
@@ -54,13 +56,15 @@ export const EXTENSIONS: Extension[] = [
     author: "ChickenSoup269",
     homepage:
       "https://chromewebstore.google.com/detail/zero-bookmark-manager/jhcoclfodfnchlddakkeegkogajdpgce",
+    slug: "zero-bookmark-manager",
+    webstoreId: "jhcoclfodfnchlddakkeegkogajdpgce",
   },
 
   {
     id: 2,
     icon: "/images/startpage_icon.png",
     name: "Zero Startpage",
-    version: "1.1.1",
+    version: "1.2.0",
     status: "new",
     category: "ui",
     description: {
@@ -73,6 +77,8 @@ export const EXTENSIONS: Extension[] = [
     author: "ChickenSoup269",
     homepage:
       "https://chromewebstore.google.com/detail/zero-startpage-newtab-rep/ogdbkgoionmjnlinbmmjncnhafhaenck",
+    slug: "zero-startpage",
+    webstoreId: "ogdbkgoionmjnlinbmmjncnhafhaenck",
   },
 ]
 
