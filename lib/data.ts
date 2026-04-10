@@ -50,9 +50,9 @@ export const EXTENSIONS: Extension[] = [
       en: "Powerful, minimalist bookmark manager with smart search, folder organization, and easy data export/import.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "181",
+    downloads: "180",
     stars: "3.7",
-    featured: true,
+
     author: "ChickenSoup269",
     homepage:
       "https://chromewebstore.google.com/detail/zero-bookmark-manager/jhcoclfodfnchlddakkeegkogajdpgce",
@@ -72,8 +72,10 @@ export const EXTENSIONS: Extension[] = [
       en: "Replacement for the new tab page with a minimalist interface focusing on elegance. Supports custom widgets and HD wallpapers.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "140",
+    downloads: "131",
     stars: "5.0",
+    featured: true,
+
     author: "ChickenSoup269",
     homepage:
       "https://chromewebstore.google.com/detail/zero-startpage-newtab-rep/ogdbkgoionmjnlinbmmjncnhafhaenck",
@@ -84,45 +86,101 @@ export const EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
-    version: "1.2.2",
-    extension: "Zero Bookmark Manager",
-    extensionIcon: "fa-solid fa-bookmark",
-    date: { vi: "7 Tháng 4 2026", en: "Apr 7, 2026" },
-    releaseType: "patch",
+    version: "1.2.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-star",
+    date: { vi: "10 Tháng 4 2026", en: "Apr 10, 2026" },
+    releaseType: "minor",
     changes: [
       {
         type: "feat",
         text: {
-          vi: "Thêm popup thông báo cập nhật với link Release Notes",
-          en: "Added update notification popup with release notes link",
+          vi: "Thêm nhiều hiệu ứng mới: GridScan, LightPillars, Jellyfish",
+          en: "Added new visual effects: GridScan, LightPillars, Jellyfish",
         },
       },
       {
         type: "feat",
         text: {
-          vi: "Cập nhật link Release Notes",
-          en: "Updated release notes link",
+          vi: "Thêm hệ thống layout bookmark tùy chỉnh",
+          en: "Added customizable bookmark layout system",
         },
       },
       {
         type: "feat",
         text: {
-          vi: "Cập nhật tiêu đề hiển thị theo version mới",
-          en: "Updated title to reflect new version",
+          vi: "Thêm drag & drop và draggable cho nhiều widget",
+          en: "Added drag-and-drop and draggable widgets",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Lưu ảnh nền bằng IndexedDB cho Unsplash",
+          en: "Implemented IndexedDB storage for Unsplash images",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thêm hệ thống localization EN/VI đầy đủ",
+          en: "Added full English/Vietnamese localization support",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thêm nhiều tùy chọn clock, timezone và format",
+          en: "Added clock, timezone and format settings",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thêm hệ thống settings nâng cao với nhóm và layout mới",
+          en: "Enhanced settings UI with grouped layout and controls",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thêm tính năng donate và modal hỗ trợ",
+          en: "Added donation system with modal support",
         },
       },
       {
         type: "perf",
         text: {
-          vi: "Cập nhật URL font DRC",
-          en: "Updated DRC font URL",
+          vi: "Tối ưu render bookmark và hiệu suất UI",
+          en: "Optimized bookmark rendering and UI performance",
+        },
+      },
+      {
+        type: "perf",
+        text: {
+          vi: "Cải thiện quản lý memory cho video và effects",
+          en: "Improved memory management for video backgrounds and effects",
+        },
+      },
+      {
+        type: "perf",
+        text: {
+          vi: "Tối ưu settings update với throttling",
+          en: "Implemented throttling for settings updates",
         },
       },
       {
         type: "fix",
         text: {
-          vi: "Xóa dòng trắng không cần thiết trong CSS",
-          en: "Removed unnecessary blank line in CSS",
+          vi: "Sửa nhiều lỗi UI (search, layout, tooltip, CLS, widget)",
+          en: "Fixed various UI issues (search, layout, tooltip, CLS, widgets)",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi dịch thuật và hiển thị tiếng Việt",
+          en: "Fixed translation and localization issues",
         },
       },
     ],

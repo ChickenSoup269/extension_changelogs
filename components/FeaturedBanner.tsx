@@ -26,7 +26,7 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
           className="inline-flex items-center gap-2 text-[11px] font-bold tracking-wider px-3 py-1 rounded-full mb-4 text-white"
           style={{ background: "var(--accent)" }}
         >
-          ⚡ {t("common.featured").toUpperCase()}
+          {t("common.featured").toUpperCase()}
         </div>
         <h2 className="font-syne font-bold text-3xl tracking-tight mb-3">
           {ext.name}
@@ -51,7 +51,11 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
           <Link
             href={`/about/${ext.slug}`}
             className="text-sm font-medium px-5 py-2.5 rounded-xl transition-all duration-200"
-            style={{ border: "1px solid var(--border2)", color: "var(--text)", background: "var(--bg3)" }}
+            style={{
+              border: "1px solid var(--border2)",
+              color: "var(--text)",
+              background: "var(--bg3)",
+            }}
           >
             {t("common.details")}
           </Link>

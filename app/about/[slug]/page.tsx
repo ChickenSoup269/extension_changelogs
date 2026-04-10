@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { useLanguage } from "@/context/LanguageContext"
 import { motion, AnimatePresence } from "framer-motion"
 import { EXTENSIONS, type Extension } from "@/lib/data"
@@ -14,33 +13,11 @@ export default function DynamicAboutPage() {
   const { t, locale } = useLanguage()
 
   const ext = EXTENSIONS.find((e) => e.slug === slug) || EXTENSIONS[0]
-  const extStats = statsData.extensions[
+  const stats = statsData.extensions[
     ext.webstoreId as keyof typeof statsData.extensions
   ] || { users: "0", rating: "0", ratingCount: "0" }
 
-  const [stats, setStats] = useState(extStats)
-  const [lastUpdated, setLastUpdated] = useState(statsData.lastUpdated)
-
-  useEffect(() => {
-    // Check if stats are older than 24 hours
-    const lastUpdateDate = new Date(statsData.lastUpdated)
-    const now = new Date()
-    const diffHours =
-      (now.getTime() - lastUpdateDate.getTime()) / (1000 * 60 * 60)
-
-    if (diffHours >= 24) {
-      fetch("/api/update-stats")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success && data.data.extensions[ext.webstoreId]) {
-            setStats(data.data.extensions[ext.webstoreId])
-            setLastUpdated(data.data.lastUpdated)
-          }
-        })
-    }
-  }, [ext.webstoreId])
-
-  const formattedDate = new Date(lastUpdated).toLocaleDateString(
+  const formattedDate = new Date(statsData.lastUpdated).toLocaleDateString(
     locale === "vi" ? "vi-VN" : "en-US",
     {
       day: "numeric",

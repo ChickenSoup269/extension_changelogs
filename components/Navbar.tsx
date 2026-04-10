@@ -102,7 +102,7 @@ export default function Navbar() {
             color: "var(--accent2)",
           }}
         >
-          v1.0.0 {t("nav.new")}
+          v1.1.0 {t("nav.new")}
         </span>
         <Link
           href="/extensions"

@@ -6,6 +6,7 @@ import ScrollToTop from "@/components/ScrollToTop"
 import Background from "@/components/Background"
 import { LanguageProvider } from "@/context/LanguageContext"
 import { SettingsProvider } from "@/context/SettingsContext"
+import StatsUpdater from "@/components/StatsUpdater"
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body>
         <SettingsProvider>
           <LanguageProvider>
+            <StatsUpdater />
             <Background />
             <Navbar />
             <main>{children}</main>

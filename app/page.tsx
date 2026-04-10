@@ -5,6 +5,7 @@ import ExtensionCard from "@/components/ExtensionCard"
 import FeaturedBanner from "@/components/FeaturedBanner"
 import { EXTENSIONS } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
+import statsData from "@/lib/webstore-stats.json"
 
 export default function HomePage() {
   const { t } = useLanguage()
@@ -12,19 +13,25 @@ export default function HomePage() {
   const latest = EXTENSIONS.slice(0, 6)
 
   const totalExtensions = EXTENSIONS.length
-  const totalDownloads = EXTENSIONS.reduce(
-    (acc, ext) => acc + parseInt(ext.downloads.replace(/,/g, "") || "0"),
-    0,
-  )
-  const averageRating =
-    totalExtensions > 0
-      ? (
-          EXTENSIONS.reduce(
-            (acc, ext) => acc + parseFloat(ext.stars || "0"),
-            0,
-          ) / totalExtensions
-        ).toFixed(1)
-      : "0.0"
+  
+  // Calculate stats using live data from webstore-stats.json
+  const totalDownloads = EXTENSIONS.reduce((acc, ext) => {
+    const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
+    const downloads = liveStats 
+      ? parseInt(liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0")
+      : parseInt(ext.downloads.replace(/,/g, "") || "0")
+    return acc + downloads
+  }, 0)
+
+  const totalStars = EXTENSIONS.reduce((acc, ext) => {
+    const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
+    const stars = liveStats 
+      ? parseFloat(liveStats.rating || "0")
+      : parseFloat(ext.stars || "0")
+    return acc + stars
+  }, 0)
+
+  const averageRating = totalExtensions > 0 ? (totalStars / totalExtensions).toFixed(1) : "0.0"
 
   return (
     <>

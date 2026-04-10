@@ -3,16 +3,14 @@ import { fetchWebstoreStats } from "@/lib/fetcher"
 import fs from "fs"
 import path from "path"
 
-const EXTENSION_IDS = [
-  "jhcoclfodfnchlddakkeegkogajdpgce", // Zero Bookmark Manager
-  "ogdbkgoionmjnlinbmmjncnhafhaenck"  // Zero Startpage
-]
+import { EXTENSIONS } from "@/lib/data"
 
 export async function GET(request: Request) {
   try {
     const results: Record<string, any> = {}
+    const webstoreIds = EXTENSIONS.map(ext => ext.webstoreId).filter(Boolean)
     
-    for (const id of EXTENSION_IDS) {
+    for (const id of webstoreIds) {
       const stats = await fetchWebstoreStats(id)
       if (stats) {
         results[id] = {
