@@ -496,7 +496,7 @@ function ChangelogContent() {
             </h3>
 
             {sourceProjects
-              .filter((p) => p.name !== "Pricy Extension")
+              .filter((p) => p.name !== "Extension")
               .map((project) => (
                 <a
                   key={project.repo}
@@ -548,7 +548,7 @@ function ChangelogContent() {
 
             <div className="mt-3 flex flex-col gap-2">
               {sourceProjects
-                .filter((p) => p.name !== "Pricy Extension")
+                .filter((p) => p.name !== "Extension")
                 .map((project) => (
                   <a
                     key={project.releasesHref}
@@ -576,7 +576,7 @@ function ChangelogContent() {
             </div>
           </div>
 
-          {/* Pricy Extension Card */}
+          {/* Privacy Extension Card */}
           <div
             className="rounded-xl p-5 flex flex-col items-start gap-3"
             style={{
@@ -593,7 +593,7 @@ function ChangelogContent() {
                 }}
               >
                 <img
-                  src="/images/privacy_icon.png"
+                  src="/images/icon.png"
                   alt="Privacy Center"
                   style={{ width: 24, height: 24, borderRadius: 4 }}
                 />
