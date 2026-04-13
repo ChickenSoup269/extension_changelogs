@@ -130,7 +130,7 @@ function ChangelogContent() {
       href: "https://github.com/ChickenSoup269/Zero-Bookmark-Manager",
       releasesHref:
         "https://github.com/ChickenSoup269/Zero-Bookmark-Manager/releases",
-      icon: "fa-solid fa-bookmark",
+      icon: "fa-solid fa-lock",
     },
   ]
 
@@ -378,7 +378,6 @@ function ChangelogContent() {
             )}
           </div>
         </div>
-
         {/* Sidebar */}
         <div className="space-y-4" style={{ alignSelf: "start" }}>
           {/* Stats Card */}
@@ -496,99 +495,142 @@ function ChangelogContent() {
               })()}
             </h3>
 
-            {sourceProjects.map((project) => (
-              <a
-                key={project.repo}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-start gap-3 py-3 group transition-all duration-200"
-                style={{ borderBottom: "1px solid var(--border)" }}
-              >
-                <span
-                  className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                  style={{
-                    background: "var(--accent-glow)",
-                    border: "1px solid var(--accent)",
-                  }}
-                >
-                  <img
-                    src={
-                      project.repo.includes("Zero-Start-Page")
-                        ? "/images/startpage_icon.png"
-                        : project.repo.includes("Zero-Bookmark-Manager")
-                          ? "/images/bookmark_icon.png"
-                          : "/images/source-code.png"
-                    }
-                    alt={project.name}
-                    style={{ width: 20, height: 20, borderRadius: 4 }}
-                  />
-                </span>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className="text-sm font-medium truncate transition-colors duration-200 group-hover:text-[var(--accent2)]"
-                    style={{ color: changelogTextColor }}
-                  >
-                    {project.name}
-                  </p>
-                  <p
-                    className="text-xs truncate mt-0.5"
-                    style={{ color: "var(--muted2)" }}
-                  >
-                    {project.repo}
-                  </p>
-                </div>
-                <i
-                  className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                  style={{ color: "var(--accent2)" }}
-                />
-              </a>
-            ))}
-
-            <div className="mt-3 flex flex-col gap-2">
-              {sourceProjects.map((project) => (
+            {sourceProjects
+              .filter((p) => p.name !== "Pricy Extension")
+              .map((project) => (
                 <a
-                  key={project.releasesHref}
-                  href={project.releasesHref}
+                  key={project.repo}
+                  href={project.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
-                  style={{
-                    background: "var(--accent-glow)",
-                    border: "1px solid var(--border2)",
-                  }}
+                  className="flex items-start gap-3 py-3 group transition-all duration-200"
+                  style={{ borderBottom: "1px solid var(--border)" }}
                 >
-                  <span style={{ color: "var(--muted)" }}>{project.name}</span>
                   <span
-                    className="flex items-center gap-1"
-                    style={{ color: "var(--accent2)" }}
+                    className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: "var(--accent-glow)",
+                      border: "1px solid var(--accent)",
+                    }}
                   >
-                    <i className="fa-solid fa-tag text-[10px]" />
-                    {locale === "vi" ? "Xem releases" : "View releases"}
+                    <img
+                      src={
+                        project.repo.includes("Zero-Start-Page")
+                          ? "/images/startpage_icon.png"
+                          : project.repo.includes("Zero-Bookmark-Manager")
+                            ? "/images/bookmark_icon.png"
+                            : "/images/source-code.png"
+                      }
+                      alt={project.name}
+                      style={{ width: 20, height: 20, borderRadius: 4 }}
+                    />
                   </span>
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="text-sm font-medium truncate transition-colors duration-200 group-hover:text-[var(--accent2)]"
+                      style={{ color: changelogTextColor }}
+                    >
+                      {project.name}
+                    </p>
+                    <p
+                      className="text-xs truncate mt-0.5"
+                      style={{ color: "var(--muted2)" }}
+                    >
+                      {project.repo}
+                    </p>
+                  </div>
+                  <i
+                    className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    style={{ color: "var(--accent2)" }}
+                  />
                 </a>
               ))}
+
+            <div className="mt-3 flex flex-col gap-2">
+              {sourceProjects
+                .filter((p) => p.name !== "Pricy Extension")
+                .map((project) => (
+                  <a
+                    key={project.releasesHref}
+                    href={project.releasesHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
+                    style={{
+                      background: "var(--accent-glow)",
+                      border: "1px solid var(--border2)",
+                    }}
+                  >
+                    <span style={{ color: "var(--muted)" }}>
+                      {project.name}
+                    </span>
+                    <span
+                      className="flex items-center gap-1"
+                      style={{ color: "var(--accent2)" }}
+                    >
+                      <i className="fa-solid fa-tag text-[10px]" />
+                      {locale === "vi" ? "Xem releases" : "View releases"}
+                    </span>
+                  </a>
+                ))}
             </div>
           </div>
-        </div>
-      </div>
+
+          {/* Pricy Extension Card */}
+          <div
+            className="rounded-xl p-5 flex flex-col items-start gap-3"
+            style={{
+              background: "var(--bg2)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <span
+                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{
+                  background: "var(--accent-glow)",
+                  border: "1px solid var(--accent)",
+                }}
+              >
+                <img
+                  src="/images/privacy.png"
+                  alt="Privacy Center"
+                  style={{ width: 24, height: 24, borderRadius: 4 }}
+                />
+              </span>
+              <span
+                className="font-syne font-bold text-base"
+                style={{ color: changelogTextColor }}
+              >
+                Privacy Center
+              </span>
+            </div>
+            <div className="text-xs mb-2" style={{ color: "var(--muted)" }}>
+              {locale === "vi"
+                ? "Trung tâm bảo mật, quản lý quyền riêng tư của 2 extension"
+                : "Privacy Center for managing privacy settings of 2 extensions"}
+            </div>
+            <a
+              href="https://privacy-extension-bookmark-2-0.vercel.app/projects"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
+              style={{
+                background: "var(--accent-glow)",
+                border: "1px solid var(--accent2)",
+                color: "var(--accent2)",
+              }}
+            >
+              {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}
+            </a>
+          </div>
+          <div style={{ color: "var(--muted)" }}></div>
+        </div>{" "}
+        {/* End Sidebar */}
+      </div>{" "}
+      {/* End grid */}
     </section>
   )
 }
 
-export default function ChangelogPage() {
-  return (
-    <Suspense
-      fallback={
-        <div
-          className="p-10 text-center text-sm font-mono"
-          style={{ color: "var(--muted)" }}
-        >
-          Loading changelog...
-        </div>
-      }
-    >
-      <ChangelogContent />
-    </Suspense>
-  )
-}
+export default ChangelogContent
