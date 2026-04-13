@@ -593,7 +593,7 @@ function ChangelogContent() {
                 }}
               >
                 <img
-                  src="/images/privacy.png"
+                  src="/images/privacy_icon.png"
                   alt="Privacy Center"
                   style={{ width: 24, height: 24, borderRadius: 4 }}
                 />
