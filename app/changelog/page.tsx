@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Suspense, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
@@ -633,4 +633,12 @@ function ChangelogContent() {
   )
 }
 
-export default ChangelogContent
+import { Suspense } from "react"
+
+export default function ChangelogPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ChangelogContent />
+    </Suspense>
+  )
+}
