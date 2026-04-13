@@ -6,6 +6,7 @@ import FeaturedBanner from "@/components/FeaturedBanner"
 import { EXTENSIONS } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
 import statsData from "@/lib/webstore-stats.json"
+import { useMemo } from "react"
 
 export default function HomePage() {
   const { t } = useLanguage()
@@ -13,25 +14,37 @@ export default function HomePage() {
   const latest = EXTENSIONS.slice(0, 6)
 
   const totalExtensions = EXTENSIONS.length
-  
-  // Calculate stats using live data from webstore-stats.json
-  const totalDownloads = EXTENSIONS.reduce((acc, ext) => {
-    const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
-    const downloads = liveStats 
-      ? parseInt(liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0")
-      : parseInt(ext.downloads.replace(/,/g, "") || "0")
-    return acc + downloads
-  }, 0)
 
-  const totalStars = EXTENSIONS.reduce((acc, ext) => {
-    const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
-    const stars = liveStats 
-      ? parseFloat(liveStats.rating || "0")
-      : parseFloat(ext.stars || "0")
-    return acc + stars
-  }, 0)
-
-  const averageRating = totalExtensions > 0 ? (totalStars / totalExtensions).toFixed(1) : "0.0"
+  // Tối ưu hóa tính toán thống kê bằng useMemo
+  const { totalDownloads, totalStars, averageRating, uniqueCategories } =
+    useMemo(() => {
+      let downloads = 0
+      let stars = 0
+      const categories = new Set()
+      EXTENSIONS.forEach((ext) => {
+        const liveStats =
+          statsData.extensions[
+            ext.webstoreId as keyof typeof statsData.extensions
+          ]
+        downloads += liveStats
+          ? parseInt(
+              liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0",
+            )
+          : parseInt(ext.downloads.replace(/,/g, "") || "0")
+        stars += liveStats
+          ? parseFloat(liveStats.rating || "0")
+          : parseFloat(ext.stars || "0")
+        if (ext.category) categories.add(ext.category)
+      })
+      const avg =
+        totalExtensions > 0 ? (stars / totalExtensions).toFixed(1) : "0.0"
+      return {
+        totalDownloads: downloads,
+        totalStars: stars,
+        averageRating: avg,
+        uniqueCategories: categories.size,
+      }
+    }, [EXTENSIONS, statsData, totalExtensions])
 
   return (
     <>
@@ -94,31 +107,57 @@ export default function HomePage() {
           className="flex justify-center gap-12 mt-14 pt-10 animate-fade-up delay-400"
           style={{ borderTop: "1px solid var(--border)" }}
         >
-          {[
-            {
-              num: totalExtensions.toString(),
-              label: t("hero.stats.extensions"),
-            },
-            {
-              num: totalDownloads.toLocaleString(),
-              label: t("hero.stats.downloads"),
-            },
-            { num: `${averageRating}★`, label: t("hero.stats.reviews") },
-            {
-              num: totalDownloads.toLocaleString(),
-              label: t("hero.stats.devs"),
-            },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-syne font-bold text-3xl">{s.num}</div>
-              <div
-                className="text-xs tracking-widest mt-1 uppercase"
-                style={{ color: "var(--muted)" }}
-              >
-                {s.label}
-              </div>
+          {/* Tổng số extension */}
+          <div className="text-center">
+            <div className="font-syne font-bold text-3xl">
+              {totalExtensions}
             </div>
-          ))}
+            <div
+              className="text-xs tracking-widest mt-1 uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              {t("hero.stats.extensions")}
+            </div>
+          </div>
+          {/* Tổng số lượt tải */}
+          <div className="text-center">
+            <div className="font-syne font-bold text-3xl">
+              {totalDownloads.toLocaleString()}
+            </div>
+            <div
+              className="text-xs tracking-widest mt-1 uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              {t("hero.stats.downloads")}
+            </div>
+          </div>
+          {/* Đánh giá trung bình */}
+          <div className="text-center">
+            <div className="font-syne font-bold text-3xl flex items-center justify-center gap-1">
+              <span>{averageRating}</span>
+              <span style={{ color: "#FFD700", fontSize: 22, lineHeight: 1 }}>
+                ★
+              </span>
+            </div>
+            <div
+              className="text-xs tracking-widest mt-1 uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              {t("hero.stats.reviews")}
+            </div>
+          </div>
+          {/* Số lượng category (hoặc dev nếu có) */}
+          <div className="text-center">
+            <div className="font-syne font-bold text-3xl">
+              {uniqueCategories}
+            </div>
+            <div
+              className="text-xs tracking-widest mt-1 uppercase"
+              style={{ color: "var(--muted)" }}
+            >
+              {t("hero.stats.categories")}
+            </div>
+          </div>
         </div>
       </section>
 
