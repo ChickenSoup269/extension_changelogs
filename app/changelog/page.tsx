@@ -163,10 +163,10 @@ function ChangelogContent() {
   }, [])
   const changelogTextColor = isLightTheme ? "#111" : "var(--text)"
   return (
-    <section className="max-w-[1200px] mx-auto px-10 py-14">
-      <div className="grid gap-10" style={{ gridTemplateColumns: "1fr 340px" }}>
+    <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14">
+      <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
         {/* Main */}
-        <div>
+        <div className="flex-1 min-w-0">
           <div className="mb-8">
             <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2">
               Change<span className="gradient-text">log</span>
@@ -441,7 +441,7 @@ function ChangelogContent() {
           </div>
         </div>
         {/* Sidebar */}
-        <div className="space-y-4" style={{ alignSelf: "start" }}>
+        <div className="lg:w-[320px] flex flex-col gap-6">
           {/* Stats Card */}
           <div
             className="rounded-xl p-5"

@@ -100,7 +100,7 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 mt-20 p-8 rounded-3xl bg-[var(--bg2)] border border-[var(--border)] shadow-xl"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 mt-20 p-8 rounded-3xl bg-[var(--bg2)] border border-[var(--border)] shadow-xl"
         >
           {[
             { label: t("hero.stats.extensions"), value: totalExtensions, icon: "fa-cubes" },
@@ -108,7 +108,7 @@ export default function HomePage() {
             { label: t("hero.stats.reviews"), value: `${averageRating} ★`, icon: "fa-star", color: "var(--amber)" },
             { label: "CATEGORIES", value: uniqueCategories, icon: "fa-layer-group" },
           ].map((stat, i) => (
-            <div key={i} className={`flex flex-col items-center px-4 ${i !== 3 ? 'md:border-r border-[var(--border)]' : ''}`}>
+            <div key={i} className={`flex flex-col items-center px-4 ${i !== 3 ? 'lg:border-r border-[var(--border)]' : ''} ${i % 2 === 0 && i !== 2 ? 'sm:border-r lg:border-r-0' : ''}`}>
                <i className={`fas ${stat.icon} mb-3 opacity-20 text-2xl`} style={{ color: stat.color }} />
                <div className="text-3xl font-syne font-black text-[var(--text)] mb-1">{stat.value}</div>
                <div className="text-[10px] font-bold tracking-[0.2em] text-[var(--muted)] uppercase">{stat.label}</div>

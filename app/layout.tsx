@@ -60,18 +60,18 @@ export default function RootLayout({
             <main>{children}</main>
             <ScrollToTop />
             <footer className="border-t border-[var(--border)] mt-20">
-              <div className="max-w-[1200px] mx-auto px-10 py-10 flex items-center justify-between">
-                <div className="flex flex-col items-start gap-2">
+              <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
+                <div className="flex flex-col items-center md:items-start gap-2">
                   <img
                     src="/images/logo2.png"
                     alt="ExtHub Logo"
-                    className="h-8 logo-img"
+                    className="h-7 md:h-8 logo-img"
                   />
-                  <p className="text-xs text-[var(--muted)] mt-1">
+                  <p className="text-[10px] md:text-xs text-[var(--muted)] mt-1 text-center md:text-left">
                     Bộ sưu tập extension cá nhân • Made with ♥ in Vietnam
                   </p>
                 </div>
-                <p className="text-xs text-[var(--muted2)]">
+                <p className="text-[10px] md:text-xs text-[var(--muted2)]">
                   © 2026 My Extensions. All rights reserved.
                 </p>
               </div>

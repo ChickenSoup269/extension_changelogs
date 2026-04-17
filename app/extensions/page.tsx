@@ -33,10 +33,10 @@ export default function ExtensionsPage() {
   }, [category, status, search, locale])
 
   return (
-    <section className="max-w-[1200px] mx-auto px-10 py-14">
+    <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14">
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2">
+      <div className="mb-8 md:mb-10 text-center md:text-left">
+        <h1 className="font-syne font-extrabold text-3xl md:text-4xl tracking-tight mb-2">
           {t("extensions.title")}{" "}
           <span className="gradient-text">Extensions</span>
         </h1>
@@ -48,7 +48,7 @@ export default function ExtensionsPage() {
       {/* Search */}
       <div className="relative mb-6">
         <input
-          className="w-full text-sm px-4 py-3 pl-11 rounded-xl outline-none transition-all duration-200"
+          className="w-full text-sm px-4 py-3.5 pl-11 rounded-xl outline-none transition-all duration-200"
           style={{
             background: "var(--bg3)",
             border: "1px solid var(--border)",
@@ -57,13 +57,11 @@ export default function ExtensionsPage() {
           placeholder={t("extensions.search_placeholder")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onFocus={(e) => (e.target.style.borderColor = "var(--accent)")}
-          onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
         />
         <svg
           className="absolute left-3.5 top-1/2 -translate-y-1/2 opacity-30"
-          width="16"
-          height="16"
+          width="18"
+          height="18"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -75,60 +73,60 @@ export default function ExtensionsPage() {
       </div>
 
       {/* Category tabs */}
-      <div className="flex flex-wrap gap-2 mb-5">
+      <div className="flex flex-wrap gap-2 mb-6">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setCategory(cat.id as ExtCategory | "all")}
-            className="px-4 py-1.5 rounded-full text-sm transition-all duration-200"
+            className="px-4 py-2 rounded-xl text-xs md:text-sm transition-all duration-200 flex items-center gap-2"
             style={{
-              background: category === cat.id ? "var(--accent)" : "transparent",
+              background: category === cat.id ? "var(--accent)" : "var(--bg2)",
               border: `1px solid ${category === cat.id ? "var(--accent)" : "var(--border)"}`,
               color: category === cat.id ? "#fff" : "var(--muted)",
             }}
           >
-            <i
-              className={`${cat.icon} text-xs ${category === cat.id ? "text-white" : "text-[var(--accent)]"}`}
-            ></i>
-            <span className="ml-2">{cat.label[locale]}</span>
+            <i className={`${cat.icon} ${category === cat.id ? "text-white" : "text-[var(--accent)]"}`}></i>
+            <span>{cat.label[locale]}</span>
           </button>
         ))}
       </div>
 
       {/* Status filters */}
-      <div className="flex items-center gap-2 mb-8">
-        <span
-          className="text-xs tracking-wider"
-          style={{ color: "var(--muted)" }}
-        >
-          {t("extensions.status_label")}
-        </span>
-        {(["all", "stable", "beta", "new"] as const).map((s) => (
-          <button
-            key={s}
-            onClick={() => setStatus(s)}
-            className="px-3.5 py-1 rounded-full text-xs transition-all duration-200"
-            style={{
-              background: status === s ? "var(--bg4)" : "transparent",
-              border: `1px solid ${status === s ? "var(--border2)" : "var(--border)"}`,
-              color: status === s ? "var(--text)" : "var(--muted)",
-            }}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span
+            className="text-xs tracking-wider"
+            style={{ color: "var(--muted)" }}
           >
-            {s === "all"
-              ? t("extensions.all")
-              : s === "stable"
-                ? t("common.stable")
-                : s === "beta"
-                  ? t("common.beta")
-                  : t("common.new")}
-          </button>
-        ))}
-        <span className="ml-auto text-xs" style={{ color: "var(--muted2)" }}>
+            {t("extensions.status_label")}
+          </span>
+          {(["all", "stable", "beta", "new"] as const).map((s) => (
+            <button
+              key={s}
+              onClick={() => setStatus(s)}
+              className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
+              style={{
+                background: status === s ? "var(--bg4)" : "transparent",
+                border: `1px solid ${status === s ? "var(--border2)" : "var(--border)"}`,
+                color: status === s ? "var(--text)" : "var(--muted)",
+              }}
+            >
+              {s === "all"
+                ? t("extensions.all")
+                : s === "stable"
+                  ? t("common.stable")
+                  : s === "beta"
+                    ? t("common.beta")
+                    : t("common.new")}
+            </button>
+          ))}
+        </div>
+        <span className="sm:ml-auto text-xs" style={{ color: "var(--muted2)" }}>
           {filtered.length} {t("extensions.results")}
         </span>
       </div>
 
-      {/* Grid - Single column for horizontal cards */}
+      {/* Grid */}
       {filtered.length > 0 ? (
         <div className="flex flex-col gap-6">
           {filtered.map((ext) => (
@@ -137,7 +135,7 @@ export default function ExtensionsPage() {
         </div>
       ) : (
         <div className="text-center py-20" style={{ color: "var(--muted)" }}>
-          <div className="text-4xl mb-4">
+          <div className="text-4xl mb-4 opacity-20">
             <i className="fas fa-search"></i>
           </div>
           <p className="text-lg font-syne">{t("extensions.not_found")}</p>
@@ -148,31 +146,33 @@ export default function ExtensionsPage() {
       {/* Detail modal */}
       {selected && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6"
           style={{
-            background: "rgba(0,0,0,0.75)",
+            background: "rgba(0,0,0,0.85)",
             backdropFilter: "blur(8px)",
           }}
           onClick={() => setSelected(null)}
         >
           <div
-            className="max-w-[500px] w-full rounded-2xl p-8"
+            className="max-w-[500px] w-full rounded-3xl p-6 md:p-8 animate-fade-up"
             style={{
               background: "var(--bg2)",
               border: "1px solid var(--border2)",
+              maxHeight: "90vh",
+              overflowY: "auto"
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start gap-4 mb-6">
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl flex-shrink-0"
-                style={{ background: "var(--bg4)", overflow: "hidden" }}
+                className="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0"
+                style={{ background: "var(--bg4)", border: "1px solid var(--border)" }}
               >
                 {selected.icon.startsWith("/") ? (
                   <img
                     src={selected.icon}
                     alt={selected.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain p-2"
                   />
                 ) : (
                   <i
@@ -181,8 +181,8 @@ export default function ExtensionsPage() {
                   ></i>
                 )}
               </div>
-              <div>
-                <h2 className="font-syne font-bold text-2xl tracking-tight">
+              <div className="min-w-0">
+                <h2 className="font-syne font-bold text-2xl tracking-tight truncate">
                   {selected.name}
                 </h2>
                 <p className="text-sm mt-1" style={{ color: "var(--muted)" }}>
@@ -191,16 +191,16 @@ export default function ExtensionsPage() {
               </div>
             </div>
             <p
-              className="text-sm leading-relaxed mb-6"
+              className="text-[15px] leading-relaxed mb-6"
               style={{ color: "var(--muted)" }}
             >
               {selected.description[locale]}
             </p>
-            <div className="flex flex-wrap gap-1.5 mb-6">
+            <div className="flex flex-wrap gap-2 mb-8">
               {selected.tags.map((t) => (
                 <span
                   key={t}
-                  className="text-xs px-2.5 py-1 rounded-full"
+                  className="text-xs px-3 py-1 rounded-lg"
                   style={{
                     background: "var(--bg4)",
                     border: "1px solid var(--border)",
@@ -211,26 +211,22 @@ export default function ExtensionsPage() {
                 </span>
               ))}
             </div>
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={selected.homepage || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white transition-opacity hover:opacity-90 flex justify-center items-center gap-2"
+                className="flex-[2] py-3.5 rounded-2xl text-sm font-bold text-white transition-all hover:scale-[1.02] flex justify-center items-center gap-2"
                 style={{ background: "var(--accent)" }}
               >
                 <i className="fa-brands fa-chrome text-lg"></i>{" "}
-                {t("common.install_now")}
+                {t("common.install_now").toUpperCase()}
               </a>
               <button
-                className="px-5 py-2.5 rounded-xl text-sm transition-all duration-200"
-                style={{
-                  border: "1px solid var(--border2)",
-                  color: "var(--text)",
-                }}
+                className="flex-1 px-5 py-3.5 rounded-2xl text-sm font-bold transition-all duration-200 border border-[var(--border2)] hover:bg-[var(--bg3)]"
                 onClick={() => setSelected(null)}
               >
-                Đóng
+                {locale === "vi" ? "ĐÓNG" : "CLOSE"}
               </button>
             </div>
           </div>
