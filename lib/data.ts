@@ -64,7 +64,7 @@ export const EXTENSIONS: Extension[] = [
     id: 2,
     icon: "/images/startpage_icon.png",
     name: "Zero Startpage",
-    version: "1.2.0",
+    version: "1.3.0",
     status: "new",
     category: "ui",
     description: {
@@ -85,6 +85,78 @@ export const EXTENSIONS: Extension[] = [
 ]
 
 export const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "1.3.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-star",
+    date: { vi: "15 Tháng 5 2026", en: "May 15, 2026" }, // Bạn có thể điều chỉnh ngày theo thời điểm release thực tế
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp widget Todo: Hỗ trợ kéo thả (drag-and-drop), phân chia danh mục (sections) và cải thiện giao diện checkbox",
+          en: "Enhanced Todo widget: Added drag-and-drop support, section management, and improved checkbox UI",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cải tiến hiệu ứng Pixel: Thêm chế độ gió/mưa (Weather), hình cầu 3D (Cubes) và nền parallax (Run)",
+          en: "Pixel effects evolution: Added wind/splash modes (Weather), 3D wireframe sphere (Cubes), and parallax backgrounds (Run)",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống kéo thả toàn diện: Hỗ trợ sắp xếp Bookmarks, màu sắc, Gradients và SVG Waves trong cài đặt",
+          en: "Comprehensive Drag & Drop: Support for reordering Bookmarks, colors, gradients, and SVG waves in settings",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu giao diện Cài đặt: Tổ chức lại các nhóm (Interface, Widgets, Music...), thêm bộ chọn màu Accent mới và chế độ ẩn Key Unsplash",
+          en: "Settings UI Overhaul: Reorganized groups (Interface, Widgets, Music...), added new Accent color presets, and Unsplash key toggle",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp Music Player: Thêm giao diện Sidebar phong cách Spotify và tùy chọn màu sắc mặc định",
+          en: "Music Player upgrade: Added Spotify-inspired sidebar layout and default color options",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cập nhật Timer & Clock: Redesign widget Timer với nhập liệu thông minh, thêm nhiều font chữ mới (GohuFont, Anurati, E1234...)",
+          en: "Timer & Clock updates: Redesigned Timer with smart input, added various new fonts (GohuFont, Anurati, E1234...)",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Tính năng yêu thích: Cho phép đánh dấu 'Favorite' cho các hiệu ứng, màu sắc và sóng SVG để truy cập nhanh",
+          en: "Favorites system: Mark effects, colors, and SVG waves as favorites for quick access",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu hóa layout: Sửa lỗi nhảy bố cục (CLS) cho bookmark, cải thiện hiển thị context menu và đồng bộ hóa lưu trữ ảnh Unsplash",
+          en: "Layout optimization: Fixed layout shifts (CLS) for bookmarks, improved context menu sync, and Unsplash image storage handling",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Cập nhật License và README: Làm rõ các điều khoản sử dụng và cải thiện tài liệu hướng dẫn",
+          en: "Updated License and README: Clarified usage terms and improved documentation formatting",
+        },
+      },
+    ],
+  },
   {
     version: "1.2.0",
     extension: "Zero Startpage - Newtab Replacement",
