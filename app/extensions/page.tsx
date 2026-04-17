@@ -128,14 +128,9 @@ export default function ExtensionsPage() {
         </span>
       </div>
 
-      {/* Grid */}
+      {/* Grid - Single column for horizontal cards */}
       {filtered.length > 0 ? (
-        <div
-          className="grid gap-4"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-          }}
-        >
+        <div className="flex flex-col gap-6">
           {filtered.map((ext) => (
             <ExtensionCard key={ext.id} ext={ext} onClick={setSelected} />
           ))}

@@ -29,38 +29,35 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
 
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+      x: direction > 0 ? "20%" : "-20%",
       opacity: 0,
-      scale: 0.95
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      scale: 1
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 300 : -300,
+      x: direction < 0 ? "20%" : "-20%",
       opacity: 0,
-      scale: 0.95
     })
   }
 
   return (
-    <div className="relative w-full flex flex-col items-center justify-center gap-8">
+    <div className="relative w-full h-full flex flex-col">
       {/* Main image carousel */}
-      <div className="relative w-full h-[300px] md:h-[500px] flex items-center justify-center overflow-hidden rounded-2xl group">
+      <div className="relative w-full flex-1 flex items-center justify-center overflow-hidden group bg-black">
         <button
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-900 rounded-full p-3 z-20 shadow-xl border border-white/20 transition-all hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100"
-          onClick={prevSlide}
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 z-20 transition-all opacity-0 group-hover:opacity-100"
+          onClick={(e) => { e.preventDefault(); prevSlide(); }}
           aria-label="Previous"
           type="button"
         >
-          <i className="fas fa-chevron-left text-lg"></i>
+          <i className="fas fa-chevron-left text-2xl"></i>
         </button>
 
-        <div className="relative w-full h-full flex items-center justify-center bg-black/5">
+        <div className="relative w-full h-full">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={current}
@@ -70,42 +67,41 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.4 },
-                scale: { duration: 0.4 }
+                x: { type: "tween", duration: 0.3 },
+                opacity: { duration: 0.3 }
               }}
-              className="absolute w-full h-full flex items-center justify-center p-2"
+              className="absolute inset-0"
             >
               <img
                 src={images[current]}
                 alt={`Slide ${current + 1}`}
-                className="max-w-full max-h-full object-contain rounded-xl shadow-2xl pointer-events-none"
+                className="w-full h-full object-cover pointer-events-none"
               />
             </motion.div>
           </AnimatePresence>
         </div>
 
         <button
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-900 rounded-full p-3 z-20 shadow-xl border border-white/20 transition-all hover:scale-110 active:scale-95 opacity-0 group-hover:opacity-100"
-          onClick={nextSlide}
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white p-2 z-20 transition-all opacity-0 group-hover:opacity-100"
+          onClick={(e) => { e.preventDefault(); nextSlide(); }}
           aria-label="Next"
           type="button"
         >
-          <i className="fas fa-chevron-right text-lg"></i>
+          <i className="fas fa-chevron-right text-2xl"></i>
         </button>
       </div>
 
-      {/* Thumbnails Row */}
-      <div className="w-full max-w-full overflow-x-auto pb-4 no-scrollbar">
-        <div className="flex gap-4 justify-center px-4">
+      {/* Thumbnails Row - Simplified for Steam Style */}
+      <div className="w-full bg-black/60 py-2 overflow-x-auto no-scrollbar">
+        <div className="flex gap-1.5 px-2">
           {images.map((img, idx) => (
             <button
               key={idx}
               onClick={() => goToSlide(idx)}
-              className={`relative flex-shrink-0 w-20 h-14 md:w-32 md:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 transform ${
+              className={`relative flex-shrink-0 w-24 aspect-video overflow-hidden border transition-all ${
                 idx === current 
-                ? "border-[var(--accent)] scale-110 ring-4 ring-[var(--accent-glow)] z-10" 
-                : "border-transparent opacity-50 hover:opacity-100 hover:scale-105"
+                ? "border-[#66c0f4] ring-1 ring-[#66c0f4]" 
+                : "border-transparent opacity-60 hover:opacity-100"
               }`}
               type="button"
             >
@@ -114,19 +110,9 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
                 alt={`Thumb ${idx + 1}`} 
                 className="w-full h-full object-cover"
               />
-              {idx === current && (
-                <div className="absolute inset-0 bg-[var(--accent)]/10" />
-              )}
             </button>
           ))}
         </div>
-      </div>
-      
-      {/* Hidden preloader for all images */}
-      <div className="hidden">
-        {images.map((img, i) => (
-          <img key={i} src={img} alt="preload" />
-        ))}
       </div>
     </div>
   )

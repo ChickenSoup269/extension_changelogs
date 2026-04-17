@@ -14,7 +14,7 @@ export default function Navbar() {
   const links = [
     { href: "/", label: t("nav.home") },
     { href: "/extensions", label: t("nav.extensions") },
-    { href: "/about/zero-bookmark-manager", label: "About" },
+    { href: "/about", label: t("nav.about") },
     { href: "/changelog", label: t("nav.changelog") },
     { href: "/docs", label: t("nav.docs") },
   ]
@@ -39,7 +39,10 @@ export default function Navbar() {
 
       <div className="flex items-center gap-1">
         {links.map((link) => {
-          const active = pathname === link.href
+          const active =
+            link.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(link.href)
           return (
             <Link
               key={link.href}
@@ -102,7 +105,7 @@ export default function Navbar() {
             color: "var(--accent2)",
           }}
         >
-          v1.1.1 {t("nav.new")}
+          v1.2.0 {t("nav.new")}
         </span>
         <Link
           href="/extensions"

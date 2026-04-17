@@ -115,6 +115,20 @@ function ChangelogContent() {
   })
   const latestVersions = Array.from(latestVersionsMap.values())
 
+  const REPO_MAP: Record<string, string> = {
+    "Zero Startpage - Newtab Replacement":
+      "https://github.com/ChickenSoup269/Zero-Start-Page",
+    "Zero Bookmark Manager":
+      "https://github.com/ChickenSoup269/Zero-Bookmark-Manager",
+  }
+
+  const STORE_MAP: Record<string, string> = {
+    "Zero Startpage - Newtab Replacement":
+      "https://chromewebstore.google.com/detail/ogdbkgoionmjnlinbmmjncnhafhaenck?utm_source=item-share-cb",
+    "Zero Bookmark Manager":
+      "https://chromewebstore.google.com/detail/jhcoclfodfnchlddakkeegkogajdpgce?utm_source=item-share-cb",
+  }
+
   const sourceProjects = [
     {
       name: "Zero Start Page",
@@ -122,6 +136,8 @@ function ChangelogContent() {
       href: "https://github.com/ChickenSoup269/Zero-Start-Page",
       releasesHref:
         "https://github.com/ChickenSoup269/Zero-Start-Page/releases",
+      storeHref:
+        "https://chromewebstore.google.com/detail/ogdbkgoionmjnlinbmmjncnhafhaenck?utm_source=item-share-cb",
       icon: "fa-solid fa-rocket",
     },
     {
@@ -130,15 +146,21 @@ function ChangelogContent() {
       href: "https://github.com/ChickenSoup269/Zero-Bookmark-Manager",
       releasesHref:
         "https://github.com/ChickenSoup269/Zero-Bookmark-Manager/releases",
+      storeHref:
+        "https://chromewebstore.google.com/detail/jhcoclfodfnchlddakkeegkogajdpgce?utm_source=item-share-cb",
       icon: "fa-solid fa-lock",
     },
   ]
 
   // Detect theme (light/dark)
-  const isLightTheme =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: light)").matches
+  const [isLightTheme, setIsLightTheme] = useState(false)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: light)")
+    setIsLightTheme(mediaQuery.matches)
+    const handler = (e: MediaQueryListEvent) => setIsLightTheme(e.matches)
+    mediaQuery.addEventListener("change", handler)
+    return () => mediaQuery.removeEventListener("change", handler)
+  }, [])
   const changelogTextColor = isLightTheme ? "#111" : "var(--text)"
   return (
     <section className="max-w-[1200px] mx-auto px-10 py-14">
@@ -307,6 +329,46 @@ function ChangelogContent() {
                                     )
                                   })}
                               </ul>
+
+                              {REPO_MAP[group.extension] && (
+                                <div
+                                  className="mt-6 pt-4 flex items-center justify-between"
+                                  style={{ borderTop: "1px solid var(--border)" }}
+                                >
+                                  <div className="flex flex-wrap gap-4">
+                                    <a
+                                      href={`${REPO_MAP[group.extension]}/releases/tag/v${item.version}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex items-center gap-2 group/link"
+                                    >
+                                      <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]" />
+                                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]">
+                                        {t("changelog.sidebar.source_code")}
+                                      </span>
+                                    </a>
+
+                                    {STORE_MAP[group.extension] && (
+                                      <a
+                                        href={STORE_MAP[group.extension]}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 group/link"
+                                      >
+                                        <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]" />
+                                        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]">
+                                          {t("changelog.sidebar.store")}
+                                        </span>
+                                      </a>
+                                    )}
+                                  </div>
+
+                                  <i
+                                    className="fa-solid fa-arrow-up-right-from-square text-[10px] transition-colors"
+                                    style={{ color: "var(--muted2)" }}
+                                  />
+                                </div>
+                              )}
                             </div>
                           </div>
                         )
@@ -483,26 +545,14 @@ function ChangelogContent() {
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
               <i className="fa-brands fa-github text-[var(--accent)] text-base" />
-              {(() => {
-                const label =
-                  t && typeof t === "function"
-                    ? t("changelog.sidebar.source_code")
-                    : null
-                if (label && label !== "changelog.sidebar.source_code")
-                  return label
-                if (locale === "vi") return "Mã nguồn"
-                return "Source Code"
-              })()}
+              {t("changelog.sidebar.source_code")}
             </h3>
 
             {sourceProjects
               .filter((p) => p.name !== "Extension")
               .map((project) => (
-                <a
+                <div
                   key={project.repo}
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="flex items-start gap-3 py-3 group transition-all duration-200"
                   style={{ borderBottom: "1px solid var(--border)" }}
                 >
@@ -526,12 +576,15 @@ function ChangelogContent() {
                     />
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p
-                      className="text-sm font-medium truncate transition-colors duration-200 group-hover:text-[var(--accent2)]"
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--accent2)]"
                       style={{ color: changelogTextColor }}
                     >
                       {project.name}
-                    </p>
+                    </a>
                     <p
                       className="text-xs truncate mt-0.5"
                       style={{ color: "var(--muted2)" }}
@@ -539,11 +592,18 @@ function ChangelogContent() {
                       {project.repo}
                     </p>
                   </div>
-                  <i
-                    className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                    style={{ color: "var(--accent2)" }}
-                  />
-                </a>
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  >
+                    <i
+                      className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1"
+                      style={{ color: "var(--accent2)" }}
+                    />
+                  </a>
+                </div>
               ))}
 
             <div className="mt-3 flex flex-col gap-2">
@@ -573,6 +633,54 @@ function ChangelogContent() {
                     </span>
                   </a>
                 ))}
+            </div>
+          </div>
+
+          {/* Chrome Store Card */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "var(--bg2)",
+              border: "1px solid var(--border)",
+            }}
+          >
+            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+              <i className="fa-brands fa-chrome text-[var(--accent)] text-base" />
+              {t("changelog.sidebar.store")}
+            </h3>
+
+            <div className="flex flex-col gap-2">
+              {sourceProjects.map((project) => (
+                <a
+                  key={project.storeHref}
+                  href={project.storeHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)] hover:bg-[var(--accent-glow)] transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={
+                        project.repo.includes("Zero-Start-Page")
+                          ? "/images/startpage_icon.png"
+                          : "/images/bookmark_icon.png"
+                      }
+                      alt={project.name}
+                      style={{ width: 24, height: 24, borderRadius: 4 }}
+                    />
+                    <span
+                      className="text-xs font-semibold group-hover:text-[var(--accent2)] transition-colors"
+                      style={{ color: changelogTextColor }}
+                    >
+                      {project.name}
+                    </span>
+                  </div>
+                  <i
+                    className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--accent2)] transition-all"
+                    style={{ color: "var(--muted2)" }}
+                  />
+                </a>
+              ))}
             </div>
           </div>
 

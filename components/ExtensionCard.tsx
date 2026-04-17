@@ -2,7 +2,6 @@
 
 import { useRef } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import type { Extension } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -33,174 +32,114 @@ const STATUS_CONFIG = {
 interface Props {
   ext: Extension
   onClick?: (ext: Extension) => void
+  compact?: boolean
 }
 
-export default function ExtensionCard({ ext, onClick }: Props) {
+export default function ExtensionCard({ ext, onClick, compact = false }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const { t, locale } = useLanguage()
   const status = STATUS_CONFIG[ext.status]
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current
-    if (!card) return
-    const rect = card.getBoundingClientRect()
-    card.style.setProperty("--mx", `${e.clientX - rect.left}px`)
-    card.style.setProperty("--my", `${e.clientY - rect.top}px`)
-  }
+  // Use standard preview images if available, else fallback
+  const previewImg = ext.slug === "zero-startpage" 
+    ? "/images/starpage/1.png" 
+    : "https://github.com/ChickenSoup269/imagesForRepo/blob/main/img_repo_extension_bookmarks/extension_bookmark_120/1.png?raw=true"
 
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
       onClick={() => onClick?.(ext)}
-      className="relative overflow-hidden rounded-xl p-[22px] cursor-pointer group transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_var(--accent-glow)]"
-      style={{
-        background: ext.featured
-          ? "linear-gradient(135deg, var(--accent-glow), var(--bg2))"
-          : "var(--bg2)",
-        border: `1px solid ${ext.featured ? "var(--accent)" : "var(--border)"}`,
-      }}
+      className={`relative flex flex-col md:flex-row items-stretch gap-4 bg-[var(--bg2)] border border-[var(--border)] rounded-xl overflow-hidden group transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--bg3)] hover:shadow-xl ${compact ? 'p-3' : 'p-4'}`}
     >
-      {/* Mouse glow */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{
-          background:
-            "radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--accent-glow), transparent 40%)",
-        }}
-      />
-
-      {/* Hover border */}
-      <div
-        className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
-        style={{
-          border: "1px solid var(--accent)",
-          boxShadow: "inset 0 0 20px var(--accent-glow)",
-        }}
-      />
-
-      {/* Header */}
-      <div className="flex items-start justify-between mb-4 relative">
-        <div className="flex items-start gap-3">
-          <div
-            className="w-11 h-11 rounded-[10px] flex items-center justify-center text-xl flex-shrink-0"
-            style={{ background: "var(--bg4)", overflow: "hidden" }}
+      {/* PREVIEW IMAGE - STEAM STYLE */}
+      <div className={`w-full ${compact ? 'md:w-[180px]' : 'md:w-[240px]'} aspect-video bg-black overflow-hidden flex-shrink-0 shadow-lg relative`}>
+        <img 
+          src={previewImg} 
+          alt={ext.name} 
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        />
+        <div className="absolute top-1.5 left-1.5">
+           <span
+            className="text-[9px] font-bold px-1.5 py-0.5 rounded-sm uppercase italic"
+            style={{
+              background: status.bg,
+              border: `1px solid ${status.border}`,
+              color: status.color,
+              backdropFilter: "blur(4px)"
+            }}
           >
-            {ext.icon.startsWith("/") ? (
-              <img
-                src={ext.icon}
-                alt={ext.name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <i className={ext.icon} style={{ color: "var(--accent)" }}></i>
-            )}
+            {t(status.key)}
+          </span>
+        </div>
+      </div>
+
+      {/* CONTENT INFO */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex items-start justify-between mb-1.5">
+          <div className="flex items-center gap-2.5">
+             <div className={`${compact ? 'w-8 h-8' : 'w-10 h-10'} rounded-lg bg-[var(--bg4)] p-1.5 border border-[var(--border2)] flex-shrink-0`}>
+                <img src={ext.icon} alt={ext.name} className="w-full h-full object-contain" />
+             </div>
+             <div>
+                <h3 className={`${compact ? 'text-[15px]' : 'text-lg'} font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors leading-tight`}>
+                  {ext.name}
+                </h3>
+                <div className="text-[9px] text-[var(--muted)] uppercase tracking-tighter">
+                  v{ext.version} • {ext.category}
+                </div>
+             </div>
           </div>
-          <div>
-            <div className="font-syne font-semibold text-[15px] mb-0.5">
-              {ext.name}
-            </div>
-            <div
-              className="text-[11px] font-mono"
-              style={{
-                color: "var(--muted)",
-                fontFamily: "var(--font-dm-mono)",
-              }}
-            >
-              v{ext.version}
-            </div>
+          
+          <div className="flex flex-col items-end gap-1">
+             <span className="text-[9px] px-1.5 py-0.5 bg-[#5c7e10] text-[#beee11] font-black rounded-sm uppercase italic">FREE</span>
+             {!compact && (
+               <div className="flex items-center gap-2 text-[10px] opacity-60">
+                  <span>★ {ext.stars}</span>
+                  <span>⬇ {ext.downloads}</span>
+               </div>
+             )}
           </div>
         </div>
-        <span
-          className="text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
+
+        <p className={`${compact ? 'text-[12px]' : 'text-[13px]'} text-[var(--muted)] line-clamp-2 mb-3 leading-relaxed italic`}>
+          "{ext.description[locale]}"
+        </p>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1 mb-2 mt-auto">
+          {ext.tags.slice(0, compact ? 2 : undefined).map((tag) => (
+            <span
+              key={tag}
+              className="text-[9px] px-2 py-0.5 rounded-sm bg-[var(--bg4)] border border-[var(--border)] text-[var(--muted)]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* SIDEBAR ACTIONS */}
+      <div className={`flex md:flex-col gap-1.5 justify-center md:border-l border-[var(--border)] ${compact ? 'md:pl-4 md:min-w-[110px]' : 'md:pl-6 md:min-w-[140px]'}`}>
+        <Link
+          href={`/about/${ext.slug}`}
+          onClick={(e) => e.stopPropagation()}
+          className={`flex-1 md:flex-none font-bold rounded-lg transition-all text-center tracking-wider bg-[var(--bg3)] border border-[var(--border2)] text-[var(--text)] hover:bg-[var(--bg4)] hover:border-[var(--accent)] ${compact ? 'text-[9px] px-2 py-2' : 'text-[11px] px-4 py-2.5'}`}
+        >
+          {t("common.details").toUpperCase()}
+        </Link>
+        <a
+          href={ext.homepage || "#"}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className={`flex-1 md:flex-none font-bold rounded-lg transition-all text-center tracking-wider text-white shadow-lg shadow-[var(--accent-glow)] flex items-center justify-center gap-1.5 ${compact ? 'text-[9px] px-2 py-2' : 'text-[11px] px-4 py-2.5'}`}
           style={{
-            background: status.bg,
-            border: `1px solid ${status.border}`,
-            color: status.color,
+            background: "linear-gradient(to bottom, var(--accent) 5%, var(--accent2) 95%)",
           }}
         >
-          {status.prefix} {t(status.key)}
-        </span>
-      </div>
-
-      {/* Description */}
-      <p
-        className="text-[13px] leading-relaxed mb-4 relative"
-        style={{ color: "var(--muted)" }}
-      >
-        {ext.description[locale]}
-      </p>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-1.5 mb-4 relative">
-        {ext.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-[11px] px-2.5 py-1 rounded-full"
-            style={{
-              background: "var(--bg4)",
-              border: "1px solid var(--border)",
-              color: "var(--muted)",
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      {/* Footer */}
-      <div
-        className="flex items-center justify-between pt-3.5 relative"
-        style={{ borderTop: "1px solid var(--border)" }}
-      >
-        <div className="flex gap-3.5">
-          <span
-            className="text-xs flex items-center gap-1"
-            style={{ color: "var(--muted)" }}
-          >
-            <span style={{ opacity: 0.5 }}>⬇</span> {ext.downloads}
-          </span>
-          <span
-            className="text-xs flex items-center gap-1"
-            style={{ color: "#f59e0b" }}
-          >
-            ★ {ext.stars}
-          </span>
-        </div>
-        <div className="flex gap-2">
-          <Link
-            href={`/about/${ext.slug}`}
-            onClick={(e) => e.stopPropagation()}
-            className="text-[11px] font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200"
-            style={{ border: "1px solid var(--border2)", color: "var(--text)", background: "var(--bg3)" }}
-          >
-            {t("common.details")}
-          </Link>
-          <a
-            href={ext.homepage || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="text-[11px] font-medium px-3.5 py-1.5 rounded-lg transition-all duration-200 hover:text-white inline-flex items-center gap-1.5"
-            style={{
-              background: "var(--bg4)",
-              border: "1px solid var(--border2)",
-              color: "var(--text)",
-            }}
-            onMouseEnter={(e) => {
-              const el = e.currentTarget
-              el.style.background = "var(--accent)"
-              el.style.borderColor = "var(--accent)"
-            }}
-            onMouseLeave={(e) => {
-              const el = e.currentTarget
-              el.style.background = "var(--bg4)"
-              el.style.borderColor = "var(--border2)"
-            }}
-          >
-            <i className="fa-brands fa-chrome"></i> {t("common.install")}
-          </a>
-        </div>
+          <i className="fa-brands fa-chrome"></i>
+          {t("common.install").toUpperCase()}
+        </a>
       </div>
     </div>
   )
