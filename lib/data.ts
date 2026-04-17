@@ -89,7 +89,7 @@ export const CHANGELOG: ChangelogItem[] = [
     version: "1.3.0",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-star",
-    date: { vi: "15 Tháng 5 2026", en: "May 15, 2026" }, // Bạn có thể điều chỉnh ngày theo thời điểm release thực tế
+    date: { vi: "17 Tháng 4 2026", en: "April 17, 2026" },
     releaseType: "minor",
     changes: [
       {
