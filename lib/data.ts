@@ -46,8 +46,8 @@ export const EXTENSIONS: Extension[] = [
     status: "stable",
     category: "productivity",
     description: {
-      vi: "Trình quản lý dấu trang mạnh mẽ, tối giản với tìm kiếm thông minh, sắp xếp thư mục và xuất/nhập dữ liệu dễ dàng.",
-      en: "Powerful, minimalist bookmark manager with smart search, folder organization, and easy data export/import.",
+      vi: "Trình quản lý dấu trang thế hệ mới với tìm kiếm thông minh, tổ chức thư mục khoa học và hiệu suất vượt trội cho trình duyệt của bạn.",
+      en: "Next-gen bookmark manager featuring smart search, scientific folder organization, and superior performance for your browser.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
     downloads: "180",
@@ -68,8 +68,8 @@ export const EXTENSIONS: Extension[] = [
     status: "new",
     category: "ui",
     description: {
-      vi: "Thay thế trang Tab mới bằng giao diện tối giản, tập trung vào sự tinh tế. Hỗ trợ tùy chỉnh widget và hình nền HD.",
-      en: "Replacement for the new tab page with a minimalist interface focusing on elegance. Supports custom widgets and HD wallpapers.",
+      vi: "Biến đổi Tab mới thành một không gian làm việc tối giản, đầy cảm hứng với widget thông minh và hiệu ứng động tuyệt đẹp.",
+      en: "Transform your New Tab into a minimalist, inspiring workspace with smart widgets and stunning visual effects.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
     downloads: "131",
@@ -85,6 +85,71 @@ export const EXTENSIONS: Extension[] = [
 ]
 
 export const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "1.4.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-star",
+    date: { vi: "29 Tháng 4 2026", en: "April 29, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Chế độ White Blur: Giao diện mờ trắng hiện đại cho Music Player, Widgets và Modals, tối ưu hiển thị trên các nền sáng.",
+          en: "White Blur Mode: Modern frosted glass UI for Music Player, Widgets, and Modals, optimized for light backgrounds.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống Theme đa dạng: Thêm các chủ đề mới (Aurora, Nature, Monochrome, Space, Neon...) với hiệu ứng riêng biệt.",
+          en: "Diverse Theme System: Added new themes (Aurora, Nature, Monochrome, Space, Neon...) with unique visual effects.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp hiệu ứng thời tiết & hạt: Bổ sung hiệu ứng Storm (sấm sét), Northern Lights (cực quang) và cải tiến Fireflies, Sakura.",
+          en: "Weather & Particle Upgrades: Added Storm (lightning), Northern Lights effects; enhanced Fireflies and Sakura animations.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Widget Daily Quotes & Crystal Ball: Tích hợp trích dẫn hàng ngày và quả cầu tiên tri với khả năng tùy biến cao.",
+          en: "Daily Quotes & Crystal Ball: Integrated daily inspiration and fortune-telling ball with high customizability.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng bộ hóa Cloud Sync: Hỗ trợ sao lưu và khôi phục cài đặt thông qua Chrome Sync Storage.",
+          en: "Cloud Sync: Support for backing up and restoring settings via Chrome Sync Storage.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cải tiến UX: Hỗ trợ font chữ hệ thống (Local Fonts), nâng cấp Menu chuột phải phong cách MacOS và hiệu ứng hover mượt mà.",
+          en: "UX Improvements: Local font support, MacOS-inspired context menu, and smoother hover transitions.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Ổn định bố cục: Sử dụng Widget Containers để chống nhảy khung (Layout Shift) khi khởi tạo ứng dụng.",
+          en: "Layout Stability: Implemented Widget Containers to prevent layout shifts during app initialization.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu hiệu suất: Cấu trúc lại logic render hiệu ứng, caching gradient và cải thiện việc xử lý ảnh/video background.",
+          en: "Performance Tuning: Refactored effect rendering logic, gradient caching, and improved background image/video handling.",
+        },
+      },
+    ],
+  },
   {
     version: "1.3.0",
     extension: "Zero Startpage - Newtab Replacement",

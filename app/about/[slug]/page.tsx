@@ -372,24 +372,38 @@ export default function DynamicAboutPage() {
                     <p className="font-bold text-white text-lg">
                       {t(`about.${ext.slug}.subtitle`)}
                     </p>
-                    <p>{ext.description[locale]}</p>
+                    <p>{t(`about.${ext.slug}.description`)}</p>
 
                     <div className="bg-black/20 p-6 md:p-8 rounded-sm border-l-4 border-[#66c0f4] mt-8 border border-white/5">
                       <h4 className="text-[#66c0f4] font-bold mb-4 uppercase tracking-widest text-[11px]">
                         {t("about.features.title")}
                       </h4>
                       <ul className="space-y-4">
-                        {ext.tags.map((tag, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <i className="fas fa-check text-[#beee11] mt-1 text-[10px]" />
-                            <span className="text-sm opacity-90 leading-snug">
-                              <span className="text-white font-bold uppercase text-[11px] mr-2">
-                                {tag}:
-                              </span>{" "}
-                              {t("about.features.support_desc")}
-                            </span>
-                          </li>
-                        ))}
+                        {(t(`about.${ext.slug}.detailed_features`) || []).length > 0 ? (
+                          t(`about.${ext.slug}.detailed_features`).map((feature: any, i: number) => (
+                            <li key={i} className="flex items-start gap-3">
+                              <i className="fas fa-check text-[#beee11] mt-1 text-[10px]" />
+                              <span className="text-sm opacity-90 leading-snug">
+                                <span className="text-white font-bold uppercase text-[11px] mr-2">
+                                  {feature.title}:
+                                </span>{" "}
+                                {feature.desc}
+                              </span>
+                            </li>
+                          ))
+                        ) : (
+                          ext.tags.map((tag, i) => (
+                            <li key={i} className="flex items-start gap-3">
+                              <i className="fas fa-check text-[#beee11] mt-1 text-[10px]" />
+                              <span className="text-sm opacity-90 leading-snug">
+                                <span className="text-white font-bold uppercase text-[11px] mr-2">
+                                  {tag}:
+                                </span>{" "}
+                                {t("about.features.support_desc")}
+                              </span>
+                            </li>
+                          ))
+                        )}
                       </ul>
                     </div>
                   </div>

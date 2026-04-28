@@ -94,7 +94,13 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-startpage": {
         title: "Về Zero Startpage",
         subtitle: "Giao diện Tab mới tối giản và tinh tế",
-        description: "Nâng tầm trải nghiệm trình duyệt của bạn với giao diện Startpage được lấy cảm hứng từ sự tối giản. Tích hợp nhiều widget thông minh, hình nền HD và hiệu ứng động tuyệt đẹp.",
+        description: "Zero Startpage không chỉ là một trang Tab mới thông thường; đó là một trải nghiệm kỹ thuật số được thiết kế để mang lại sự bình yên và tập trung. Chúng tôi loại bỏ sự lộn xộn của các trình duyệt truyền thống và thay thế bằng một giao diện thẩm mỹ, nơi bạn có thể tùy biến mọi thứ từ hình nền 4K đến các hiệu ứng hạt động mượt mà.",
+        detailed_features: [
+          { title: "Cá nhân hóa tối đa", desc: "Tự do thay đổi hình nền từ kho ảnh Unsplash khổng lồ hoặc tải lên video background cá nhân." },
+          { title: "Hệ thống Widget thông minh", desc: "Tích hợp đồng hồ đa dạng, dự báo thời tiết, danh sách Todo và trình phát nhạc trực quan." },
+          { title: "Hiệu ứng động độc quyền", desc: "Trải nghiệm các hiệu ứng cực quang, mưa rơi, hay tuyết bay được tối ưu hóa cực nhẹ cho trình duyệt." },
+          { title: "Đồng bộ hóa đám mây", desc: "Lưu trữ và đồng bộ mọi cài đặt của bạn trên các thiết bị khác nhau thông qua Chrome Sync." }
+        ],
         preview: {
           slider_title: "Giao diện tinh tế",
           slider_desc: "Khám phá sự tỉ mỉ trong từng đường nét thiết kế, mang lại cảm giác mượt mà và hiện đại.",
@@ -105,7 +111,13 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-bookmark-manager": {
         title: "Về Zero Bookmark Manager",
         subtitle: "Quản lý dấu trang thông minh & tối giản",
-        description: "Quản lý hàng ngàn dấu trang một cách khoa học với hệ thống thư mục và tìm kiếm thông minh. Hỗ trợ sao lưu, phân loại tag và tùy biến giao diện mạnh mẽ giúp bạn làm việc năng suất hơn.",
+        description: "Hãy quên đi thanh dấu trang lộn xộn của Chrome. Zero Bookmark Manager mang đến một cách tiếp cận hoàn toàn mới để tổ chức cuộc sống trực tuyến của bạn. Với giao diện lấy cảm hứng từ các trình quản lý file chuyên nghiệp, bạn có thể dễ dàng phân loại, gắn thẻ và tìm kiếm hàng ngàn liên kết chỉ trong vài giây.",
+        detailed_features: [
+          { title: "Tìm kiếm siêu tốc", desc: "Thuật toán tìm kiếm thông minh giúp bạn truy cập ngay lập tức vào bất kỳ dấu trang nào dựa trên tên, URL hoặc tag." },
+          { title: "Hệ thống Tag linh hoạt", desc: "Phân loại dấu trang bằng hệ thống nhãn dán đa màu sắc, giúp việc quản lý trở nên trực quan và khoa học hơn." },
+          { title: "Kiểm tra link lỗi", desc: "Tự động quét và phát hiện các liên kết đã hỏng hoặc không còn tồn tại để giữ cho bộ sưu tập luôn 'sạch'." },
+          { title: "Xuất bản HTML/JSON", desc: "Dễ dàng sao lưu và di chuyển dữ liệu của bạn sang các trình duyệt khác với định dạng tiêu chuẩn." }
+        ],
         preview: {
           slider_title: "Quản lý chuyên nghiệp",
           slider_desc: "Giao diện trực quan giúp bạn sắp xếp và tìm kiếm dấu trang chỉ trong nháy mắt.",
@@ -231,7 +243,13 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-startpage": {
         title: "About Zero Startpage",
         subtitle: "Minimalist & Elegant New Tab",
-        description: "Elevate your browsing experience with a minimalist-inspired Startpage. Integrated with smart widgets, HD wallpapers, and stunning visual effects.",
+        description: "Zero Startpage is more than just a replacement for your new tab; it's a digital sanctuary designed for peace and focus. We've stripped away the browser clutter to provide a serene, aesthetic interface where you can customize everything from stunning 4K wallpapers to smooth, lightweight particle effects.",
+        detailed_features: [
+          { title: "Ultimate Personalization", desc: "Change backgrounds using the vast Unsplash library or upload your own personal video backgrounds." },
+          { title: "Smart Widget Ecosystem", desc: "Integrated versatile clocks, weather forecasts, Todo lists, and an intuitive music player." },
+          { title: "Exclusive Motion Effects", desc: "Experience Northern Lights, rain, or snow effects, all highly optimized for browser performance." },
+          { title: "Cloud Synchronization", desc: "Save and sync all your settings seamlessly across different devices via Chrome Sync." }
+        ],
         preview: {
           slider_title: "Elegant Interface",
           slider_desc: "Experience the meticulous attention to detail and modern design aesthetics.",
@@ -242,7 +260,13 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-bookmark-manager": {
         title: "About Zero Bookmark Manager",
         subtitle: "Smart & Minimalist Bookmarking",
-        description: "Manage thousands of bookmarks scientifically with a folder system and smart search. Powerful backup, tag classification, and UI customization to boost your productivity.",
+        description: "Forget Chrome's messy bookmark bar. Zero Bookmark Manager introduces a fresh approach to organizing your online life. With a UI inspired by professional file managers, you can effortlessly categorize, tag, and search through thousands of links in seconds.",
+        detailed_features: [
+          { title: "Lightning Fast Search", desc: "Smart search algorithms give you instant access to any bookmark based on title, URL, or tags." },
+          { title: "Flexible Tagging System", desc: "Categorize bookmarks using a multi-colored labeling system for intuitive and scientific organization." },
+          { title: "Link Health Check", desc: "Automatically scan and detect broken or dead links to keep your collection clean and functional." },
+          { title: "HTML/JSON Portability", desc: "Easily backup and migrate your data to other browsers using standard file formats." }
+        ],
         preview: {
           slider_title: "Professional Management",
           slider_desc: "An intuitive interface that helps you organize and find bookmarks in a blink of an eye.",
