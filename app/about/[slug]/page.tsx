@@ -379,7 +379,7 @@ export default function DynamicAboutPage() {
                         {t("about.features.title")}
                       </h4>
                       <ul className="space-y-4">
-                        {(t(`about.${ext.slug}.detailed_features`) || []).length > 0 ? (
+                        {Array.isArray(t(`about.${ext.slug}.detailed_features`)) ? (
                           t(`about.${ext.slug}.detailed_features`).map((feature: any, i: number) => (
                             <li key={i} className="flex items-start gap-3">
                               <i className="fas fa-check text-[#beee11] mt-1 text-[10px]" />

@@ -6,7 +6,7 @@ import { DICTIONARY, type Locale } from "@/lib/translations"
 interface LanguageContextType {
   locale: Locale
   setLocale: (l: Locale) => void
-  t: (key: string) => string
+  t: (key: string) => any
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
@@ -29,14 +29,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }
 
   // Simple nested translation getter (e.g. t('nav.home'))
-  const t = (path: string): string => {
+  const t = (path: string): any => {
     const keys = path.split(".")
     let current: any = DICTIONARY[locale]
     for (const key of keys) {
       if (current[key] === undefined) return path
       current = current[key]
     }
-    return current as string
+    return current
   }
 
   return (
