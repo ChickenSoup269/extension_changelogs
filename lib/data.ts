@@ -86,6 +86,136 @@ export const EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.3.0",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "11 Tháng 5 2026", en: "May 11, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống AI Profiles: Quản lý hồ sơ AI chuyên sâu, hỗ trợ lưu/xóa cấu hình, gợi ý Model và cải tiến khung chat thông minh.",
+          en: "AI Profiles System: Advanced AI profile management, support for saving/deleting configs, model suggestions, and smart chat UI.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Kéo thả toàn diện: Hỗ trợ Drag-and-drop cho cả Bookmarks và thư mục, giúp sắp xếp không gian làm việc cực kỳ linh hoạt.",
+          en: "Comprehensive Drag & Drop: Full support for reordering bookmarks and folders for a highly flexible workspace.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Chế độ hiển thị List View: Thêm tùy chọn xem danh sách gọn gàng bên cạnh Grid View truyền thống, tối ưu cho số lượng lớn liên kết.",
+          en: "List View Mode: Added a clean list view option alongside traditional Grid View, optimized for handling many links.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp hệ thống Tag: Tăng giới hạn lên 10 tags và cải tiến logic lọc nâng cao (Health check, Favorites, Search).",
+          en: "Tag System Upgrade: Increased limit to 10 tags and enhanced advanced filtering (Health check, Favorites, Search).",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu trang Trợ giúp & Lệnh: Thiết kế lại giao diện Help Guide, danh sách lệnh (Commands) hỗ trợ copy nhanh tiện lợi.",
+          en: "Help & Commands Overhaul: Redesigned Help Guide and Command list with a quick-copy feature for better accessibility.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Marketing & Documentation: Cập nhật README đa ngôn ngữ với cấu hình bảng (tables) và tóm tắt tính năng chuyên nghiệp.",
+          en: "Marketing & Documentation: Updated multi-language README with table layouts and professional feature summaries.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu hóa UI/UX: Cải thiện nút 'Scroll to Top', ổn định độ cao Sidebar và tinh chỉnh hiển thị Thumbnail dự phòng.",
+          en: "UI/UX Optimization: Improved 'Scroll to Top' button, stabilized Sidebar height, and refined fallback thumbnail rendering.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Bảo mật & Giấy phép: Cập nhật điều khoản License (hạn chế thương mại) và hỗ trợ ẩn/hiện API Key trong cài đặt.",
+          en: "Security & License: Updated License terms (non-commercial) and added API Key visibility toggle in settings.",
+        },
+      },
+    ],
+  },
+  {
+    version: "1.5.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "11 Tháng 5 2026", en: "May 11, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Siêu phẩm Fliqlo: Tích hợp đồng hồ lật (Flip Clock) phong cách cổ điển với chế độ Zen Mode và tùy biến màu sắc thẻ số.",
+          en: "Fliqlo Masterpiece: Integrated classic Flip Clock with Zen Mode and customizable card colors.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống Tự tạo Theme: Cho phép người dùng lưu Snapshot cài đặt hiện tại thành Theme cá nhân với tên và icon tùy chọn.",
+          en: "Custom Theme System: Save your current settings as a personal snapshot with custom names and icons.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Chế độ Countdown: Biến đồng hồ chính thành bộ đếm ngược thời gian, hỗ trợ quản lý công việc và mục tiêu trực quan hơn.",
+          en: "Countdown Mode: Transform the main clock into a countdown timer for better goal and task management.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Clock Style mới: Thêm phong cách 'Cyber Pulse' với hiệu ứng động hiện đại và font chữ SAIBA-45 đặc trưng.",
+          en: "New Clock Style: Added 'Cyber Pulse' with modern dynamic animations and signature SAIBA-45 font.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp Loading Screen: Thêm hiệu ứng Ambient Glow (tỏa sáng môi trường) và tối ưu hóa quá trình khởi động mượt mà hơn.",
+          en: "Enhanced Loading Screen: Added Ambient Glow effects and optimized startup transitions for a smoother experience.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Tối ưu hóa hiển thị: Bổ sung hiệu ứng Fade cho ngày giờ và hướng dẫn ẩn thanh dấu trang Chrome theo từng hệ điều hành.",
+          en: "Display Optimization: Added Fade effects for date/time and OS-specific instructions to hide the Chrome Bookmark Bar.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Cải thiện giao diện sáng: Tinh chỉnh độ tương phản Sidebar và màu sắc Accent cho Music Player trong Light Mode.",
+          en: "Light Mode Refinement: Adjusted Sidebar contrast and Music Player accent colors for better visibility in light themes.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Đồng bộ hóa README: Cập nhật layout Flexbox và căn chỉnh Badge giúp tài liệu dự án chuyên nghiệp hơn.",
+          en: "README Synchronization: Updated Flexbox layout and badge alignment for a more professional project documentation.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.4.0",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-star",
