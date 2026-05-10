@@ -32,19 +32,20 @@ export async function fetchWebstoreStats(
     // Scrape rating: looking for the numeric rating value (e.g. 4.8)
     const ratingMatch =
       html.match(/aria-label=["']Average rating ([0-9.]+) out of 5/i) ||
-      html.match(
-        /class=["'][^"']*["']>([0-9.]{1,3})<\/div>[^<]*?aria-label=["']ratings/i,
-      )
+      html.match(/aria-label=["']Rated ([0-9.]+) out of 5/i) ||
+      html.match(/class=["'][^"']*["']>([0-9.]{1,3})<\/div>[^<]*?aria-label=["']ratings/i) ||
+      html.match(/<div[^>]*?>([0-9.]{1,3})<\/div>[^<]*?average rating/i)
 
     // Scrape rating count
     const countMatch =
       html.match(/\(([0-9,.]+)\s+ratings\)/i) ||
-      html.match(/([0-9,.]+)\s+ratings/i)
+      html.match(/([0-9,.]+)\s+ratings/i) ||
+      html.match(/([0-9,.]+)\s+lượt đánh giá/i)
 
     return {
       id: extensionId,
-      users: userMatch ? userMatch[1] : "100+",
-      rating: ratingMatch ? ratingMatch[1] : "5.0",
+      users: userMatch ? userMatch[1] : "0",
+      rating: ratingMatch ? ratingMatch[1] : "0",
       ratingCount: countMatch ? countMatch[1] : "0",
       lastUpdated: new Date().toISOString(),
     }

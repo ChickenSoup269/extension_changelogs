@@ -71,6 +71,7 @@ Chỉnh sửa `lib/data.ts`, thêm vào mảng `EXTENSIONS`:
   tags: ['tag1', 'tag2'],
   downloads: '0',
   stars: '5.0',
+  ratingCount: '0',
   author: 'Tên của bạn',
 }
 ```

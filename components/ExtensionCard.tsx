@@ -94,7 +94,7 @@ export default function ExtensionCard({ ext, onClick, compact = false }: Props) 
              <span className="text-[9px] px-1.5 py-0.5 bg-[#5c7e10] text-[#beee11] font-black rounded-sm uppercase italic">FREE</span>
              {!compact && (
                <div className="flex items-center gap-2 text-[10px] opacity-60">
-                  <span>★ {ext.stars}</span>
+                  <span>★ {ext.stars} ({ext.ratingCount})</span>
                   <span>⬇ {ext.downloads}</span>
                </div>
              )}

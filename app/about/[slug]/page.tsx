@@ -242,6 +242,15 @@ export default function DynamicAboutPage() {
 
                       <div className="grid grid-cols-[110px_1fr] text-[11px] py-1">
                         <span className="text-[#556772] uppercase font-semibold">
+                          {t("about.stats.rating")}:
+                        </span>
+                        <span className="text-[#8f98a0] text-right lg:text-left">
+                          <span className="text-white font-bold">{stats.rating} ★</span> ({stats.ratingCount} {t("about.all_reviews").toLowerCase()})
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-[110px_1fr] text-[11px] py-1">
+                        <span className="text-[#556772] uppercase font-semibold">
                           {t("about.release_date")}:
                         </span>
                         <span className="text-[#8f98a0] text-right lg:text-left">

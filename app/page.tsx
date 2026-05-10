@@ -16,10 +16,11 @@ export default function HomePage() {
 
   const totalExtensions = EXTENSIONS.length
 
-  const { totalDownloads, averageRating, uniqueCategories } =
+  const { totalDownloads, averageRating, totalRatingCount, uniqueCategories } =
     useMemo(() => {
       let downloads = 0
       let stars = 0
+      let ratingCount = 0
       const categories = new Set()
       EXTENSIONS.forEach((ext) => {
         const liveStats =
@@ -31,9 +32,15 @@ export default function HomePage() {
               liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0",
             )
           : parseInt(ext.downloads.replace(/,/g, "") || "0")
+        
         stars += liveStats
           ? parseFloat(liveStats.rating || "0")
           : parseFloat(ext.stars || "0")
+        
+        ratingCount += liveStats
+          ? parseInt(liveStats.ratingCount || "0")
+          : parseInt(ext.ratingCount || "0")
+
         if (ext.category) categories.add(ext.category)
       })
       const avg =
@@ -41,6 +48,7 @@ export default function HomePage() {
       return {
         totalDownloads: downloads,
         averageRating: avg,
+        totalRatingCount: ratingCount,
         uniqueCategories: categories.size,
       }
     }, [EXTENSIONS, statsData, totalExtensions])
@@ -105,7 +113,7 @@ export default function HomePage() {
           {[
             { label: t("hero.stats.extensions"), value: totalExtensions, icon: "fa-cubes" },
             { label: t("hero.stats.downloads"), value: totalDownloads.toLocaleString(), icon: "fa-download" },
-            { label: t("hero.stats.reviews"), value: `${averageRating} ★`, icon: "fa-star", color: "var(--amber)" },
+            { label: t("hero.stats.reviews"), value: `${averageRating} ★ (${totalRatingCount})`, icon: "fa-star", color: "var(--amber)" },
             { label: "CATEGORIES", value: uniqueCategories, icon: "fa-layer-group" },
           ].map((stat, i) => (
             <div key={i} className={`flex flex-col items-center px-4 ${i !== 3 ? 'lg:border-r border-[var(--border)]' : ''} ${i % 2 === 0 && i !== 2 ? 'sm:border-r lg:border-r-0' : ''}`}>

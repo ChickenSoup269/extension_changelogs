@@ -14,6 +14,7 @@ export interface Extension {
   tags: string[]
   downloads: string
   stars: string
+  ratingCount: string
   featured?: boolean
   author: string
   homepage?: string
@@ -50,8 +51,9 @@ export const EXTENSIONS: Extension[] = [
       en: "Next-gen bookmark manager featuring smart search, scientific folder organization, and superior performance for your browser.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "180",
+    downloads: "754",
     stars: "3.7",
+    ratingCount: "3",
 
     author: "ChickenSoup269",
     homepage:
@@ -72,8 +74,9 @@ export const EXTENSIONS: Extension[] = [
       en: "Transform your New Tab into a minimalist, inspiring workspace with smart widgets and stunning visual effects.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "131",
-    stars: "5.0",
+    downloads: "128",
+    stars: "4.9",
+    ratingCount: "3",
     featured: true,
 
     author: "ChickenSoup269",

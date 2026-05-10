@@ -79,7 +79,7 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
           
           <div className="mt-8 flex gap-6 text-center">
              <div>
-                <div className="text-xl font-bold text-[var(--text)]">★ {ext.stars}</div>
+                <div className="text-xl font-bold text-[var(--text)]">★ {ext.stars} ({ext.ratingCount})</div>
                 <div className="text-[10px] text-[var(--muted)] uppercase tracking-widest">{t("about.stats.rating").toUpperCase()}</div>
              </div>
              <div className="w-px h-10 bg-[var(--border)]" />

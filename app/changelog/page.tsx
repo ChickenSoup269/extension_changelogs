@@ -254,8 +254,8 @@ function ChangelogContent() {
                             <div
                               className="rounded-xl p-5 relative"
                               style={{
-                                background: "var(--bg2)",
-                                border: "1px solid var(--border)",
+                                background: "var(--bg3)",
+                                border: "1px solid var(--border2)",
                               }}
                             >
                               <div
@@ -387,8 +387,8 @@ function ChangelogContent() {
                   disabled={currentPage === 1}
                   className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
                   style={{
-                    background: "var(--bg2)",
-                    border: "1px solid var(--border)",
+                    background: "var(--bg3)",
+                    border: "1px solid var(--border2)",
                     color: changelogTextColor,
                   }}
                 >
@@ -429,8 +429,8 @@ function ChangelogContent() {
                   disabled={currentPage === totalPages}
                   className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
                   style={{
-                    background: "var(--bg2)",
-                    border: "1px solid var(--border)",
+                    background: "var(--bg3)",
+                    border: "1px solid var(--border2)",
                     color: changelogTextColor,
                   }}
                 >
@@ -446,8 +446,8 @@ function ChangelogContent() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "var(--bg2)",
-              border: "1px solid var(--border)",
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4">
@@ -497,8 +497,8 @@ function ChangelogContent() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "var(--bg2)",
-              border: "1px solid var(--border)",
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4">
@@ -539,8 +539,8 @@ function ChangelogContent() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "var(--bg2)",
-              border: "1px solid var(--border)",
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
@@ -640,8 +640,8 @@ function ChangelogContent() {
           <div
             className="rounded-xl p-5"
             style={{
-              background: "var(--bg2)",
-              border: "1px solid var(--border)",
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
@@ -688,8 +688,8 @@ function ChangelogContent() {
           <div
             className="rounded-xl p-5 flex flex-col items-start gap-3"
             style={{
-              background: "var(--bg2)",
-              border: "1px solid var(--border)",
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
             }}
           >
             <div className="flex items-center gap-3 mb-2">
