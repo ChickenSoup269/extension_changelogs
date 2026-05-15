@@ -1,0 +1,28 @@
+.card-swap-container {
+  position: relative;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  margin: 0 auto;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  border-radius: 24px;
+  background-color: var(--bg2);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  will-change: transform, box-shadow;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 20px 50px -10px rgba(var(--accent-rgb), 0.3), 0 0 0 1px var(--accent);
+  border-color: var(--accent);
+}

@@ -5,12 +5,17 @@ import { usePathname } from "next/navigation"
 import { useLanguage } from "../context/LanguageContext"
 import { useState, useEffect } from "react"
 import SettingsModal from "./SettingsModal"
+import { CHANGELOG } from "@/lib/data"
 
 export default function Navbar() {
   const pathname = usePathname()
   const { t, locale, setLocale } = useLanguage()
   const [showSettings, setShowSettings] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const latestVersion = CHANGELOG.reduce((max, item) => {
+    return item.version > max ? item.version : max
+  }, "0.0.0")
 
   const links = [
     { href: "/", label: t("nav.home") },
@@ -38,12 +43,12 @@ export default function Navbar() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
+          className="cursor-target md:hidden w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
           style={{ color: "var(--text)" }}
         >
           <i className={`fa ${isMenuOpen ? "fa-times" : "fa-bars"} text-xl`}></i>
         </button>
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" className="cursor-target flex-shrink-0">
           <img
             src="/images/logo2.png"
             alt="ExtHub Logo"
@@ -62,7 +67,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="px-4 py-1.5 rounded-lg text-sm transition-all duration-200"
+              className="cursor-target px-4 py-1.5 rounded-lg text-sm transition-all duration-200"
               style={{
                 color: active ? "var(--text)" : "var(--muted)",
                 background: active ? "var(--bg4)" : "transparent",
@@ -77,7 +82,7 @@ export default function Navbar() {
       <div className="flex items-center gap-2 md:gap-3">
         <button
           onClick={() => setShowSettings(true)}
-          className="w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
+          className="cursor-target w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
           style={{ color: "var(--muted)" }}
           title="Cài đặt"
         >
@@ -87,7 +92,7 @@ export default function Navbar() {
         <button
           title="Change language"
           onClick={() => setLocale(locale === "vi" ? "en" : "vi")}
-          className="text-xs md:text-sm font-medium px-2 md:px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1 md:gap-2"
+          className="cursor-target text-xs md:text-sm font-medium px-2 md:px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1 md:gap-2"
           style={{
             background: "var(--bg2)",
             color: "var(--text)",
@@ -110,12 +115,12 @@ export default function Navbar() {
             color: "var(--accent2)",
           }}
         >
-          v1.2.0 {t("nav.new")}
+          v{latestVersion} {t("nav.new")}
         </span>
 
         <Link
           href="/extensions"
-          className="hidden sm:flex text-xs md:text-sm font-medium px-3 md:px-4 py-1.5 rounded-lg text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-px items-center"
+          className="cursor-target hidden sm:flex text-xs md:text-sm font-medium px-3 md:px-4 py-1.5 rounded-lg text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-px items-center"
           style={{ background: "var(--accent)" }}
         >
           {t("nav.explore")}
@@ -169,7 +174,7 @@ export default function Navbar() {
 
           <div className="mt-auto pb-4 text-center">
             <p className="text-[10px] text-[var(--muted2)] font-bold tracking-[0.2em] uppercase">
-              ExtHub v1.2.0 • 2026
+              ExtHub v{latestVersion} • 2026
             </p>
           </div>
         </div>

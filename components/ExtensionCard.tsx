@@ -49,7 +49,7 @@ export default function ExtensionCard({ ext, onClick, compact = false }: Props) 
     <div
       ref={cardRef}
       onClick={() => onClick?.(ext)}
-      className={`relative flex flex-col md:flex-row items-stretch gap-4 bg-[var(--bg2)] border border-[var(--border)] rounded-xl overflow-hidden group transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--bg3)] hover:shadow-xl ${compact ? 'p-3' : 'p-4'}`}
+      className={`cursor-target relative flex flex-col md:flex-row items-stretch gap-4 bg-[var(--bg2)] border border-[var(--border)] rounded-xl overflow-hidden group transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--bg3)] hover:shadow-xl ${compact ? 'p-3' : 'p-4'}`}
     >
       {/* PREVIEW IMAGE - STEAM STYLE */}
       <div className={`w-full ${compact ? 'md:w-[180px]' : 'md:w-[240px]'} aspect-video bg-black overflow-hidden flex-shrink-0 shadow-lg relative`}>

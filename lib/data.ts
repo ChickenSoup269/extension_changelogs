@@ -38,7 +38,7 @@ export interface ChangelogItem {
   changes: ChangeEntry[]
 }
 
-export const EXTENSIONS: Extension[] = [
+const RAW_EXTENSIONS: Extension[] = [
   {
     id: 1,
     icon: "/images/bookmark_icon.png",
@@ -1923,6 +1923,31 @@ export const CHANGELOG: ChangelogItem[] = [
     ],
   },
 ]
+
+// Automatically sync extension versions with the latest changelog entry
+export const EXTENSIONS: Extension[] = RAW_EXTENSIONS.map((ext) => {
+  // Find all changelog entries for this extension
+  const extensionLogs = CHANGELOG.filter(
+    (log) =>
+      log.extension.toLowerCase().includes(ext.name.toLowerCase()) ||
+      ext.name.toLowerCase().includes(log.extension.toLowerCase()),
+  )
+
+  // If logs exist, find the one with the highest version number
+  if (extensionLogs.length > 0) {
+    const latestLog = extensionLogs.reduce((prev, current) => {
+      // Very basic version comparison (works for 1.2.3 style strings)
+      return current.version > prev.version ? current : prev
+    }, extensionLogs[0])
+
+    return {
+      ...ext,
+      version: latestLog.version,
+    }
+  }
+
+  return ext
+})
 
 export const CATEGORIES = [
   {
