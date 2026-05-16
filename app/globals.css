@@ -258,6 +258,205 @@ body {
   }
 }
 
+.donate-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 76px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.donate-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.donate-card__icon {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 95, 154, 0.35);
+  border-radius: 10px;
+  background: rgba(255, 95, 154, 0.12);
+  color: #ff72aa;
+}
+
+.donate-card__title,
+.donate-card__text {
+  display: block;
+}
+
+.donate-card__title {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.donate-card__text {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.donate-card__arrow {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--muted2);
+  font-size: 10px;
+  opacity: 0.6;
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+.donate-card:hover .donate-card__arrow {
+  color: var(--accent2);
+  opacity: 1;
+}
+
+.pixelated-image-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  outline: none;
+  isolation: isolate;
+}
+
+.pixelated-image-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.pixelated-image-card__default,
+.pixelated-image-card__active,
+.pixelated-image-card__pixels {
+  position: absolute;
+  inset: 0;
+}
+
+.pixelated-image-card__active {
+  display: none;
+}
+
+.pixelated-image-card__pixels {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pixelated-image-card__pixel {
+  position: absolute;
+  display: none;
+}
+
+.momo-pixel-card {
+  border: 1px solid rgba(255, 79, 163, 0.28);
+  background: var(--bg);
+  color: #ff4fa3;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.momo-pixel-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 79, 163, 0.72);
+  box-shadow: 0 14px 36px rgba(255, 79, 163, 0.16);
+}
+
+.momo-card__front {
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 14px 18px;
+}
+
+.momo-card__cover,
+.momo-card__shade {
+  position: absolute;
+  inset: 0;
+}
+
+.momo-card__cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.momo-card__shade {
+  background:
+    linear-gradient(180deg, rgba(5, 6, 7, 0.12), rgba(5, 6, 7, 0.74)),
+    linear-gradient(180deg, rgba(165, 0, 100, 0.18), rgba(5, 6, 7, 0.42));
+}
+
+.momo-card__mark {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: #a50064;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.momo-card__copy {
+  display: none;
+  position: relative;
+  z-index: 1;
+}
+
+.momo-pixel-card:hover .momo-card__mark,
+.momo-pixel-card:focus-visible .momo-card__mark {
+  opacity: 0;
+  transform: translateY(8px) scale(0.94);
+}
+
+.momo-card__copy .donate-card__text {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.momo-card__qr {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  padding: 8px;
+  background: #fff;
+}
+
+.momo-card__qr img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  object-position: center 68%;
+}
+
 /* Animations */
 @keyframes fadeUp {
   from {
@@ -471,4 +670,3 @@ body {
   border-color: var(--accent);
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
-

@@ -130,14 +130,19 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <div 
-          className="fixed inset-0 top-[60px] z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 top-[60px] z-40 bg-black/75 backdrop-blur-md md:hidden"
           onClick={() => setIsMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu Drawer */}
       <div 
-        className={`fixed top-[60px] left-0 bottom-0 w-[280px] z-50 bg-[var(--bg2)] border-r border-[var(--border)] transition-transform duration-300 md:hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-[60px] left-0 bottom-0 w-[280px] z-50 transition-transform duration-300 md:hidden ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
+        style={{
+          background: "linear-gradient(180deg, #0b0c0e 0%, #070809 100%)",
+          borderRight: "1px solid var(--border2)",
+          boxShadow: "24px 0 60px rgba(0,0,0,0.45)",
+        }}
       >
         <div className="flex flex-col p-4 gap-2">
           {links.map((link) => {
@@ -152,7 +157,8 @@ export default function Navbar() {
                 className="px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 flex items-center justify-between"
                 style={{
                   color: active ? "var(--accent)" : "var(--text)",
-                  background: active ? "var(--bg4)" : "transparent",
+                  background: active ? "var(--accent-glow)" : "var(--bg3)",
+                  border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`,
                 }}
               >
                 {link.label}

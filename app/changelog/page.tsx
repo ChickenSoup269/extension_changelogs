@@ -1,11 +1,157 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { Suspense, type ReactNode, useEffect, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { gsap } from "gsap"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
+import momoQr from "@/app/images/momo_qr_Thien.jpg"
+import momoCover from "@/app/images/cat.png"
 
 type TypeConfigValue = { label: string; bg: string; color: string }
+
+type PixelTransitionProps = {
+  firstContent: ReactNode
+  secondContent: ReactNode
+  gridSize?: number
+  pixelColor?: string
+  animationStepDuration?: number
+  once?: boolean
+  aspectRatio?: string
+  className?: string
+}
+
+function PixelTransition({
+  firstContent,
+  secondContent,
+  gridSize = 8,
+  pixelColor = "currentColor",
+  animationStepDuration = 0.35,
+  once = false,
+  aspectRatio = "100%",
+  className = "",
+}: PixelTransitionProps) {
+  const pixelGridRef = useRef<HTMLDivElement>(null)
+  const activeRef = useRef<HTMLDivElement>(null)
+  const delayedCallRef = useRef<gsap.core.Tween | null>(null)
+  const [isActive, setIsActive] = useState(false)
+  const [isTouchDevice, setIsTouchDevice] = useState(false)
+
+  useEffect(() => {
+    setIsTouchDevice(
+      "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches,
+    )
+  }, [])
+
+  useEffect(() => {
+    const pixelGridEl = pixelGridRef.current
+    if (!pixelGridEl) return
+
+    pixelGridEl.innerHTML = ""
+
+    for (let row = 0; row < gridSize; row++) {
+      for (let col = 0; col < gridSize; col++) {
+        const pixel = document.createElement("div")
+        pixel.classList.add("pixelated-image-card__pixel")
+        pixel.style.backgroundColor = pixelColor
+
+        const size = 100 / gridSize
+        pixel.style.width = `${size}%`
+        pixel.style.height = `${size}%`
+        pixel.style.left = `${col * size}%`
+        pixel.style.top = `${row * size}%`
+        pixelGridEl.appendChild(pixel)
+      }
+    }
+  }, [gridSize, pixelColor])
+
+  useEffect(() => {
+    return () => {
+      delayedCallRef.current?.kill()
+    }
+  }, [])
+
+  const animatePixels = (activate: boolean) => {
+    setIsActive(activate)
+
+    const pixelGridEl = pixelGridRef.current
+    const activeEl = activeRef.current
+    if (!pixelGridEl || !activeEl) return
+
+    const pixels = pixelGridEl.querySelectorAll(".pixelated-image-card__pixel")
+    if (!pixels.length) return
+
+    gsap.killTweensOf(pixels)
+    delayedCallRef.current?.kill()
+    gsap.set(pixels, { display: "none" })
+
+    const staggerDuration = animationStepDuration / pixels.length
+
+    gsap.to(pixels, {
+      display: "block",
+      duration: 0,
+      stagger: {
+        each: staggerDuration,
+        from: "random",
+      },
+    })
+
+    delayedCallRef.current = gsap.delayedCall(animationStepDuration, () => {
+      activeEl.style.display = activate ? "block" : "none"
+      activeEl.style.pointerEvents = activate ? "none" : ""
+    })
+
+    gsap.to(pixels, {
+      display: "none",
+      duration: 0,
+      delay: animationStepDuration,
+      stagger: {
+        each: staggerDuration,
+        from: "random",
+      },
+    })
+  }
+
+  const handleEnter = () => {
+    if (!isActive) animatePixels(true)
+  }
+
+  const handleLeave = () => {
+    if (isActive && !once) animatePixels(false)
+  }
+
+  const handleClick = () => {
+    if (!isActive) animatePixels(true)
+    else if (!once) animatePixels(false)
+  }
+
+  return (
+    <div
+      className={`pixelated-image-card ${className}`}
+      onMouseEnter={!isTouchDevice ? handleEnter : undefined}
+      onMouseLeave={!isTouchDevice ? handleLeave : undefined}
+      onClick={isTouchDevice ? handleClick : undefined}
+      onFocus={!isTouchDevice ? handleEnter : undefined}
+      onBlur={!isTouchDevice ? handleLeave : undefined}
+      tabIndex={0}
+    >
+      <div style={{ paddingTop: aspectRatio }} />
+      <div className="pixelated-image-card__default" aria-hidden={isActive}>
+        {firstContent}
+      </div>
+      <div
+        className="pixelated-image-card__active"
+        ref={activeRef}
+        aria-hidden={!isActive}
+      >
+        {secondContent}
+      </div>
+      <div className="pixelated-image-card__pixels" ref={pixelGridRef} />
+    </div>
+  )
+}
 
 const TYPE_CONFIG: { [K in ChangeType]: TypeConfigValue } = {
   feat: { label: "FEAT", bg: "rgba(124,106,247,0.15)", color: "#a594ff" },
@@ -535,6 +681,83 @@ function ChangelogContent() {
             ))}
           </div>
 
+          {/* Donation Card */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
+            }}
+          >
+            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+              <i className="fa-solid fa-heart text-[var(--accent)] text-base" />
+              {locale === "vi" ? "Ủng hộ dự án" : "Support the project"}
+            </h3>
+
+            <div className="grid gap-3">
+              <a
+                href="https://ko-fi.com/chickensoup269"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="donate-card donate-card--kofi group"
+              >
+                <span className="donate-card__icon">
+                  <i className="fa-solid fa-mug-hot" />
+                </span>
+                <span className="min-w-0">
+                  <span
+                    className="donate-card__title"
+                    style={{ color: changelogTextColor }}
+                  >
+                    Ko-fi
+                  </span>
+                  <span className="donate-card__text">
+                    {locale === "vi"
+                      ? "Mời mình một ly cà phê"
+                      : "Buy me a coffee"}
+                  </span>
+                </span>
+                <i className="fa-solid fa-arrow-up-right-from-square donate-card__arrow" />
+              </a>
+
+              <PixelTransition
+                firstContent={
+                  <div className="momo-card__front">
+                    <img
+                      src={momoCover.src}
+                      alt=""
+                      className="momo-card__cover"
+                    />
+                    <div className="momo-card__shade" />
+                    <span className="momo-card__mark">MoMo</span>
+                    <span className="momo-card__copy">
+                      <span
+                        className="donate-card__title"
+                        style={{ color: "#fff" }}
+                      >
+                        MoMo
+                      </span>
+                      <span className="donate-card__text">
+                        {locale === "vi"
+                          ? "Hover để hiện mã QR"
+                          : "Hover to reveal QR"}
+                      </span>
+                    </span>
+                  </div>
+                }
+                secondContent={
+                  <div className="momo-card__qr">
+                    <img src={momoQr.src} alt="MoMo QR" />
+                  </div>
+                }
+                gridSize={8}
+                pixelColor="#ff4fa3"
+                animationStepDuration={0.4}
+                className="momo-pixel-card"
+              />
+            </div>
+          </div>
+
           {/* Source Code Card */}
           <div
             className="rounded-xl p-5"
@@ -740,8 +963,6 @@ function ChangelogContent() {
     </section>
   )
 }
-
-import { Suspense } from "react"
 
 export default function ChangelogPage() {
   return (
