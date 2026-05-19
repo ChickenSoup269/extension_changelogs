@@ -89,6 +89,72 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.6.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "19 Tháng 5 2026", en: "May 19, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp hệ thống ID Media: Triển khai hàm tạo định danh duy nhất (Prefix + Timestamp + Random) cho ảnh và video trong IndexedDB, đảm bảo tính nhất quán và an toàn dữ liệu.",
+          en: "Enhanced Media ID System: Implemented a robust ID generation function (Prefix + Timestamp + Random) for images and videos in IndexedDB to ensure consistency and prevent data collisions.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Siêu nâng cấp Notepad: Hỗ trợ kéo giãn kích thước ghi chú, thu gọn thẻ ghi chú linh hoạt, xử lý liên kết và trạng thái định dạng trực quan trong trình soạn thảo phong phú.",
+          en: "Notepad Overhaul: Added manual note resizing, collapsible floating notes, link handling, and active formatting states in the rich text editor.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hiệu ứng nền WebGL cao cấp: Tích hợp các hiệu ứng động mượt mà bao gồm Silk (Lụa), Light Pillar (Cột sáng), Liquid Ether và Pixel Snow HQ với đầy đủ tùy chỉnh thông số.",
+          en: "Premium WebGL Backgrounds: Integrated high-performance animated effects including Silk, Light Pillar, Liquid Ether, and Pixel Snow HQ with customizable parameters.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Kiến trúc Cài đặt Mô-đun: Tái cấu trúc toàn bộ hệ thống cài đặt thành các mô-đun độc lập (State, UI, Styling, Themes) giúp tối ưu hiệu năng và dễ dàng bảo trì.",
+          en: "Modular Settings Architecture: Refactored the settings system into dedicated modules (State, UI, Styling, Themes) for optimized performance and maintainability.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Quản lý Preset & Randomize: Cho phép lưu, xóa các thiết lập hiệu ứng cá nhân và bổ sung nút ngẫu nhiên hóa nhanh các thông số hình nền.",
+          en: "Preset Management & Randomization: Added functionality to save/delete user-defined effect presets and introduced randomization buttons for instant background tweaks.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp UI/UX & Menu macOS: Thêm menu ngữ cảnh chuột phải chuẩn macOS, hiệu ứng con trỏ Splash Cursor độc đáo và tối ưu hóa giao diện To-do List.",
+          en: "UI/UX & macOS Menu: Introduced macOS-style right-click context menus, a unique Splash Cursor effect, and comprehensive layout improvements for the Todo List component.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Công cụ Ngôn ngữ tùy chỉnh: Hỗ trợ tự dịch và tạo tệp ngôn ngữ JSON cá nhân hóa dựa trên bản mẫu tiếng Anh với sự trợ giúp của AI.",
+          en: "Custom Language Tools: Allowed users to create custom language JSONs using an English template and guided AI translation support.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi & Tối ưu bố cục: Tăng chiều rộng widget lên 490px, tinh chỉnh căn chỉnh tab bookmark, tối ưu hóa bộ nhớ đệm Unsplash và sửa logic đồng bộ màu nền.",
+          en: "Bug Fixes & Layout Tweaks: Increased widget width to 490px, widened bookmark group tabs, optimized Unsplash caching, and fixed background toggle icon synchronization logic.",
+        },
+      },
+    ],
+  },
+
+  {
     version: "1.4.0",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
@@ -142,71 +208,6 @@ export const CHANGELOG: ChangelogItem[] = [
         text: {
           vi: "Cải thiện Phản hồi Giao diện: Tinh chỉnh hiệu ứng hover cho các nút bấm cài đặt, tối ưu hóa hiển thị bảng mã ngôn ngữ và cập nhật các thông báo popup chuẩn hóa.",
           en: "UI Responsiveness & Localization Fixes: Enhanced hover effects for settings controls, optimized responsive sizing for custom language popups, and added missing translation keys.",
-        },
-      },
-    ],
-  },
-  {
-    version: "1.6.0",
-    extension: "Zero Startpage - Newtab Replacement",
-    extensionIcon: "fa-solid fa-rocket",
-    date: { vi: "19 Tháng 5 2026", en: "May 19, 2026" },
-    releaseType: "minor",
-    changes: [
-      {
-        type: "feat",
-        text: {
-          vi: "Siêu nâng cấp Notepad: Hỗ trợ kéo giãn kích thước ghi chú, thu gọn thẻ ghi chú linh hoạt, xử lý liên kết và trạng thái định dạng trực quan trong trình soạn thảo phong phú.",
-          en: "Notepad Overhaul: Added manual note resizing, collapsible floating notes, link handling, and active formatting states in the rich text editor.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Hiệu ứng nền WebGL cao cấp: Tích hợp các hiệu ứng động mượt mà bao gồm Silk (Lụa), Light Pillar (Cột sáng), Liquid Ether và Pixel Snow HQ với đầy đủ tùy chỉnh thông số.",
-          en: "Premium WebGL Backgrounds: Integrated high-performance animated effects including Silk, Light Pillar, Liquid Ether, and Pixel Snow HQ with customizable parameters.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Kiến trúc Cài đặt Mô-đun: Tái cấu trúc toàn bộ hệ thống cài đặt thành các mô-đun độc lập (Trạng thái, UI, Kiểu dáng, Chủ đề) giúp tối ưu hiệu năng và dễ dàng bảo trì.",
-          en: "Modular Settings Architecture: Refactored the settings system into dedicated modules (State, UI, Styling, Themes) for optimized performance and maintainability.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Quản lý Preset & Randomize: Cho phép lưu, xóa các thiết lập hiệu ứng cá nhân và bổ sung nút ngẫu nhiên hóa (Randomize) nhanh các thông số hình nền.",
-          en: "Preset Management & Randomization: Added functionality to save/delete user-defined effect presets and introduced randomization buttons for instant background tweaks.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Nâng cấp UI/UX & Menu macOS: Thêm menu ngữ cảnh (Context Menu) chuột phải chuẩn phong cách macOS, hiệu ứng con trỏ Splash Cursor độc đáo và tối ưu hóa giao diện To-do List.",
-          en: "UI/UX & macOS Menu: Introduced macOS-style right-click context menus, a unique Splash Cursor effect, and comprehensive layout improvements for the Todo List component.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Công cụ Ngôn ngữ tùy chỉnh: Hỗ trợ tự dịch và tạo tệp ngôn ngữ JSON cá nhân hóa dựa trên bản mẫu tiếng Anh với sự trợ giúp của AI.",
-          en: "Custom Language Tools: Allowed users to create custom language JSONs using an English template and guided AI translation support.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Đa ngôn ngữ & Tiện ích: Bổ sung bản địa hóa tiếng Anh/Việt cho các thứ/tháng trên Lịch, bản xem trước sự kiện/ngày lễ khi di chuột và nhập liệu hẹn giờ bằng bàn phím số.",
-          en: "Localization & Widgets: Added English/Vietnamese support for calendar months/weekdays, hover previews for holidays, and keypad input for timer settings.",
-        },
-      },
-      {
-        type: "fix",
-        text: {
-          vi: "Sửa lỗi & Tối ưu bố cục: Tăng chiều rộng widget lên 490px, tinh chỉnh căn chỉnh tab bookmark, tối ưu hóa bộ nhớ đệm Unsplash và sửa logic đồng bộ màu nền.",
-          en: "Bug Fixes & Layout Tweaks: Increased widget width to 490px, widened bookmark group tabs, optimized Unsplash caching, and fixed background toggle icon synchronization logic.",
         },
       },
     ],
