@@ -153,7 +153,6 @@ export const CHANGELOG: ChangelogItem[] = [
       },
     ],
   },
-
   {
     version: "1.4.0",
     extension: "Zero Bookmark Manager",
@@ -194,6 +193,13 @@ export const CHANGELOG: ChangelogItem[] = [
         text: {
           vi: "Bản quyền thương hiệu: Cập nhật thông tin tác quyền dưới Footer dự án chính thức sang tên 'chickensoup269'.",
           en: "Footer Branding Update: Updated the official copyright name in the footer to 'chickensoup269'.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu quyền bảo mật (Manifest): Chuyển đổi các quyền truy cập host (host permissions) trong tệp manifest.json sang dạng tùy chọn (optional), giúp tăng tính bảo mật và giảm cảnh báo không cần thiết khi cài đặt extension.",
+          en: "Optimize Host Permissions: Updated host permissions to optional in manifest.json to improve extension security and reduce installation warnings.",
         },
       },
       {
