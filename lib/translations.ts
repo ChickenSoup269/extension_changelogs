@@ -94,35 +94,70 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-startpage": {
         title: "Về Zero Startpage",
         subtitle: "Giao diện Tab mới tối giản và tinh tế",
-        description: "Zero Startpage không chỉ là một trang Tab mới thông thường; đó là một trải nghiệm kỹ thuật số được thiết kế để mang lại sự bình yên và tập trung. Chúng tôi loại bỏ sự lộn xộn của các trình duyệt truyền thống và thay thế bằng một giao diện thẩm mỹ, nơi bạn có thể tùy biến mọi thứ từ hình nền 4K đến các hiệu ứng hạt động mượt mà.",
+        description:
+          "Zero Startpage không chỉ là một trang Tab mới thông thường; đó là một trải nghiệm kỹ thuật số được thiết kế để mang lại sự bình yên và tập trung. Chúng tôi loại bỏ sự lộn xộn của các trình duyệt truyền thống và thay thế bằng một giao diện thẩm mỹ, nơi bạn có thể tùy biến mọi thứ từ hình nền 4K đến các hiệu ứng hạt động mượt mà.",
         detailed_features: [
-          { title: "Cá nhân hóa tối đa", desc: "Tự do thay đổi hình nền từ kho ảnh Unsplash khổng lồ hoặc tải lên video background cá nhân." },
-          { title: "Hệ thống Widget thông minh", desc: "Tích hợp đồng hồ đa dạng, dự báo thời tiết, danh sách Todo và trình phát nhạc trực quan." },
-          { title: "Hiệu ứng động độc quyền", desc: "Trải nghiệm các hiệu ứng cực quang, mưa rơi, hay tuyết bay được tối ưu hóa cực nhẹ cho trình duyệt." },
-          { title: "Đồng bộ hóa đám mây", desc: "Lưu trữ và đồng bộ mọi cài đặt của bạn trên các thiết bị khác nhau thông qua Chrome Sync." }
+          {
+            title: "Cá nhân hóa tối đa",
+            desc: "Tự do thay đổi hình nền từ kho ảnh Unsplash khổng lồ hoặc tải lên video background cá nhân.",
+          },
+          {
+            title: "Hệ thống Widget thông minh",
+            desc: "Tích hợp đồng hồ đa dạng, dự báo thời tiết, danh sách Todo và trình phát nhạc trực quan.",
+          },
+          {
+            title: "Hiệu ứng động độc quyền",
+            desc: "Trải nghiệm các hiệu ứng cực quang, mưa rơi, hay tuyết bay được tối ưu hóa cực nhẹ cho trình duyệt.",
+          },
+          {
+            title: "Đồng bộ hóa đám mây",
+            desc: "Lưu trữ và đồng bộ mọi cài đặt của bạn trên các thiết bị khác nhau thông qua Chrome Sync.",
+          },
         ],
         preview: {
           slider_title: "Giao diện tinh tế",
-          slider_desc: "Khám phá sự tỉ mỉ trong từng đường nét thiết kế, mang lại cảm giác mượt mà và hiện đại.",
+          slider_desc:
+            "Khám phá sự tỉ mỉ trong từng đường nét thiết kế, mang lại cảm giác mượt mà và hiện đại.",
           video_title: "Video giới thiệu & Hướng dẫn",
-          video_desc: "Hướng dẫn chi tiết cách cài đặt và tùy chỉnh các tính năng mạnh mẽ nhất của Zero Startpage.",
+          video_desc:
+            "Hướng dẫn chi tiết cách cài đặt và tùy chỉnh các tính năng mạnh mẽ nhất của Zero Startpage.",
         },
       },
       "zero-bookmark-manager": {
         title: "Về Zero Bookmark Manager",
         subtitle: "Quản lý dấu trang thông minh & tối giản",
-        description: "Hãy quên đi thanh dấu trang lộn xộn của Chrome. Zero Bookmark Manager mang đến một cách tiếp cận hoàn toàn mới để tổ chức cuộc sống trực tuyến của bạn. Với giao diện lấy cảm hứng từ các trình quản lý file chuyên nghiệp, bạn có thể dễ dàng phân loại, gắn thẻ và tìm kiếm hàng ngàn liên kết chỉ trong vài giây.",
+        description:
+          "Hãy quên đi thanh dấu trang lộn xộn của Chrome. Zero Bookmark Manager mang đến một cách tiếp cận hoàn toàn mới để tổ chức cuộc sống trực tuyến của bạn. Với giao diện lấy cảm hứng từ các trình quản lý file chuyên nghiệp, bạn có thể dễ dàng phân loại, gắn thẻ và tìm kiếm hàng ngàn liên kết chỉ trong vài giây.",
         detailed_features: [
-          { title: "Tìm kiếm siêu tốc", desc: "Thuật toán tìm kiếm thông minh giúp bạn truy cập ngay lập tức vào bất kỳ dấu trang nào dựa trên tên, URL hoặc tag." },
-          { title: "Hệ thống Tag linh hoạt", desc: "Phân loại dấu trang bằng hệ thống nhãn dán đa màu sắc, giúp việc quản lý trở nên trực quan và khoa học hơn." },
-          { title: "Kiểm tra link lỗi", desc: "Tự động quét và phát hiện các liên kết đã hỏng hoặc không còn tồn tại để giữ cho bộ sưu tập luôn 'sạch'." },
-          { title: "Xuất bản HTML/JSON", desc: "Dễ dàng sao lưu và di chuyển dữ liệu của bạn sang các trình duyệt khác với định dạng tiêu chuẩn." }
+          {
+            title: "Tìm kiếm siêu tốc",
+            desc: "Thuật toán tìm kiếm thông minh giúp bạn truy cập ngay lập tức vào bất kỳ dấu trang nào dựa trên tên, URL hoặc tag.",
+          },
+          {
+            title: "Hệ thống Tag linh hoạt",
+            desc: "Phân loại dấu trang bằng hệ thống nhãn dán đa màu sắc, giúp việc quản lý trở nên trực quan và khoa học hơn.",
+          },
+          {
+            title: "Kiểm tra link lỗi",
+            desc: "Tự động quét và phát hiện các liên kết đã hỏng hoặc không còn tồn tại để giữ cho bộ sưu tập luôn 'sạch'.",
+          },
+          {
+            title: "Xuất bản HTML/JSON",
+            desc: "Dễ dàng sao lưu và di chuyển dữ liệu của bạn sang các trình duyệt khác với định dạng tiêu chuẩn.",
+          },
         ],
         preview: {
           slider_title: "Quản lý chuyên nghiệp",
-          slider_desc: "Giao diện trực quan giúp bạn sắp xếp và tìm kiếm dấu trang chỉ trong nháy mắt.",
+          slider_desc:
+            "Giao diện trực quan giúp bạn sắp xếp và tìm kiếm dấu trang chỉ trong nháy mắt.",
           video_title: "Hướng dẫn sử dụng",
-          video_desc: "Khám phá các tính năng quản lý nâng cao, import/export và hệ thống tag thông minh của Zero Bookmarks.",
+          video_desc:
+            "Khám phá các tính năng quản lý nâng cao, import/export và hệ thống tag thông minh của Zero Bookmarks.",
+        },
+        bookmark_styles: {
+          title: "Bookmark Item Styles",
+          list_view: "Chế độ danh sách (List View)",
+          grid_view: "Chế độ lưới (Grid View)",
         },
       },
       recent_reviews: "Đánh giá gần đây",
@@ -145,7 +180,8 @@ export const DICTIONARY: Record<Locale, any> = {
       features: {
         title: "Tính năng nổi bật",
         support_title: "Hỗ trợ tối ưu",
-        support_desc: "Tối ưu hóa hoàn toàn cho tính năng này, mang lại hiệu năng và trải nghiệm người dùng tốt nhất.",
+        support_desc:
+          "Tối ưu hóa hoàn toàn cho tính năng này, mang lại hiệu năng và trải nghiệm người dùng tốt nhất.",
       },
       cta: "Thêm vào Chrome - Hoàn toàn miễn phí",
     },
@@ -243,35 +279,70 @@ export const DICTIONARY: Record<Locale, any> = {
       "zero-startpage": {
         title: "About Zero Startpage",
         subtitle: "Minimalist & Elegant New Tab",
-        description: "Zero Startpage is more than just a replacement for your new tab; it's a digital sanctuary designed for peace and focus. We've stripped away the browser clutter to provide a serene, aesthetic interface where you can customize everything from stunning 4K wallpapers to smooth, lightweight particle effects.",
+        description:
+          "Zero Startpage is more than just a replacement for your new tab; it's a digital sanctuary designed for peace and focus. We've stripped away the browser clutter to provide a serene, aesthetic interface where you can customize everything from stunning 4K wallpapers to smooth, lightweight particle effects.",
         detailed_features: [
-          { title: "Ultimate Personalization", desc: "Change backgrounds using the vast Unsplash library or upload your own personal video backgrounds." },
-          { title: "Smart Widget Ecosystem", desc: "Integrated versatile clocks, weather forecasts, Todo lists, and an intuitive music player." },
-          { title: "Exclusive Motion Effects", desc: "Experience Northern Lights, rain, or snow effects, all highly optimized for browser performance." },
-          { title: "Cloud Synchronization", desc: "Save and sync all your settings seamlessly across different devices via Chrome Sync." }
+          {
+            title: "Ultimate Personalization",
+            desc: "Change backgrounds using the vast Unsplash library or upload your own personal video backgrounds.",
+          },
+          {
+            title: "Smart Widget Ecosystem",
+            desc: "Integrated versatile clocks, weather forecasts, Todo lists, and an intuitive music player.",
+          },
+          {
+            title: "Exclusive Motion Effects",
+            desc: "Experience Northern Lights, rain, or snow effects, all highly optimized for browser performance.",
+          },
+          {
+            title: "Cloud Synchronization",
+            desc: "Save and sync all your settings seamlessly across different devices via Chrome Sync.",
+          },
         ],
         preview: {
           slider_title: "Elegant Interface",
-          slider_desc: "Experience the meticulous attention to detail and modern design aesthetics.",
+          slider_desc:
+            "Experience the meticulous attention to detail and modern design aesthetics.",
           video_title: "Demo & Walkthrough",
-          video_desc: "Step-by-step guide on how to install and customize the powerful features of Zero Startpage.",
+          video_desc:
+            "Step-by-step guide on how to install and customize the powerful features of Zero Startpage.",
         },
       },
       "zero-bookmark-manager": {
         title: "About Zero Bookmark Manager",
         subtitle: "Smart & Minimalist Bookmarking",
-        description: "Forget Chrome's messy bookmark bar. Zero Bookmark Manager introduces a fresh approach to organizing your online life. With a UI inspired by professional file managers, you can effortlessly categorize, tag, and search through thousands of links in seconds.",
+        description:
+          "Forget Chrome's messy bookmark bar. Zero Bookmark Manager introduces a fresh approach to organizing your online life. With a UI inspired by professional file managers, you can effortlessly categorize, tag, and search through thousands of links in seconds.",
         detailed_features: [
-          { title: "Lightning Fast Search", desc: "Smart search algorithms give you instant access to any bookmark based on title, URL, or tags." },
-          { title: "Flexible Tagging System", desc: "Categorize bookmarks using a multi-colored labeling system for intuitive and scientific organization." },
-          { title: "Link Health Check", desc: "Automatically scan and detect broken or dead links to keep your collection clean and functional." },
-          { title: "HTML/JSON Portability", desc: "Easily backup and migrate your data to other browsers using standard file formats." }
+          {
+            title: "Lightning Fast Search",
+            desc: "Smart search algorithms give you instant access to any bookmark based on title, URL, or tags.",
+          },
+          {
+            title: "Flexible Tagging System",
+            desc: "Categorize bookmarks using a multi-colored labeling system for intuitive and scientific organization.",
+          },
+          {
+            title: "Link Health Check",
+            desc: "Automatically scan and detect broken or dead links to keep your collection clean and functional.",
+          },
+          {
+            title: "HTML/JSON Portability",
+            desc: "Easily backup and migrate your data to other browsers using standard file formats.",
+          },
         ],
         preview: {
           slider_title: "Professional Management",
-          slider_desc: "An intuitive interface that helps you organize and find bookmarks in a blink of an eye.",
-          video_title: "How-to Guide",
-          video_desc: "Discover advanced management features, import/export options, and the smart tagging system of Zero Bookmarks.",
+          slider_desc:
+            "An intuitive interface that helps you organize and find bookmarks in a blink of an eye.",
+          video_title: "Usage Guide",
+          video_desc:
+            "Discover advanced management features, import/export options, and the smart tagging system of Zero Bookmarks.",
+        },
+        bookmark_styles: {
+          title: "Bookmark Item Styles",
+          list_view: "List View Mode",
+          grid_view: "Grid View Mode",
         },
       },
       recent_reviews: "Recent Reviews",
@@ -294,7 +365,8 @@ export const DICTIONARY: Record<Locale, any> = {
       features: {
         title: "Key Features",
         support_title: "Optimized Support",
-        support_desc: "Fully optimized for this feature, ensuring the best performance and user experience.",
+        support_desc:
+          "Fully optimized for this feature, ensuring the best performance and user experience.",
       },
       cta: "Add to Chrome - It's Free",
     },

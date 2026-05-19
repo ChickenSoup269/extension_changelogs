@@ -418,6 +418,73 @@ export default function DynamicAboutPage() {
                   </div>
                 </section>
 
+                {ext.slug === "zero-bookmark-manager" && (
+                  <section className="mb-14">
+                    <h2 className="text-[13px] uppercase tracking-[0.2em] text-[#66c0f4] border-b border-white/5 pb-3 mb-8 font-black italic">
+                      {t("about.zero-bookmark-manager.bookmark_styles.title")}
+                    </h2>
+                    
+                    <div className="space-y-10">
+                      <div>
+                        <h4 className="text-[10px] uppercase font-bold text-[#556772] mb-6 tracking-widest flex items-center gap-2">
+                          <i className="fas fa-list-ul" /> {t("about.zero-bookmark-manager.bookmark_styles.list_view")}
+                        </h4>
+                        <div className="space-y-3">
+                          {[
+                            { title: "Next.js Documentation", url: "https://nextjs.org/docs", icon: "fa-brands fa-react", tags: ["Dev", "Docs"] },
+                            { title: "GitHub - ExtHub Repo", url: "https://github.com/ChickenSoup269/exthub", icon: "fa-brands fa-github", tags: ["Project", "Git"] },
+                            { title: "Tailwind CSS Design", url: "https://tailwindcss.com", icon: "fa-solid fa-wind", tags: ["UI", "CSS"] }
+                          ].map((item, i) => (
+                            <div key={i} className="bookmark-card-demo group cursor-target">
+                              <div className="bookmark-demo-icon">
+                                <i className={item.icon} />
+                              </div>
+                              <div className="bookmark-demo-info">
+                                <div className="bookmark-demo-title">{item.title}</div>
+                                <div className="bookmark-demo-url">{item.url}</div>
+                                <div className="bookmark-demo-tags">
+                                  {item.tags.map(tag => (
+                                    <span key={tag} className="bookmark-demo-tag">{tag}</span>
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[var(--accent)] hover:text-white transition-all cursor-target">
+                                  <i className="fas fa-pencil text-[10px]" />
+                                </button>
+                                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-500/20 hover:text-red-500 transition-all cursor-target">
+                                  <i className="fas fa-trash text-[10px]" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="text-[10px] uppercase font-bold text-[#556772] mb-6 tracking-widest flex items-center gap-2">
+                          <i className="fas fa-th-large" /> {t("about.zero-bookmark-manager.bookmark_styles.grid_view")}
+                        </h4>
+                        <div className="bookmark-grid-demo">
+                          {[
+                            { title: "YouTube", icon: "fa-brands fa-youtube", color: "#ff0000" },
+                            { title: "Facebook", icon: "fa-brands fa-facebook", color: "#1877f2" },
+                            { title: "Discord", icon: "fa-brands fa-discord", color: "#5865f2" },
+                            { title: "Spotify", icon: "fa-brands fa-spotify", color: "#1db954" }
+                          ].map((item, i) => (
+                            <div key={i} className="bookmark-grid-item group cursor-target">
+                              <div className="bookmark-grid-icon" style={{ color: item.color }}>
+                                <i className={item.icon} />
+                              </div>
+                              <div className="font-bold text-xs text-white group-hover:text-[var(--accent)] transition-colors">{item.title}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                )}
+
                 <section className="mb-14">
                   <h2 className="text-[13px] uppercase tracking-[0.2em] text-[#66c0f4] border-b border-white/5 pb-3 mb-8 font-black italic">
                     {t("about.requirements")}

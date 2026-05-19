@@ -43,7 +43,7 @@ const RAW_EXTENSIONS: Extension[] = [
     id: 1,
     icon: "/images/bookmark_icon.png",
     name: "Zero Bookmark Manager",
-    version: "1.2.2",
+    version: "1.4.0",
     status: "stable",
     category: "productivity",
     description: {
@@ -51,7 +51,7 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Next-gen bookmark manager featuring smart search, scientific folder organization, and superior performance for your browser.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "754",
+    downloads: "1k",
     stars: "3.7",
     ratingCount: "3",
 
@@ -66,7 +66,7 @@ const RAW_EXTENSIONS: Extension[] = [
     id: 2,
     icon: "/images/startpage_icon.png",
     name: "Zero Startpage",
-    version: "1.3.0",
+    version: "1.6.0",
     status: "new",
     category: "ui",
     description: {
@@ -74,7 +74,7 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Transform your New Tab into a minimalist, inspiring workspace with smart widgets and stunning visual effects.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "128",
+    downloads: "120",
     stars: "4.9",
     ratingCount: "3",
     featured: true,
@@ -88,6 +88,129 @@ const RAW_EXTENSIONS: Extension[] = [
 ]
 
 export const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "1.4.0",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "19 Tháng 5 2026", en: "May 19, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Hỗ trợ Gói Ngôn ngữ Tự chọn: Cho phép tạo, lưu và quản lý các gói ngôn ngữ tùy biến ngay từ bộ nhớ cục bộ, kèm popup công cụ nhập/xuất và điền mẫu tiện lợi.",
+          en: "Custom Language Packs: Implemented full support for reading, writing, and managing custom language packs locally, complete with import/export tools and template generation UI.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cá nhân hóa Font chữ & Khởi động: Thêm popup chọn font ngay trong lần đầu chạy ứng dụng, đồng bộ font chữ JetBrainsMonoNerdFont toàn diện trên các trang giao diện.",
+          en: "First-Run Font Selection: Introduced a first-run font configuration popup and standardized JetBrainsMonoNerdFont family across all stylesheets for a cohesive look.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu Panel Cài đặt: Tái cấu trúc lại kích thước, vị trí và lề lối panel cài đặt; bổ sung phần tiêu đề (Header) mới giúp tăng tính thẩm mỹ và dễ thao tác hơn.",
+          en: "Settings Panel Redesign: Refactored the settings menu layout, adjustments to padding/border-radius, and added a clean panel header for enhanced usability.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hiệu ứng chuyển cảnh Bookmark: Thêm hiệu ứng động mượt mà khi chuyển đổi giữa các kiểu xem bookmark (Popup và Webview); bổ sung vùng hiển thị thả (Drop zone) trực quan khi kéo thả.",
+          en: "Bookmark View Animations: Added smooth transition animations for switching bookmark views and introduced clear drop zone indicators for better drag-and-drop feedback.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Bản quyền thương hiệu: Cập nhật thông tin tác quyền dưới Footer dự án chính thức sang tên 'chickensoup269'.",
+          en: "Footer Branding Update: Updated the official copyright name in the footer to 'chickensoup269'.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu hóa Phân lớp (Z-Index): Điều chỉnh và chuẩn hóa lại toàn bộ giá trị z-index của các phần tử giao diện, giải quyết triệt để lỗi đè lớp và che khuất dropdown.",
+          en: "Z-Index & Layering Fixes: Comprehensive adjustments to z-index values across UI elements to ensure proper layering, overlay visibility, and dropdown behavior.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Cải thiện Phản hồi Giao diện: Tinh chỉnh hiệu ứng hover cho các nút bấm cài đặt, tối ưu hóa hiển thị bảng mã ngôn ngữ và cập nhật các thông báo popup chuẩn hóa.",
+          en: "UI Responsiveness & Localization Fixes: Enhanced hover effects for settings controls, optimized responsive sizing for custom language popups, and added missing translation keys.",
+        },
+      },
+    ],
+  },
+  {
+    version: "1.6.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "19 Tháng 5 2026", en: "May 19, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Siêu nâng cấp Notepad: Hỗ trợ kéo giãn kích thước ghi chú, thu gọn thẻ ghi chú linh hoạt, xử lý liên kết và trạng thái định dạng trực quan trong trình soạn thảo phong phú.",
+          en: "Notepad Overhaul: Added manual note resizing, collapsible floating notes, link handling, and active formatting states in the rich text editor.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hiệu ứng nền WebGL cao cấp: Tích hợp các hiệu ứng động mượt mà bao gồm Silk (Lụa), Light Pillar (Cột sáng), Liquid Ether và Pixel Snow HQ với đầy đủ tùy chỉnh thông số.",
+          en: "Premium WebGL Backgrounds: Integrated high-performance animated effects including Silk, Light Pillar, Liquid Ether, and Pixel Snow HQ with customizable parameters.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Kiến trúc Cài đặt Mô-đun: Tái cấu trúc toàn bộ hệ thống cài đặt thành các mô-đun độc lập (Trạng thái, UI, Kiểu dáng, Chủ đề) giúp tối ưu hiệu năng và dễ dàng bảo trì.",
+          en: "Modular Settings Architecture: Refactored the settings system into dedicated modules (State, UI, Styling, Themes) for optimized performance and maintainability.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Quản lý Preset & Randomize: Cho phép lưu, xóa các thiết lập hiệu ứng cá nhân và bổ sung nút ngẫu nhiên hóa (Randomize) nhanh các thông số hình nền.",
+          en: "Preset Management & Randomization: Added functionality to save/delete user-defined effect presets and introduced randomization buttons for instant background tweaks.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp UI/UX & Menu macOS: Thêm menu ngữ cảnh (Context Menu) chuột phải chuẩn phong cách macOS, hiệu ứng con trỏ Splash Cursor độc đáo và tối ưu hóa giao diện To-do List.",
+          en: "UI/UX & macOS Menu: Introduced macOS-style right-click context menus, a unique Splash Cursor effect, and comprehensive layout improvements for the Todo List component.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Công cụ Ngôn ngữ tùy chỉnh: Hỗ trợ tự dịch và tạo tệp ngôn ngữ JSON cá nhân hóa dựa trên bản mẫu tiếng Anh với sự trợ giúp của AI.",
+          en: "Custom Language Tools: Allowed users to create custom language JSONs using an English template and guided AI translation support.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đa ngôn ngữ & Tiện ích: Bổ sung bản địa hóa tiếng Anh/Việt cho các thứ/tháng trên Lịch, bản xem trước sự kiện/ngày lễ khi di chuột và nhập liệu hẹn giờ bằng bàn phím số.",
+          en: "Localization & Widgets: Added English/Vietnamese support for calendar months/weekdays, hover previews for holidays, and keypad input for timer settings.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi & Tối ưu bố cục: Tăng chiều rộng widget lên 490px, tinh chỉnh căn chỉnh tab bookmark, tối ưu hóa bộ nhớ đệm Unsplash và sửa logic đồng bộ màu nền.",
+          en: "Bug Fixes & Layout Tweaks: Increased widget width to 490px, widened bookmark group tabs, optimized Unsplash caching, and fixed background toggle icon synchronization logic.",
+        },
+      },
+    ],
+  },
   {
     version: "1.3.0",
     extension: "Zero Bookmark Manager",

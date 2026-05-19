@@ -15,6 +15,7 @@
   --muted2: #475569;
   --accent: #2ecc71;
   --accent2: #27ae60;
+  --accent-rgb: 46, 204, 113;
   --accent-glow: rgba(46, 204, 113, 0.12);
   --green: #2ecc71;
   --amber: #f59e0b;
@@ -668,5 +669,179 @@ body {
 .image-gallery img:hover {
   transform: scale(1.02);
   border-color: var(--accent);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
+
+/* Bookmark Item Style */
+.bookmark-item-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.bookmark-card-demo {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: 
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  /* macOS/Safari optimization */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.bookmark-card-demo:hover {
+  background: var(--bg3);
+  border-color: var(--accent);
+  transform: translateX(6px) translateZ(0);
+  -webkit-transform: translateX(6px) translateZ(0);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.bookmark-card-demo::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0) translateZ(0);
+  -webkit-transform: scaleY(0) translateZ(0);
+  transition: transform 0.3s ease;
+}
+
+.bookmark-card-demo:hover::before {
+  transform: scaleY(1) translateZ(0);
+  -webkit-transform: scaleY(1) translateZ(0);
+}
+
+.bookmark-demo-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--bg4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--accent);
+  flex-shrink: 0;
+  border: 1px solid var(--border2);
+  transform: translateZ(0);
+}
+
+.bookmark-demo-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bookmark-demo-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookmark-demo-url {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.7;
+}
+
+.bookmark-demo-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.bookmark-demo-tag {
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  border: 1px solid rgba(46, 204, 113, 0.2);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.bookmark-grid-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.bookmark-grid-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: 
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.4s ease;
+  cursor: pointer;
+  /* macOS/Safari optimization */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.bookmark-grid-item:hover {
+  background: var(--bg3);
+  border-color: var(--accent);
+  transform: translateY(-8px) translateZ(0);
+  -webkit-transform: translateY(-8px) translateZ(0);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.bookmark-grid-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: var(--bg4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  border: 1px solid var(--border2);
+  transition: transform 0.3s ease;
+  transform: translateZ(0);
+}
+
+.bookmark-grid-item:hover .bookmark-grid-icon {
+  transform: scale(1.1) rotate(5deg) translateZ(0);
+  -webkit-transform: scale(1.1) rotate(5deg) translateZ(0);
+}
+
