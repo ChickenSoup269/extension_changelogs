@@ -181,6 +181,7 @@ function ChangelogContent() {
   const [currentPage, setCurrentPage] = useState(
     Number(searchParams.get("page")) || 1,
   )
+  const [contributorPage, setContributorPage] = useState(1)
 
   useEffect(() => {
     const params = new URLSearchParams()
@@ -267,6 +268,34 @@ function ChangelogContent() {
     "Zero Bookmark Manager":
       "https://github.com/ChickenSoup269/Zero-Bookmark-Manager",
   }
+
+  const CONTRIBUTORS = [
+    {
+      name: "Tên Người Dùng 1",
+      avatar: null, // Có thể để null hoặc link ảnh
+      bugs: 2,
+      suggestions: 1,
+      extension: "Zero Startpage",
+      details: "Báo lỗi hiển thị widget và gợi ý thêm theme mới.",
+    },
+    {
+      name: "Tên Người Dùng 2",
+      avatar: null,
+      bugs: 0,
+      suggestions: 3,
+      extension: "Zero Bookmark Manager",
+      details: "Gợi ý cải thiện hiệu suất tìm kiếm và UI sidebar.",
+    },
+  ]
+
+  const CONTRIBUTORS_PER_PAGE = 6
+  const totalContributorPages = Math.ceil(
+    CONTRIBUTORS.length / CONTRIBUTORS_PER_PAGE,
+  )
+  const paginatedContributors = CONTRIBUTORS.slice(
+    (contributorPage - 1) * CONTRIBUTORS_PER_PAGE,
+    contributorPage * CONTRIBUTORS_PER_PAGE,
+  )
 
   const STORE_MAP: Record<string, string> = {
     "Zero Startpage - Newtab Replacement":
@@ -596,47 +625,174 @@ function ChangelogContent() {
               border: "1px solid var(--border2)",
             }}
           >
-            <h3 className="font-syne font-semibold text-sm mb-4">
+            <h3 className="font-syne font-semibold text-xs uppercase tracking-widest mb-5" style={{ color: "var(--muted2)" }}>
               {t("changelog.sidebar.stats")}
             </h3>
-            {[
-              {
-                label: t("changelog.sidebar.total_patch"),
-                value: totalPatches,
-                color: "var(--accent2)",
-              },
-              {
-                label: t("changelog.sidebar.new_features"),
-                value: newFeatures,
-                color: "#3ecf8e",
-              },
-              {
-                label: t("changelog.sidebar.bug_fixes"),
-                value: bugFixes,
-                color: changelogTextColor,
-              },
-              {
-                label: t("changelog.sidebar.breaking"),
-                value: breakingChanges,
-                color: "#ef4444",
-              },
-              {
-                label: t("changelog.sidebar.updated"),
-                value: extensionsUpdatedCount,
-                color: changelogTextColor,
-              },
-            ].map((s) => (
+            
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                {
+                  label: t("changelog.sidebar.total_patch"),
+                  value: totalPatches,
+                  color: "var(--accent2)",
+                  icon: "fa-solid fa-layer-group",
+                  bg: "var(--accent-glow)"
+                },
+                {
+                  label: t("changelog.sidebar.new_features"),
+                  value: newFeatures,
+                  color: "#3ecf8e",
+                  icon: "fa-solid fa-wand-magic-sparkles",
+                  bg: "rgba(62,207,142,0.1)"
+                },
+                {
+                  label: t("changelog.sidebar.bug_fixes"),
+                  value: bugFixes,
+                  color: "#60a5fa",
+                  icon: "fa-solid fa-bug",
+                  bg: "rgba(96,165,250,0.1)"
+                },
+                {
+                  label: t("changelog.sidebar.breaking"),
+                  value: breakingChanges,
+                  color: "#ef4444",
+                  icon: "fa-solid fa-triangle-exclamation",
+                  bg: "rgba(239,68,68,0.1)"
+                },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--accent)] group"
+                  style={{ background: "var(--bg)" }}
+                >
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: s.bg, color: s.color }}
+                  >
+                    <i className={`${s.icon} text-xs`} />
+                  </div>
+                  <span className="text-xl font-bold font-syne" style={{ color: changelogTextColor }}>
+                    {s.value}
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-tighter mt-1" style={{ color: "var(--muted2)" }}>
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+              
               <div
-                key={s.label}
-                className="flex items-center justify-between py-2.5 text-sm"
-                style={{ borderBottom: "1px solid var(--border)" }}
+                className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--accent)] group"
+                style={{ background: "var(--bg)" }}
               >
-                <span style={{ color: "var(--muted)" }}>{s.label}</span>
-                <span className="font-semibold" style={{ color: s.color }}>
-                  {s.value}
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                    style={{ background: "var(--bg4)", color: "var(--accent2)" }}
+                  >
+                    <i className="fa-solid fa-arrows-rotate text-xs" />
+                  </div>
+                  <span className="text-[10px] font-medium uppercase tracking-tighter" style={{ color: "var(--muted2)" }}>
+                    {t("changelog.sidebar.updated")}
+                  </span>
+                </div>
+                <span className="text-lg font-bold font-syne" style={{ color: changelogTextColor }}>
+                  {extensionsUpdatedCount}
                 </span>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* Contributors Card (Hall of Fame) */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
+            }}
+          >
+            <h3 className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: "var(--muted2)" }}>
+              <i className="fa-solid fa-medal text-[var(--accent)]" />
+              {t("changelog.contributors.title")}
+            </h3>
+            <p className="text-[10px] mb-4 leading-relaxed" style={{ color: "var(--muted2)" }}>
+              {t("changelog.contributors.subtitle")}
+            </p>
+
+            <div className="flex flex-col gap-3">
+              {paginatedContributors.map((c, i) => (
+                <div
+                  key={i}
+                  className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--accent)] group"
+                  style={{ background: "var(--bg)" }}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div
+                      className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center border transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        background: "var(--bg4)",
+                        borderColor: "var(--border)",
+                      }}
+                    >
+                      {c.avatar ? (
+                        <img
+                          src={c.avatar}
+                          alt={c.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <i
+                          className="fa-solid fa-user text-[10px]"
+                          style={{ color: "var(--accent2)" }}
+                        />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold text-xs truncate" style={{ color: changelogTextColor }}>
+                        {c.name}
+                      </div>
+                      <div className="text-[9px] uppercase tracking-tighter truncate" style={{ color: "var(--muted2)" }}>
+                        {c.extension}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)]">
+                      <i className="fa-solid fa-bug text-[8px] text-[#ef4444]" />
+                      <span className="text-[9px] font-bold text-[#ef4444]">{c.bugs}</span>
+                    </div>
+                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(62,207,142,0.1)] border border-[rgba(62,207,142,0.2)]">
+                      <i className="fa-solid fa-lightbulb text-[8px] text-[#3ecf8e]" />
+                      <span className="text-[9px] font-bold text-[#3ecf8e]">{c.suggestions}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {totalContributorPages > 1 && (
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
+                <button
+                  onClick={() => setContributorPage((p) => Math.max(1, p - 1))}
+                  disabled={contributorPage === 1}
+                  className="p-2 rounded-lg transition-all disabled:opacity-30"
+                  style={{ background: "var(--bg4)", color: changelogTextColor }}
+                >
+                  <i className="fa-solid fa-chevron-left text-[10px]" />
+                </button>
+                <span className="text-[10px] font-bold" style={{ color: "var(--muted2)" }}>
+                  {contributorPage} / {totalContributorPages}
+                </span>
+                <button
+                  onClick={() => setContributorPage((p) => Math.min(totalContributorPages, p + 1))}
+                  disabled={contributorPage === totalContributorPages}
+                  className="p-2 rounded-lg transition-all disabled:opacity-30"
+                  style={{ background: "var(--bg4)", color: changelogTextColor }}
+                >
+                  <i className="fa-solid fa-chevron-right text-[10px]" />
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Latest Versions Card */}

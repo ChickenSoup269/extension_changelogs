@@ -45,6 +45,15 @@ export const DICTIONARY: Record<Locale, any> = {
     changelog: {
       title: "Change",
       subtitle: "Lịch sử cập nhật đầy đủ của các extensions tự làm",
+      contributors: {
+        title: "Bảng vinh danh",
+        subtitle: "Cảm ơn những đóng góp tuyệt vời từ cộng đồng đã giúp cải thiện các extension.",
+        user: "Người đóng góp",
+        bugs: "Báo lỗi",
+        suggestions: "Gợi ý",
+        extension: "Extension",
+        details: "Chi tiết đóng góp",
+      },
       sidebar: {
         stats: "Thống kê tháng này",
         total_patch: "Tổng bản vá",
@@ -230,6 +239,15 @@ export const DICTIONARY: Record<Locale, any> = {
     changelog: {
       title: "Change",
       subtitle: "Full update history of all my custom extensions",
+      contributors: {
+        title: "Hall of Fame",
+        subtitle: "Special thanks to our amazing community for helping improve these extensions.",
+        user: "Contributor",
+        bugs: "Bugs",
+        suggestions: "Suggestions",
+        extension: "Extension",
+        details: "Contribution",
+      },
       sidebar: {
         stats: "Monthly Stats",
         total_patch: "Total Patches",
