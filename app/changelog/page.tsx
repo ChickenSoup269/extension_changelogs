@@ -271,20 +271,65 @@ function ChangelogContent() {
 
   const CONTRIBUTORS = [
     {
-      name: "Tên Người Dùng 1",
-      avatar: null, // Có thể để null hoặc link ảnh
-      bugs: 2,
+      name: "Dũng Đinh",
+      avatar: "/images/DungDinh.jpg",
+      role: {
+        vi: "Bug Hunter & Người đóng góp",
+        en: "Bug Hunter & Contributor",
+      },
+      bugs: "3+",
+      suggestions: 3,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Báo lỗi UI (3+) & gợi ý: code màu M3, widget Pomodoro, Google App icon.",
+        en: "UI bugs (3+) & suggestions: M3 color codes, Pomodoro widget, Google App icon.",
+      },
+    },
+
+    {
+      name: "Trần Anh Quân",
+      avatar: null,
+      role: {
+        vi: "Bug Hunter & Người đóng gói",
+        en: "Bug Hunter & Contributor",
+      },
+      bugs: "1+",
       suggestions: 1,
       extension: "Zero Startpage",
-      details: "Báo lỗi hiển thị widget và gợi ý thêm theme mới.",
+      details: {
+        vi: "Báo lỗi page title icon (1+) & gợi ý nhạc SoundCloud.",
+        en: "Page title icon bug (1+) & suggested SoundCloud music.",
+      },
     },
     {
-      name: "Tên Người Dùng 2",
+      name: "Ẩn danh (1)",
       avatar: null,
-      bugs: 0,
-      suggestions: 3,
-      extension: "Zero Bookmark Manager",
-      details: "Gợi ý cải thiện hiệu suất tìm kiếm và UI sidebar.",
+      role: {
+        vi: "Người đóng góp",
+        en: "Contributor",
+      },
+      bugs: "0+",
+      suggestions: 1,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Gợi ý xắp xếp các bookmark vào group",
+        en: "Suggested bookmark organization into groups.",
+      },
+    },
+    {
+      name: "Ẩn danh (2)",
+      avatar: null,
+      role: {
+        vi: "Người đóng góp",
+        en: "Contributor",
+      },
+      bugs: "0+",
+      suggestions: 1,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Gợi ý thêm những câu lệnh mở nhanh",
+        en: "Suggested quick launch commands.",
+      },
     },
   ]
 
@@ -508,7 +553,9 @@ function ChangelogContent() {
                               {REPO_MAP[group.extension] && (
                                 <div
                                   className="mt-6 pt-4 flex items-center justify-between"
-                                  style={{ borderTop: "1px solid var(--border)" }}
+                                  style={{
+                                    borderTop: "1px solid var(--border)",
+                                  }}
                                 >
                                   <div className="flex flex-wrap gap-4">
                                     <a
@@ -625,10 +672,13 @@ function ChangelogContent() {
               border: "1px solid var(--border2)",
             }}
           >
-            <h3 className="font-syne font-semibold text-xs uppercase tracking-widest mb-5" style={{ color: "var(--muted2)" }}>
+            <h3
+              className="font-syne font-semibold text-xs uppercase tracking-widest mb-5"
+              style={{ color: "var(--muted2)" }}
+            >
               {t("changelog.sidebar.stats")}
             </h3>
-            
+
             <div className="grid grid-cols-2 gap-3">
               {[
                 {
@@ -636,28 +686,28 @@ function ChangelogContent() {
                   value: totalPatches,
                   color: "var(--accent2)",
                   icon: "fa-solid fa-layer-group",
-                  bg: "var(--accent-glow)"
+                  bg: "var(--accent-glow)",
                 },
                 {
                   label: t("changelog.sidebar.new_features"),
                   value: newFeatures,
                   color: "#3ecf8e",
                   icon: "fa-solid fa-wand-magic-sparkles",
-                  bg: "rgba(62,207,142,0.1)"
+                  bg: "rgba(62,207,142,0.1)",
                 },
                 {
                   label: t("changelog.sidebar.bug_fixes"),
                   value: bugFixes,
                   color: "#60a5fa",
                   icon: "fa-solid fa-bug",
-                  bg: "rgba(96,165,250,0.1)"
+                  bg: "rgba(96,165,250,0.1)",
                 },
                 {
                   label: t("changelog.sidebar.breaking"),
                   value: breakingChanges,
                   color: "#ef4444",
                   icon: "fa-solid fa-triangle-exclamation",
-                  bg: "rgba(239,68,68,0.1)"
+                  bg: "rgba(239,68,68,0.1)",
                 },
               ].map((s) => (
                 <div
@@ -665,37 +715,52 @@ function ChangelogContent() {
                   className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--accent)] group"
                   style={{ background: "var(--bg)" }}
                 >
-                  <div 
+                  <div
                     className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110"
                     style={{ background: s.bg, color: s.color }}
                   >
                     <i className={`${s.icon} text-xs`} />
                   </div>
-                  <span className="text-xl font-bold font-syne" style={{ color: changelogTextColor }}>
+                  <span
+                    className="text-xl font-bold font-syne"
+                    style={{ color: changelogTextColor }}
+                  >
                     {s.value}
                   </span>
-                  <span className="text-[10px] font-medium uppercase tracking-tighter mt-1" style={{ color: "var(--muted2)" }}>
+                  <span
+                    className="text-[10px] font-medium uppercase tracking-tighter mt-1"
+                    style={{ color: "var(--muted2)" }}
+                  >
                     {s.label}
                   </span>
                 </div>
               ))}
-              
+
               <div
                 className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--accent)] group"
                 style={{ background: "var(--bg)" }}
               >
                 <div className="flex items-center gap-3">
-                  <div 
+                  <div
                     className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                    style={{ background: "var(--bg4)", color: "var(--accent2)" }}
+                    style={{
+                      background: "var(--bg4)",
+                      color: "var(--accent2)",
+                    }}
                   >
                     <i className="fa-solid fa-arrows-rotate text-xs" />
                   </div>
-                  <span className="text-[10px] font-medium uppercase tracking-tighter" style={{ color: "var(--muted2)" }}>
+                  <span
+                    className="text-[10px] font-medium uppercase tracking-tighter"
+                    style={{ color: "var(--muted2)" }}
+                  >
                     {t("changelog.sidebar.updated")}
                   </span>
                 </div>
-                <span className="text-lg font-bold font-syne" style={{ color: changelogTextColor }}>
+                <span
+                  className="text-lg font-bold font-syne"
+                  style={{ color: changelogTextColor }}
+                >
                   {extensionsUpdatedCount}
                 </span>
               </div>
@@ -710,11 +775,17 @@ function ChangelogContent() {
               border: "1px solid var(--border2)",
             }}
           >
-            <h3 className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: "var(--muted2)" }}>
+            <h3
+              className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2"
+              style={{ color: "var(--muted2)" }}
+            >
               <i className="fa-solid fa-medal text-[var(--accent)]" />
               {t("changelog.contributors.title")}
             </h3>
-            <p className="text-[10px] mb-4 leading-relaxed" style={{ color: "var(--muted2)" }}>
+            <p
+              className="text-[10px] mb-4 leading-relaxed"
+              style={{ color: "var(--muted2)" }}
+            >
               {t("changelog.contributors.subtitle")}
             </p>
 
@@ -747,25 +818,70 @@ function ChangelogContent() {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="font-bold text-xs truncate" style={{ color: changelogTextColor }}>
+                      <div
+                        className="font-bold text-xs truncate"
+                        style={{ color: changelogTextColor }}
+                      >
                         {c.name}
                       </div>
-                      <div className="text-[9px] uppercase tracking-tighter truncate" style={{ color: "var(--muted2)" }}>
+                      <div
+                        className="text-[9px] uppercase tracking-tighter truncate"
+                        style={{ color: "var(--muted2)" }}
+                      >
                         {c.extension}
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-2">
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {c.role && (
+                      <span
+                        className="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider"
+                        style={{
+                          background:
+                            c.role[locale] === "Bug Hunter"
+                              ? "rgba(239,68,68,0.12)"
+                              : "var(--bg4)",
+                          color:
+                            c.role[locale] === "Bug Hunter"
+                              ? "#ef4444"
+                              : "var(--accent2)",
+                          border:
+                            c.role[locale] === "Bug Hunter"
+                              ? "1px solid rgba(239,68,68,0.2)"
+                              : "1px solid var(--border)",
+                        }}
+                      >
+                        {c.role[locale]}
+                      </span>
+                    )}
                     <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)]">
                       <i className="fa-solid fa-bug text-[8px] text-[#ef4444]" />
-                      <span className="text-[9px] font-bold text-[#ef4444]">{c.bugs}</span>
+                      <span className="text-[9px] font-bold text-[#ef4444]">
+                        {c.bugs}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(62,207,142,0.1)] border border-[rgba(62,207,142,0.2)]">
                       <i className="fa-solid fa-lightbulb text-[8px] text-[#3ecf8e]" />
-                      <span className="text-[9px] font-bold text-[#3ecf8e]">{c.suggestions}</span>
+                      <span className="text-[9px] font-bold text-[#3ecf8e]">
+                        {c.suggestions}
+                      </span>
                     </div>
                   </div>
+
+                  {c.details && (
+                    <div
+                      className="text-[10px] mt-2 pt-2 border-t leading-relaxed font-medium"
+                      style={{
+                        color: "var(--muted2)",
+                        borderColor: "var(--border)",
+                      }}
+                    >
+                      {typeof c.details === "string"
+                        ? c.details
+                        : c.details[locale]}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -776,18 +892,31 @@ function ChangelogContent() {
                   onClick={() => setContributorPage((p) => Math.max(1, p - 1))}
                   disabled={contributorPage === 1}
                   className="p-2 rounded-lg transition-all disabled:opacity-30"
-                  style={{ background: "var(--bg4)", color: changelogTextColor }}
+                  style={{
+                    background: "var(--bg4)",
+                    color: changelogTextColor,
+                  }}
                 >
                   <i className="fa-solid fa-chevron-left text-[10px]" />
                 </button>
-                <span className="text-[10px] font-bold" style={{ color: "var(--muted2)" }}>
+                <span
+                  className="text-[10px] font-bold"
+                  style={{ color: "var(--muted2)" }}
+                >
                   {contributorPage} / {totalContributorPages}
                 </span>
                 <button
-                  onClick={() => setContributorPage((p) => Math.min(totalContributorPages, p + 1))}
+                  onClick={() =>
+                    setContributorPage((p) =>
+                      Math.min(totalContributorPages, p + 1),
+                    )
+                  }
                   disabled={contributorPage === totalContributorPages}
                   className="p-2 rounded-lg transition-all disabled:opacity-30"
-                  style={{ background: "var(--bg4)", color: changelogTextColor }}
+                  style={{
+                    background: "var(--bg4)",
+                    color: changelogTextColor,
+                  }}
                 >
                   <i className="fa-solid fa-chevron-right text-[10px]" />
                 </button>
