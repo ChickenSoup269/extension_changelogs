@@ -268,7 +268,6 @@ function ChangelogContent() {
     "Zero Bookmark Manager":
       "https://github.com/ChickenSoup269/Zero-Bookmark-Manager",
   }
-
   const CONTRIBUTORS = [
     {
       name: "Dũng Đinh",
@@ -277,20 +276,19 @@ function ChangelogContent() {
         vi: "Bug Hunter & Người đóng góp",
         en: "Bug Hunter & Contributor",
       },
-      bugs: "3+",
+      bugs: "4+",
       suggestions: 3,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi UI (3+) & gợi ý: code màu M3, widget Pomodoro, Google App icon.",
-        en: "UI bugs (3+) & suggestions: M3 color codes, Pomodoro widget, Google App icon.",
+        vi: "Báo lỗi UI (4+) & gợi ý: code màu M3, widget Pomodoro, Google App icon.",
+        en: "UI bugs (4+) & suggestions: M3 color codes, Pomodoro widget, Google App icon.",
       },
     },
-
     {
       name: "Trần Anh Quân",
       avatar: null,
       role: {
-        vi: "Bug Hunter & Người đóng gói",
+        vi: "Bug Hunter & Người đóng góp",
         en: "Bug Hunter & Contributor",
       },
       bugs: "1+",
@@ -302,7 +300,10 @@ function ChangelogContent() {
       },
     },
     {
-      name: "Ẩn danh (1)",
+      name: {
+        vi: "Ẩn danh (1)",
+        en: "anonymous  (1)",
+      },
       avatar: null,
       role: {
         vi: "Người đóng góp",
@@ -312,12 +313,15 @@ function ChangelogContent() {
       suggestions: 1,
       extension: "Zero Startpage",
       details: {
-        vi: "Gợi ý xắp xếp các bookmark vào group",
+        vi: "Gợi ý sắp xếp các bookmark vào group.",
         en: "Suggested bookmark organization into groups.",
       },
     },
     {
-      name: "Ẩn danh (2)",
+      name: {
+        vi: "Ẩn danh (2)",
+        en: "anonymous  (2)",
+      },
       avatar: null,
       role: {
         vi: "Người đóng góp",
@@ -327,8 +331,26 @@ function ChangelogContent() {
       suggestions: 1,
       extension: "Zero Startpage",
       details: {
-        vi: "Gợi ý thêm những câu lệnh mở nhanh",
+        vi: "Gợi ý thêm những câu lệnh mở nhanh.",
         en: "Suggested quick launch commands.",
+      },
+    },
+    {
+      name: {
+        vi: "Ẩn danh (3)",
+        en: "anonymous  (3)",
+      },
+      avatar: null,
+      role: {
+        vi: "Bug Hunter",
+        en: "Bug Hunter",
+      },
+      bugs: "1+",
+      suggestions: 0,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Phát hiện lỗi widget Spotify.",
+        en: "Detected Spotify widget bug.",
       },
     },
   ]
@@ -807,7 +829,9 @@ function ChangelogContent() {
                       {c.avatar ? (
                         <img
                           src={c.avatar}
-                          alt={c.name}
+                          alt={
+                            typeof c.name === "string" ? c.name : c.name[locale]
+                          }
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -822,7 +846,7 @@ function ChangelogContent() {
                         className="font-bold text-xs truncate"
                         style={{ color: changelogTextColor }}
                       >
-                        {c.name}
+                        {typeof c.name === "string" ? c.name : c.name[locale]}
                       </div>
                       <div
                         className="text-[9px] uppercase tracking-tighter truncate"
@@ -838,18 +862,15 @@ function ChangelogContent() {
                       <span
                         className="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider"
                         style={{
-                          background:
-                            c.role[locale] === "Bug Hunter"
-                              ? "rgba(239,68,68,0.12)"
-                              : "var(--bg4)",
-                          color:
-                            c.role[locale] === "Bug Hunter"
-                              ? "#ef4444"
-                              : "var(--accent2)",
-                          border:
-                            c.role[locale] === "Bug Hunter"
-                              ? "1px solid rgba(239,68,68,0.2)"
-                              : "1px solid var(--border)",
+                          background: c.role[locale].includes("Bug Hunter")
+                            ? "rgba(239,68,68,0.12)"
+                            : "var(--bg4)",
+                          color: c.role[locale].includes("Bug Hunter")
+                            ? "#ef4444"
+                            : "var(--accent2)",
+                          border: c.role[locale].includes("Bug Hunter")
+                            ? "1px solid rgba(239,68,68,0.2)"
+                            : "1px solid var(--border)",
                         }}
                       >
                         {c.role[locale]}
