@@ -353,6 +353,24 @@ function ChangelogContent() {
         en: "Detected Spotify widget bug.",
       },
     },
+    {
+      name: {
+        vi: "Ẩn danh (4)",
+        en: "anonymous  (4)",
+      },
+      avatar: null,
+      role: {
+        vi: "Người đóng góp",
+        en: "Contributor",
+      },
+      bugs: "1+",
+      suggestions: 0,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Các bookmark không thay thế trình duyệt tab",
+        en: "Bookmarks not replacing browser tabs.",
+      },
+    },
   ]
 
   const CONTRIBUTORS_PER_PAGE = 6
