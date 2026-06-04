@@ -89,6 +89,71 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.7.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "5 Tháng 6 2026", en: "June 5, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ sinh thái Theme & Preset: Ra mắt liên kết Theme Web (Beta), cho phép chia sẻ và áp dụng cấu hình thông qua mã Preset Code. Hỗ trợ gộp hình nền khi import thay vì ghi đè dữ liệu cũ.",
+          en: "Theme & Preset Ecosystem: Launched Theme Web (Beta) link for community themes. Introduced Preset Codes for easy sharing and improved import logic to merge backgrounds without overwriting.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu Bookmark & Stack: Hỗ trợ kéo thả (Drag-and-drop) trong popup stack, tùy chọn mở liên kết trong tab mới, và hệ thống Hoàn tác (Undo) mạnh mẽ khi xóa hoặc chỉnh sửa.",
+          en: "Bookmark & Stack Overhaul: Added drag-and-drop support within stack popups, new-tab open behavior settings, and a robust Undo system for deletions and edits.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Tối ưu hóa hình ảnh & Hiệu năng: Bổ sung tính năng nén ảnh (Compress) trực tiếp trong cài đặt, tùy chọn chất lượng media 'Tiny' và hệ thống giám sát hiệu năng (Performance Mode) tự động.",
+          en: "Image Optimization & Performance: Added in-app image compression, a 'Tiny' media quality option, and an automated Performance Mode to optimize effects based on system resources.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Cá nhân hóa Material Design 3 (M3): Tích hợp trích xuất màu chủ đạo từ hình nền, bổ sung các tùy chọn giao diện M3 Accent cho Widget, Music Player và thanh truy cập nhanh.",
+          en: "M3 Personalization: Added M3 dynamic color extraction from backgrounds and introduced M3 Accent skin options for Widgets, Music Player, and Quick Access bar.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp Widget & Tiện ích: Hỗ trợ âm thanh báo thức tùy chỉnh (Pomodoro), hiển thị lịch âm trên đồng hồ, và các phong cách đồng hồ mới (Aurora Ribbon, Lunar Orbit, Cyber Pulse).",
+          en: "Widget & Utility Upgrades: Added custom alarm sounds for Pomodoro, Lunar calendar display on the clock, and new clock styles (Aurora Ribbon, Lunar Orbit, Cyber Pulse).",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống Thông báo Toast: Triển khai hệ thống thông báo nhanh (Toast) để phản hồi tức thì các thao tác người dùng như thay đổi cài đặt hoặc áp dụng theme.",
+          en: "Toast Notification System: Implemented a new toast notification system for real-time user feedback on settings changes and theme applications.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Điều khiển Media đa nguồn: Mở rộng hỗ trợ Spotify, SoundCloud, Zing MP3, NCT và Apple Music với khả năng ưu tiên tab media và tùy chỉnh biểu tượng nguồn nhạc.",
+          en: "Multi-source Media Control: Expanded support for Spotify, SoundCloud, Zing MP3, NCT, and Apple Music with media tab prioritization and customizable source icons.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Cải thiện độ ổn định: Giới hạn vị trí kéo thả trong màn hình (clamping), tối ưu hóa luồng khởi động lần đầu, và dọn dẹp các tùy chọn cũ để giao diện gọn gàng hơn.",
+          en: "Stability Improvements: Implemented viewport clamping for draggables, optimized first-run experience, and removed deprecated settings for a cleaner layout.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.6.0",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-rocket",
