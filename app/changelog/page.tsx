@@ -285,7 +285,7 @@ function ChangelogContent() {
       },
     },
     {
-      name: "Trần Anh Quân",
+      name: "Kiến Huy",
       avatar: null,
       role: {
         vi: "Bug Hunter & Người đóng góp",
