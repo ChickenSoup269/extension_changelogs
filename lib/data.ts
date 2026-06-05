@@ -51,7 +51,7 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Next-gen bookmark manager featuring smart search, scientific folder organization, and superior performance for your browser.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "1k",
+    downloads: "192",
     stars: "3.7",
     ratingCount: "3",
 
@@ -74,7 +74,7 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Transform your New Tab into a minimalist, inspiring workspace with smart widgets and stunning visual effects.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "120",
+    downloads: "997",
     stars: "4.9",
     ratingCount: "3",
     featured: true,
@@ -88,6 +88,64 @@ const RAW_EXTENSIONS: Extension[] = [
 ]
 
 export const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "1.5.0",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "6 Tháng 6 2026", en: "June 6, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống Không gian làm việc (Workspaces): Hỗ trợ tạo, lưu và chuyển đổi linh hoạt giữa các vùng làm việc khác nhau; tích hợp tính năng gộp trùng lặp (Duplicate merge) và xóa workspace nhanh.",
+          en: "Workspace Management: Introduced full support for saving, applying, and managing multiple custom workspaces with built-in duplicate merging and deletion features.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thanh lệnh nhanh & Tìm kiếm thông minh: Ra mắt Command Palette giúp tìm kiếm bookmark siêu tốc, thực hiện lệnh nhanh và hỗ trợ tìm kiếm nội dung bên trong các phần ghi chú (Bookmark notes).",
+          en: "Command Palette & Smart Search: Implemented a powerful command palette for instant bookmark searching and executing commands, with new support for indexing bookmark notes.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Danh sách đọc (Reading Queue): Thêm tính năng hàng đợi để lưu trữ các liên kết chờ đọc, hỗ trợ bộ lọc riêng biệt giúp quản lý danh sách đọc gọn gàng hơn.",
+          en: "Reading Queue Feature: Introduced a reading queue filter and state management to easily track and filter bookmarked articles for later reading.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hướng dẫn người dùng mới (First-run Experience): Thiết lập màn hình chào mừng khi cài đặt, cho phép chọn ngôn ngữ ngay từ đầu, chạy tour hướng dẫn sử dụng và hỗ trợ nút bấm để khởi động lại tour bất kỳ lúc nào.",
+          en: "Guided First-Run Tour: Implemented a complete onboarding experience with initial language configuration, a guided app tour, and a settings option to restart the guide.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Quản lý Thẻ (Tags) nâng cao: Thiết kế lại popup quản lý thẻ, bổ sung các chip hiển thị trực quan, hỗ trợ sửa/xóa thẻ nhanh và chống lỗi hiển thị bằng mã hóa HTML an toàn.",
+          en: "Advanced Tag Management: Redesigned the tag management popup with dynamic tag chips, quick edit/delete options, and secure HTML escaping.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Trợ lý AI & Trợ giúp thông minh: Bổ sung đèn trạng thái hoạt động (AI status indicator) động trong khung chat và thêm thanh tìm kiếm ngay trong phần Cẩm nang trợ giúp (Help guide).",
+          en: "AI & Help Guide Upgrades: Added a dynamic AI configuration status indicator to the chatbox and integrated a live search filter inside the Help Guide.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu Giao diện & Đa ngôn ngữ: Nâng cấp bảng màu mới thời thượng, thêm hiệu ứng kính mờ (Glassmorphic) cho menu bookmark, cải tiến lưới xuất dữ liệu (Export grid) và đồng bộ cài đặt ngôn ngữ mượt mà hệ thống.",
+          en: "UI Refinement & Localization: Updated to a fresh color palette, added glassmorphic dropdown styles, optimized responsive layouts for the export modal, and robust language sync with background scripts.",
+        },
+      },
+    ],
+  },
   {
     version: "1.7.0",
     extension: "Zero Startpage - Newtab Replacement",
