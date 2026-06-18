@@ -277,11 +277,11 @@ function ChangelogContent() {
         en: "Bug Hunter & Contributor",
       },
       bugs: "4+",
-      suggestions: 3,
+      suggestions: 4,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi UI (4+) & gợi ý: code màu M3, widget Pomodoro, Google App icon.",
-        en: "UI bugs (4+) & suggestions: M3 color codes, Pomodoro widget, Google App icon.",
+        vi: "Báo lỗi UI (4+) & gợi ý: code màu M3, widget Pomodoro, Google App icon. More M3 🐧",
+        en: "UI bugs (4+) & suggestions: M3 color codes, Pomodoro widget, Google App icon. More M3 🐧",
       },
     },
     {
@@ -291,12 +291,27 @@ function ChangelogContent() {
         vi: "Bug Hunter & Người đóng góp",
         en: "Bug Hunter & Contributor",
       },
-      bugs: "1+",
-      suggestions: 1,
+      bugs: "2+",
+      suggestions: 2,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi page title icon (1+) & gợi ý nhạc SoundCloud.",
-        en: "Page title icon bug (1+) & suggested SoundCloud music.",
+        vi: "Báo lỗi page title icon (1+) & gợi ý nhạc SoundCloud. Bookmark group không setting đúng",
+        en: "Page title icon bug (1+) & suggested SoundCloud music. Bookmark group not setting correctly.",
+      },
+    },
+    {
+      name: "Mhale",
+      avatar: null,
+      role: {
+        vi: "Bug Hunter",
+        en: "Bug Hunter",
+      },
+      bugs: "1+",
+      suggestions: 0,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore.",
+        en: "Page not working when abruptly closed during restore.",
       },
     },
     {
