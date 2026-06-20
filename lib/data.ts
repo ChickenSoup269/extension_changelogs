@@ -89,6 +89,50 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.8.2",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "20 Tháng 6 2026", en: "June 20, 2026" },
+    releaseType: "patch",
+    changes: [
+      {
+        type: "fix",
+        text: {
+          vi: "Triệt tiêu lỗi nháy màn hình: Tối ưu hóa toàn bộ trình tự tải hình nền, giải quyết triệt để hiện tượng nháy màu (color flash) khó chịu ngay trước khi video hoặc ảnh nền kịp hiển thị.",
+          en: "Eliminate Background Flashes: Optimized the asset loading sequence to prevent color flashes right before background videos and high-res images load.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Ổn định khởi động & Preset hình nền: Sửa lỗi xung đột khiến tính năng chọn ngẫu nhiên (Randomizer) ghi đè lên các bộ Preset đã lưu, đồng thời làm mượt quá trình cài đặt và chạy ứng dụng lần đầu tiên.",
+          en: "Startup & Preset Fixes: Stabilized first-run initialization and fixed an issue where background randomizers would accidentally overwrite user-saved presets.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Tự động đổi nền Unsplash: Thêm chế độ tự động ngẫu nhiên hóa (Auto-randomize) hình nền lấy từ kho ảnh Unsplash để làm mới giao diện mỗi lần mở tab.",
+          en: "Unsplash Auto-Randomize: Added a new auto-randomize mode for Unsplash backgrounds to keep your startpage fresh.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng bộ trình phát nhạc & Nhập/Xuất: Cải tiến khả năng ghi nhớ trạng thái (Persistence) của trình điều khiển nhạc, sửa lỗi nóng (Hotfix) giúp quá trình Sao lưu/Khôi phục (Import/Export) dữ liệu hoạt động chính xác hơn.",
+          en: "Music Player Persistence & Sync: Hotfixed and improved music player state persistence, smoothing out the settings import/export and backup data restoration flows.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp menu Material 3: Thiết kế lại hệ thống menu chuẩn phong cách Material 3 mượt mà hơn và tăng tốc độ khôi phục dữ liệu Startpage.",
+          en: "Material 3 Menus: Introduced updated Material 3 style menus and enhanced the core startpage data restoration process.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.8.0",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-rocket",
