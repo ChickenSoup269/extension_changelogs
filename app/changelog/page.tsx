@@ -306,12 +306,27 @@ function ChangelogContent() {
         vi: "Bug Hunter",
         en: "Bug Hunter",
       },
+      bugs: "2+",
+      suggestions: 0,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore và màn đen.",
+        en: "Page not working when abruptly closed during restore and black screen.",
+      },
+    },
+    {
+      name: "Cong Truong",
+      avatar: null,
+      role: {
+        vi: "Bug Hunter",
+        en: "Bug Hunter",
+      },
       bugs: "1+",
       suggestions: 0,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore.",
-        en: "Page not working when abruptly closed during restore.",
+        vi: "Báo lỗi page màn đen.",
+        en: "Page black screen issue.",
       },
     },
     {
