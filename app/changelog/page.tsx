@@ -453,7 +453,13 @@ function ChangelogContent() {
   }, [])
   const changelogTextColor = isLightTheme ? "#111" : "var(--text)"
   return (
-    <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14">
+    <div className="relative min-h-screen overflow-hidden">
+      {/* Ambient Background Glows */}
+      <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[var(--accent-glow)] rounded-full blur-[150px] -z-10 opacity-40 pointer-events-none" />
+      <div className="absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-[var(--accent)] rounded-full blur-[150px] -z-10 opacity-[0.15] pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[20%] w-[600px] h-[600px] bg-[var(--accent-glow)] rounded-full blur-[150px] -z-10 opacity-20 pointer-events-none" />
+
+      <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14 relative z-10">
       <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
         {/* Main */}
         <div className="flex-1 min-w-0">
@@ -542,11 +548,7 @@ function ChangelogContent() {
                             style={{ gridTemplateColumns: "1fr" }}
                           >
                             <div
-                              className="rounded-xl p-5 relative"
-                              style={{
-                                background: "var(--bg3)",
-                                border: "1px solid var(--border2)",
-                              }}
+                              className="rounded-2xl p-6 relative backdrop-blur-md bg-gradient-to-br from-[var(--bg2)]/90 to-[var(--bg3)]/95 border border-[var(--border2)] hover:border-[var(--accent)]/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300"
                             >
                               <div
                                 className="absolute -left-[27px] top-[24px] w-3 h-3 rounded-full z-10"
@@ -736,11 +738,7 @@ function ChangelogContent() {
         <div className="lg:w-[320px] flex flex-col gap-6">
           {/* Stats Card */}
           <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
+            className="rounded-2xl p-6 backdrop-blur-md bg-gradient-to-br from-[var(--bg2)]/90 to-[var(--bg3)]/95 border border-[var(--border2)] shadow-sm"
           >
             <h3
               className="font-syne font-semibold text-xs uppercase tracking-widest mb-5"
@@ -1314,7 +1312,8 @@ function ChangelogContent() {
         {/* End Sidebar */}
       </div>{" "}
       {/* End grid */}
-    </section>
+      </section>
+    </div>
   )
 }
 

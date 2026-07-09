@@ -9,6 +9,7 @@ import statsData from "@/lib/webstore-stats.json"
 import { useMemo } from "react"
 import { motion } from "framer-motion"
 import CardSwap, { Card } from "@/components/CardSwap"
+import TargetCursor from "@/components/TargetCursor"
 
 export default function HomePage() {
   const { t, locale } = useLanguage()
@@ -56,6 +57,13 @@ export default function HomePage() {
 
   return (
     <div className="overflow-hidden">
+      <TargetCursor 
+        targetSelector="a, button, .cursor-target"
+        spinDuration={2}
+        hideDefaultCursor
+        parallaxOn
+        hoverDuration={0.2}
+      />
       {/* HERO SECTION */}
       <section className="relative max-w-[1200px] mx-auto px-6 pt-32 pb-24">
         {/* Subtle Background Glow */}

@@ -7,8 +7,6 @@ import Background from "@/components/Background"
 import { LanguageProvider } from "@/context/LanguageContext"
 import { SettingsProvider } from "@/context/SettingsContext"
 import StatsUpdater from "@/components/StatsUpdater"
-import TargetCursor from "@/components/TargetCursor"
-
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
@@ -34,6 +32,9 @@ export const metadata: Metadata = {
   icons: {
     icon: "/images/logo2.png",
   },
+  verification: {
+    google: "6hjg9nrYEW8TanxFpGTFrQmco_-AR3AXBNCMWPxXMcY",
+  },
 }
 
 export default function RootLayout({
@@ -56,13 +57,6 @@ export default function RootLayout({
         <SettingsProvider>
           <LanguageProvider>
             <StatsUpdater />
-            <TargetCursor 
-              targetSelector="a, button, .cursor-target"
-              spinDuration={2}
-              hideDefaultCursor
-              parallaxOn
-              hoverDuration={0.2}
-            />
             <Background />
             <Navbar />
             <main>{children}</main>
