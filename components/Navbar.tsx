@@ -23,6 +23,7 @@ export default function Navbar() {
     { href: "/about", label: t("nav.about") },
     { href: "/changelog", label: t("nav.changelog") },
     { href: "/docs", label: t("nav.docs") },
+    { href: "https://privacy-extension-bookmark-2-0.vercel.app/projects", label: "Privacy" },
   ]
 
   // Close menu when pathname changes
