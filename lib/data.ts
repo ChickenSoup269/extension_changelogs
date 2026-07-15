@@ -2117,14 +2117,14 @@ export const CHANGELOG: ChangelogItem[] = [
         },
       },
       {
-        type: "feat",
+        type: "perf",
         text: {
           vi: "Lưu trạng thái: search, folder, sort, view mode",
           en: "Save state: search query, selected folder, sort type, view mode",
         },
       },
       {
-        type: "feat",
+        type: "perf",
         text: {
           vi: "Lưu trạng thái UI: collapsed folders, checkbox, tags",
           en: "Persist UI state: collapsed folders, checkboxes, selected tags",
@@ -2287,12 +2287,26 @@ export const CHANGELOG: ChangelogItem[] = [
 ]
 
 // Automatically sync extension versions with the latest changelog entry
+import statsData from "./webstore-stats.json"
+
+export const LAST_UPDATED = statsData.lastUpdated
+
 export const EXTENSIONS: Extension[] = RAW_EXTENSIONS.map((ext) => {
+  let mergedExt = { ...ext }
+  
+  // Merge live stats from webstore-stats.json
+  const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
+  if (liveStats) {
+    mergedExt.downloads = liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0"
+    mergedExt.stars = liveStats.rating || "0"
+    mergedExt.ratingCount = liveStats.ratingCount || "0"
+  }
+
   // Find all changelog entries for this extension
   const extensionLogs = CHANGELOG.filter(
     (log) =>
-      log.extension.toLowerCase().includes(ext.name.toLowerCase()) ||
-      ext.name.toLowerCase().includes(log.extension.toLowerCase()),
+      log.extension.toLowerCase().includes(mergedExt.name.toLowerCase()) ||
+      mergedExt.name.toLowerCase().includes(log.extension.toLowerCase()),
   )
 
   // If logs exist, find the one with the highest version number
@@ -2303,12 +2317,12 @@ export const EXTENSIONS: Extension[] = RAW_EXTENSIONS.map((ext) => {
     }, extensionLogs[0])
 
     return {
-      ...ext,
+      ...mergedExt,
       version: latestLog.version,
     }
   }
 
-  return ext
+  return mergedExt
 })
 
 export const CATEGORIES = [
