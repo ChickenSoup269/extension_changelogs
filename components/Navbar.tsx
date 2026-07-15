@@ -23,7 +23,7 @@ export default function Navbar() {
     { href: "/about", label: t("nav.about") },
     { href: "/changelog", label: t("nav.changelog") },
     { href: "/docs", label: t("nav.docs") },
-    { href: "https://privacy-extension-bookmark-2-0.vercel.app/projects", label: "Privacy" },
+    { href: "/privacy", label: t("nav.privacy") },
   ]
 
   // Close menu when pathname changes
@@ -83,29 +83,28 @@ export default function Navbar() {
       <div className="flex items-center gap-2 md:gap-3">
         <button
           onClick={() => setShowSettings(true)}
-          className="cursor-target w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-[var(--bg4)]"
-          style={{ color: "var(--muted)" }}
-          title="Cài đặt"
+          className="cursor-target group flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-300 hover:bg-[var(--bg3)]"
+          style={{
+            background: "var(--bg2)",
+            color: "var(--text)",
+            border: "1px solid var(--border)",
+          }}
+          title={locale === "vi" ? "Cài đặt" : "Settings"}
         >
-          <i className="fa fa-cog"></i>
+          <i className="fa-solid fa-sliders group-hover:scale-110 transition-transform duration-300"></i>
         </button>
         
         <button
-          title="Change language"
+          title={locale === "vi" ? "Đổi ngôn ngữ" : "Change language"}
           onClick={() => setLocale(locale === "vi" ? "en" : "vi")}
-          className="cursor-target text-xs md:text-sm font-medium px-2 md:px-3 py-1.5 rounded-lg transition-all duration-200 flex items-center gap-1 md:gap-2"
+          className="cursor-target text-[11px] md:text-xs font-bold px-3 md:px-4 h-9 rounded-xl transition-all duration-300 flex items-center tracking-wide hover:bg-[var(--bg3)]"
           style={{
             background: "var(--bg2)",
             color: "var(--text)",
             border: "1px solid var(--border)",
           }}
         >
-          <img
-            src={locale === "vi" ? "https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" : "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg"}
-            alt={locale === "vi" ? "VN" : "EN"}
-            className="w-4 md:w-5 h-[12px] md:h-[14px] rounded-[2px] object-cover"
-          />
-          <span>{locale.toUpperCase()}</span>
+          {locale === "vi" ? "Tiếng Việt" : "English"}
         </button>
 
         <span

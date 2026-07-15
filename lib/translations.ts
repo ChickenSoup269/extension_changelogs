@@ -10,6 +10,7 @@ export const DICTIONARY: Record<Locale, any> = {
       about: "Giới thiệu",
       explore: "Khám phá",
       new: "mới",
+      privacy: "Bảo mật",
     },
     hero: {
       new_badge: "2 extension mới trong tháng này",
@@ -24,6 +25,7 @@ export const DICTIONARY: Record<Locale, any> = {
         downloads: "LƯỢT TRUY CẬP",
         reviews: "YÊU THÍCH",
         devs: "NGƯỜI DÙNG",
+        categories: "THỂ LOẠI",
       },
     },
     home: {
@@ -76,11 +78,14 @@ export const DICTIONARY: Record<Locale, any> = {
       dark: "Tối",
       light: "Sáng",
       accent: "Màu chủ đạo",
-      font: "Phông chữ Chrome",
-      font_default: "Inter (Mặc định)",
+      font: "Phông chữ",
+      font_primary: "Be Vietnam Pro (Chính)",
+      font_secondary: "Space Grotesk (Phụ)",
       bg_animation: "Hiệu ứng nền",
       bg_blob: "Lưới & Khối mờ",
       bg_shapes: "Khối nổi mượt",
+      bg_rain: "Mưa rơi",
+      bg_particles: "Bụi sao",
     },
     common: {
       install: "Cài đặt",
@@ -204,6 +209,7 @@ export const DICTIONARY: Record<Locale, any> = {
       about: "About",
       explore: "Explore",
       new: "new",
+      privacy: "Privacy Center",
     },
     hero: {
       new_badge: "2 new extensions this month",
@@ -218,6 +224,7 @@ export const DICTIONARY: Record<Locale, any> = {
         downloads: "VISITS",
         reviews: "LIKES",
         devs: "ACTIVE USERS",
+        categories: "CATEGORIES",
       },
     },
     home: {
@@ -271,10 +278,13 @@ export const DICTIONARY: Record<Locale, any> = {
       light: "Light",
       accent: "Accent Color",
       font: "Typography",
-      font_default: "Inter (Default)",
+      font_primary: "Be Vietnam Pro (Primary)",
+      font_secondary: "Space Grotesk (Secondary)",
       bg_animation: "Background Effect",
       bg_blob: "Grid & Blobs",
       bg_shapes: "Floating Shapes",
+      bg_rain: "Digital Rain",
+      bg_particles: "Stardust",
     },
     common: {
       install: "Install",

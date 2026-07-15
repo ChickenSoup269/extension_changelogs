@@ -13,10 +13,10 @@
   --text: #f8fafc;
   --muted: #94a3b8;
   --muted2: #475569;
-  --accent: #2ecc71;
-  --accent2: #27ae60;
-  --accent-rgb: 46, 204, 113;
-  --accent-glow: rgba(46, 204, 113, 0.12);
+  --accent: #ffffff;
+  --accent2: #a1a1aa;
+  --accent-rgb: 255, 255, 255;
+  --accent-glow: rgba(255, 255, 255, 0.05);
   --green: #2ecc71;
   --amber: #f59e0b;
   --red: #ef4444;
@@ -36,14 +36,14 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-inter), "Inter", sans-serif;
+  font-family: var(--font-primary), "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 .font-syne {
-  font-family: var(--font-outfit), "Outfit", sans-serif;
+  font-family: var(--font-secondary), "Segoe UI", sans-serif;
 }
 
 /* Scrollbar */
@@ -79,31 +79,12 @@ body {
   background: var(--bg);
 }
 
-.bg-grid {
-  position: absolute;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: -50px;
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: gridSlide 20s linear infinite;
-  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(
-    circle at center,
-    black 40%,
-    transparent 100%
-  );
-}
-
-@keyframes gridSlide {
+@keyframes fall-rain {
   0% {
-    transform: translateY(0);
+    transform: translateY(-50px);
   }
   100% {
-    transform: translateY(50px);
+    transform: translateY(110vh);
   }
 }
 

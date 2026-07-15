@@ -162,7 +162,7 @@ const TYPE_CONFIG: { [K in ChangeType]: TypeConfigValue } = {
 }
 
 const RELEASE_TYPE_LABELS = {
-  major: { label: "Major", color: "var(--accent2)" },
+  major: { label: "Major", color: "#a594ff" },
   minor: { label: "Minor", color: "#3ecf8e" },
   patch: { label: "Patch", color: "var(--muted)" },
 }
@@ -454,18 +454,14 @@ function ChangelogContent() {
   const changelogTextColor = isLightTheme ? "#111" : "var(--text)"
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Ambient Background Glows */}
-      <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[var(--accent-glow)] rounded-full blur-[150px] -z-10 opacity-40 pointer-events-none" />
-      <div className="absolute top-[40%] left-[-10%] w-[400px] h-[400px] bg-[var(--accent)] rounded-full blur-[150px] -z-10 opacity-[0.15] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[20%] w-[600px] h-[600px] bg-[var(--accent-glow)] rounded-full blur-[150px] -z-10 opacity-20 pointer-events-none" />
 
       <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14 relative z-10">
       <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
         {/* Main */}
         <div className="flex-1 min-w-0">
           <div className="mb-8">
-            <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2">
-              Change<span className="gradient-text">log</span>
+            <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2 text-[var(--text)]">
+              Changelog
             </h1>
             <p style={{ color: "var(--muted)" }}>{t("changelog.subtitle")}</p>
           </div>
@@ -505,9 +501,9 @@ function ChangelogContent() {
                 className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
                 style={{
                   background:
-                    extFilter === e ? "var(--accent-glow)" : "transparent",
-                  border: `1px solid ${extFilter === e ? "var(--accent)" : "var(--border)"}`,
-                  color: extFilter === e ? "var(--accent2)" : "var(--muted)",
+                    extFilter === e ? "var(--bg3)" : "transparent",
+                  border: `1px solid ${extFilter === e ? "var(--text)" : "var(--border)"}`,
+                  color: extFilter === e ? "var(--text)" : "var(--muted)",
                 }}
               >
                 {e === "all" ? t("extensions.all") : e}
@@ -525,7 +521,7 @@ function ChangelogContent() {
                     style={{ color: changelogTextColor }}
                   >
                     <i
-                      className={`${group.items[0]?.extensionIcon} text-lg text-[var(--accent)]`}
+                      className={`${group.items[0]?.extensionIcon} text-lg text-[var(--text)]`}
                     ></i>
                     {group.extension}
                   </h2>
@@ -534,7 +530,7 @@ function ChangelogContent() {
                       className="absolute left-0 top-0 bottom-0 w-px"
                       style={{
                         background:
-                          "linear-gradient(180deg, var(--accent), var(--border) 60%, transparent)",
+                          "linear-gradient(180deg, var(--text), var(--border) 60%, transparent)",
                       }}
                     />
 
@@ -548,22 +544,13 @@ function ChangelogContent() {
                             style={{ gridTemplateColumns: "1fr" }}
                           >
                             <div
-                              className="rounded-2xl p-6 relative backdrop-blur-md bg-gradient-to-br from-[var(--bg2)]/90 to-[var(--bg3)]/95 border border-[var(--border2)] hover:border-[var(--accent)]/40 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300"
+                              className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)] border border-[var(--border2)] hover:border-[var(--text)] hover:shadow-sm transition-all duration-300"
                             >
                               <div
                                 className="absolute -left-[27px] top-[24px] w-3 h-3 rounded-full z-10"
                                 style={{
-                                  background:
-                                    item.releaseType === "major"
-                                      ? "var(--accent)"
-                                      : "var(--bg)",
-                                  border: `2px solid ${
-                                    item.releaseType === "major"
-                                      ? "var(--accent)"
-                                      : item.releaseType === "minor"
-                                        ? "#3ecf8e"
-                                        : "var(--muted2)"
-                                  }`,
+                                  background: item.releaseType === "major" ? "var(--text)" : "var(--bg)",
+                                  border: `2px solid ${item.releaseType === "major" ? "var(--text)" : "var(--border2)"}`,
                                 }}
                               />
                               <div className="flex items-center flex-wrap gap-2.5 mb-4">
@@ -601,10 +588,10 @@ function ChangelogContent() {
                                     return (
                                       <li
                                         key={j}
-                                        className="flex items-baseline gap-2.5 text-sm"
+                                        className="flex items-start gap-3"
                                       >
                                         <span
-                                          className="text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0"
+                                          className="mt-[5px] text-[10px] font-bold px-2 py-[3px] rounded flex-shrink-0"
                                           style={{
                                             background: cfg.bg,
                                             color: cfg.color,
@@ -612,11 +599,11 @@ function ChangelogContent() {
                                         >
                                           {cfg.label}
                                         </span>
-                                        <span
-                                          style={{ color: changelogTextColor }}
+                                        <p
+                                          className="text-[15px] leading-[1.8] text-[var(--text)] opacity-90"
                                         >
                                           {change.text[locale]}
-                                        </span>
+                                        </p>
                                       </li>
                                     )
                                   })}
@@ -636,8 +623,8 @@ function ChangelogContent() {
                                       rel="noopener noreferrer"
                                       className="flex items-center gap-2 group/link"
                                     >
-                                      <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]" />
-                                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]">
+                                      <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
+                                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
                                         {t("changelog.sidebar.source_code")}
                                       </span>
                                     </a>
@@ -649,8 +636,8 @@ function ChangelogContent() {
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 group/link"
                                       >
-                                        <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]" />
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--accent2)]">
+                                        <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
+                                        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
                                           {t("changelog.sidebar.store")}
                                         </span>
                                       </a>
@@ -698,16 +685,16 @@ function ChangelogContent() {
                         style={{
                           background:
                             currentPage === page
-                              ? "var(--accent-glow)"
+                              ? "var(--bg3)"
                               : "transparent",
                           border: `1px solid ${
                             currentPage === page
-                              ? "var(--accent)"
+                              ? "var(--text)"
                               : "transparent"
                           }`,
                           color:
                             currentPage === page
-                              ? "var(--accent2)"
+                              ? "var(--text)"
                               : "var(--muted)",
                         }}
                       >
@@ -738,7 +725,7 @@ function ChangelogContent() {
         <div className="lg:w-[320px] flex flex-col gap-6">
           {/* Stats Card */}
           <div
-            className="rounded-2xl p-6 backdrop-blur-md bg-gradient-to-br from-[var(--bg2)]/90 to-[var(--bg3)]/95 border border-[var(--border2)] shadow-sm"
+            className="rounded-2xl p-6 backdrop-blur-md bg-[var(--bg2)] border border-[var(--border2)] shadow-sm"
           >
             <h3
               className="font-syne font-semibold text-xs uppercase tracking-widest mb-5"
@@ -752,35 +739,35 @@ function ChangelogContent() {
                 {
                   label: t("changelog.sidebar.total_patch"),
                   value: totalPatches,
-                  color: "var(--accent2)",
+                  color: "var(--text)",
                   icon: "fa-solid fa-layer-group",
-                  bg: "var(--accent-glow)",
+                  bg: "var(--bg)",
                 },
                 {
                   label: t("changelog.sidebar.new_features"),
                   value: newFeatures,
-                  color: "#3ecf8e",
+                  color: "var(--text)",
                   icon: "fa-solid fa-wand-magic-sparkles",
-                  bg: "rgba(62,207,142,0.1)",
+                  bg: "var(--bg)",
                 },
                 {
                   label: t("changelog.sidebar.bug_fixes"),
                   value: bugFixes,
-                  color: "#60a5fa",
+                  color: "var(--text)",
                   icon: "fa-solid fa-bug",
-                  bg: "rgba(96,165,250,0.1)",
+                  bg: "var(--bg)",
                 },
                 {
                   label: t("changelog.sidebar.breaking"),
                   value: breakingChanges,
-                  color: "#ef4444",
+                  color: "var(--text)",
                   icon: "fa-solid fa-triangle-exclamation",
-                  bg: "rgba(239,68,68,0.1)",
+                  bg: "var(--bg)",
                 },
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--accent)] group"
+                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--text)] group"
                   style={{ background: "var(--bg)" }}
                 >
                   <div
@@ -805,7 +792,7 @@ function ChangelogContent() {
               ))}
 
               <div
-                className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--accent)] group"
+                className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--text)] group"
                 style={{ background: "var(--bg)" }}
               >
                 <div className="flex items-center gap-3">
@@ -847,7 +834,7 @@ function ChangelogContent() {
               className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2"
               style={{ color: "var(--muted2)" }}
             >
-              <i className="fa-solid fa-medal text-[var(--accent)]" />
+              <i className="fa-solid fa-medal text-[var(--text)]" />
               {t("changelog.contributors.title")}
             </h3>
             <p
@@ -861,7 +848,7 @@ function ChangelogContent() {
               {paginatedContributors.map((c, i) => (
                 <div
                   key={i}
-                  className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--accent)] group"
+                  className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--text)] group"
                   style={{ background: "var(--bg)" }}
                 >
                   <div className="flex items-center gap-3 mb-2">
@@ -1010,7 +997,7 @@ function ChangelogContent() {
               >
                 <span className="flex items-center gap-2 max-w-[70%] truncate">
                   <i
-                    className={`${c.extensionIcon} text-xs text-[var(--accent)] w-4 text-center shrink-0`}
+                    className={`${c.extensionIcon} text-xs text-[var(--text)] w-4 text-center shrink-0`}
                   ></i>
                   <span
                     className="truncate"
@@ -1042,7 +1029,7 @@ function ChangelogContent() {
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-solid fa-heart text-[var(--accent)] text-base" />
+              <i className="fa-solid fa-heart text-[#e84393] text-base" />
               {locale === "vi" ? "Ủng hộ dự án" : "Support the project"}
             </h3>
 
@@ -1103,7 +1090,7 @@ function ChangelogContent() {
                   </div>
                 }
                 gridSize={8}
-                pixelColor="#ff4fa3"
+                pixelColor="#ffffff"
                 animationStepDuration={0.4}
                 className="momo-pixel-card"
               />
@@ -1119,7 +1106,7 @@ function ChangelogContent() {
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-brands fa-github text-[var(--accent)] text-base" />
+              <i className="fa-brands fa-github text-[var(--text)] text-base" />
               {t("changelog.sidebar.source_code")}
             </h3>
 
@@ -1134,8 +1121,8 @@ function ChangelogContent() {
                   <span
                     className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{
-                      background: "var(--accent-glow)",
-                      border: "1px solid var(--accent)",
+                      background: "var(--bg3)",
+                      border: "1px solid var(--border2)",
                     }}
                   >
                     <img
@@ -1155,7 +1142,7 @@ function ChangelogContent() {
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--accent2)]"
+                      className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--text)]"
                       style={{ color: changelogTextColor }}
                     >
                       {project.name}
@@ -1175,7 +1162,7 @@ function ChangelogContent() {
                   >
                     <i
                       className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1"
-                      style={{ color: "var(--accent2)" }}
+                      style={{ color: "var(--text)" }}
                     />
                   </a>
                 </div>
@@ -1192,7 +1179,7 @@ function ChangelogContent() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
                     style={{
-                      background: "var(--accent-glow)",
+                      background: "var(--bg3)",
                       border: "1px solid var(--border2)",
                     }}
                   >
@@ -1201,7 +1188,7 @@ function ChangelogContent() {
                     </span>
                     <span
                       className="flex items-center gap-1"
-                      style={{ color: "var(--accent2)" }}
+                      style={{ color: "var(--text)" }}
                     >
                       <i className="fa-solid fa-tag text-[10px]" />
                       {locale === "vi" ? "Xem releases" : "View releases"}
@@ -1220,7 +1207,7 @@ function ChangelogContent() {
             }}
           >
             <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-brands fa-chrome text-[var(--accent)] text-base" />
+              <i className="fa-brands fa-chrome text-[#3498db] text-base" />
               {t("changelog.sidebar.store")}
             </h3>
 
@@ -1231,7 +1218,7 @@ function ChangelogContent() {
                   href={project.storeHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent)] hover:bg-[var(--accent-glow)] transition-all group"
+                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <img
@@ -1244,14 +1231,14 @@ function ChangelogContent() {
                       style={{ width: 24, height: 24, borderRadius: 4 }}
                     />
                     <span
-                      className="text-xs font-semibold group-hover:text-[var(--accent2)] transition-colors"
+                      className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
                       style={{ color: changelogTextColor }}
                     >
                       {project.name}
                     </span>
                   </div>
                   <i
-                    className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--accent2)] transition-all"
+                    className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--text)] transition-all"
                     style={{ color: "var(--muted2)" }}
                   />
                 </a>
@@ -1271,8 +1258,8 @@ function ChangelogContent() {
               <span
                 className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
-                  background: "var(--accent-glow)",
-                  border: "1px solid var(--accent)",
+                  background: "var(--bg3)",
+                  border: "1px solid var(--border2)",
                 }}
               >
                 <img
@@ -1294,14 +1281,14 @@ function ChangelogContent() {
                 : "Privacy Center for managing privacy settings of 2 extensions"}
             </div>
             <a
-              href="https://privacy-extension-bookmark-2-0.vercel.app/projects"
+              href="/privacy"
               target="_blank"
               rel="noopener noreferrer"
               className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
               style={{
-                background: "var(--accent-glow)",
-                border: "1px solid var(--accent2)",
-                color: "var(--accent2)",
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+                color: "var(--text)",
               }}
             >
               {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}

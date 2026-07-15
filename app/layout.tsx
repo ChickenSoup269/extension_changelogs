@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Outfit, Inter, DM_Mono } from "next/font/google"
+import { Be_Vietnam_Pro, Space_Grotesk } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/Navbar"
 import ScrollToTop from "@/components/ScrollToTop"
@@ -7,26 +7,21 @@ import Background from "@/components/Background"
 import { LanguageProvider } from "@/context/LanguageContext"
 import { SettingsProvider } from "@/context/SettingsContext"
 import StatsUpdater from "@/components/StatsUpdater"
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["400", "500", "600", "700", "800"],
+
+const primaryFont = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-primary",
+  weight: ["300", "400", "500", "600", "700", "800"],
 })
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const secondaryFont = Space_Grotesk({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-secondary",
   weight: ["300", "400", "500", "600", "700"],
 })
 
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  variable: "--font-dm-mono",
-  weight: ["400", "500"],
-})
-
 export const metadata: Metadata = {
-  title: "My Extensions - Zero",
+  title: "Zero extension",
   description:
     "Không gian lưu trữ, chia sẻ và theo dõi cập nhật các extension do chính mình phát triển.",
   icons: {
@@ -45,7 +40,7 @@ export default function RootLayout({
   return (
     <html
       lang="vi"
-      className={`${outfit.variable} ${inter.variable} ${dmMono.variable}`}
+      className={`${primaryFont.variable} ${secondaryFont.variable}`}
     >
       <head>
         <link

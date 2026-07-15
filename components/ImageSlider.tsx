@@ -87,7 +87,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images, autoPlay = true }) =>
               <img
                 src={images[current]}
                 alt={`Slide ${current + 1}`}
-                className="w-full h-full object-cover select-none"
+                className="w-full h-full object-contain select-none"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
             </motion.div>
