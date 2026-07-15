@@ -32,16 +32,12 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
   const colors: AccentColor[] = [
     "#2ecc71",
     "#3498db",
-    "#f59e0b",
-    "#ef4444",
-    "#9b59b6",
-    "#e84393",
-    "#00cec9",
+    "#f97316",
   ]
   const fonts: { label: string; value: FontType }[] = [
-    { label: t("settings.font_default"), value: "var(--font-inter)" },
-    { label: "System UI", value: "system-ui, sans-serif" },
-    { label: "Segoe UI", value: "Segoe UI" },
+    { label: t("settings.font_primary"), value: "var(--font-primary)" },
+    { label: t("settings.font_secondary"), value: "var(--font-secondary)" },
+    { label: "System Sans", value: "sans-serif" },
   ]
 
   if (!mounted) return null
@@ -53,15 +49,15 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="max-w-[400px] w-full rounded-2xl p-6"
+        className="max-w-[420px] w-full rounded-2xl p-8"
         style={{ background: "var(--bg2)", border: "1px solid var(--border)" }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="font-syne font-bold text-xl">{t("settings.title")}</h2>
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-[var(--border)]">
+          <h2 className="font-syne font-bold text-xl text-[var(--text)]">{t("settings.title")}</h2>
           <button
             onClick={onClose}
-            className="text-xl"
+            className="text-xl transition-colors hover:text-[var(--text)]"
             style={{ color: "var(--muted)" }}
           >
             &times;
@@ -69,42 +65,60 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
         </div>
 
         {/* Theme */}
-        <div className="mb-6">
-          <p className="text-sm font-semibold mb-3">{t("settings.theme")}</p>
+        <div className="mb-8">
+          <p className="text-xs uppercase font-bold tracking-widest mb-4" style={{ color: "var(--muted2)" }}>{t("settings.theme")}</p>
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => setTheme("dark")}
-              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
               style={{
-                borderColor:
-                  theme === "dark" ? "var(--accent)" : "var(--border2)",
-                background:
-                  theme === "dark" ? "var(--accent-glow)" : "transparent",
-                color: theme === "dark" ? "var(--accent2)" : "var(--text)",
+                borderColor: theme === "dark" ? "var(--text)" : "var(--border)",
+                background: theme === "dark" ? "var(--bg3)" : "transparent",
+                color: theme === "dark" ? "var(--text)" : "var(--muted)",
               }}
             >
               <i className="fa-solid fa-moon"></i> {t("settings.dark")}
             </button>
             <button
               onClick={() => setTheme("light")}
-              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
               style={{
-                borderColor:
-                  theme === "light" ? "var(--accent)" : "var(--border2)",
-                background:
-                  theme === "light" ? "var(--accent-glow)" : "transparent",
-                color: theme === "light" ? "var(--accent2)" : "var(--text)",
+                borderColor: theme === "light" ? "var(--text)" : "var(--border)",
+                background: theme === "light" ? "var(--bg3)" : "transparent",
+                color: theme === "light" ? "var(--text)" : "var(--muted)",
               }}
             >
               <i className="fa-solid fa-sun"></i> {t("settings.light")}
+            </button>
+            <button
+              onClick={() => setTheme("yellow-black")}
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
+              style={{
+                borderColor: theme === "yellow-black" ? "var(--text)" : "var(--border)",
+                background: theme === "yellow-black" ? "var(--bg3)" : "transparent",
+                color: theme === "yellow-black" ? "var(--text)" : "var(--muted)",
+              }}
+            >
+              <i className="fa-solid fa-bolt"></i> Vàng đen
+            </button>
+            <button
+              onClick={() => setTheme("green")}
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
+              style={{
+                borderColor: theme === "green" ? "var(--text)" : "var(--border)",
+                background: theme === "green" ? "var(--bg3)" : "transparent",
+                color: theme === "green" ? "var(--text)" : "var(--muted)",
+              }}
+            >
+              <i className="fa-solid fa-leaf"></i> Xanh lá
             </button>
           </div>
         </div>
 
         {/* Accent Color */}
-        <div className="mb-6">
-          <p className="text-sm font-semibold mb-3">{t("settings.accent")}</p>
-          <div className="flex flex-wrap gap-3">
+        <div className="mb-8">
+          <p className="text-xs uppercase font-bold tracking-widest mb-4" style={{ color: "var(--muted2)" }}>{t("settings.accent")}</p>
+          <div className="flex flex-wrap gap-4">
             {colors.map((c) => (
               <button
                 key={c}
@@ -112,79 +126,86 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-transform hover:scale-110"
                 style={{
                   background: c,
-                  boxShadow:
-                    accent === c
-                      ? `0 0 0 3px var(--bg), 0 0 0 5px ${c}`
-                      : "none",
+                  boxShadow: accent === c ? `0 0 0 2px var(--bg2), 0 0 0 4px ${c}` : "none",
                 }}
               >
-                {accent === c && (
-                  <i className="fa-solid fa-check text-white text-xs"></i>
-                )}
+                {accent === c && <i className="fa-solid fa-check text-white text-xs"></i>}
               </button>
             ))}
           </div>
         </div>
 
         {/* Font Selection */}
-        <div className="mb-6">
-          <p className="text-sm font-semibold mb-3">{t("settings.font")}</p>
-          <div className="flex flex-col gap-2">
+        <div className="mb-8">
+          <p className="text-xs uppercase font-bold tracking-widest mb-4" style={{ color: "var(--muted2)" }}>{t("settings.font")}</p>
+          <div className="flex flex-col gap-3">
             {fonts.map((f) => (
               <button
                 key={f.value}
                 onClick={() => setFont(f.value)}
-                className="flex items-center justify-between px-4 py-3 rounded-xl border text-sm transition"
+                className="flex items-center justify-between px-5 py-3.5 rounded-xl border text-sm font-semibold transition-all"
                 style={{
-                  borderColor:
-                    font === f.value ? "var(--accent)" : "var(--border2)",
-                  background:
-                    font === f.value ? "var(--accent-glow)" : "transparent",
+                  borderColor: font === f.value ? "var(--text)" : "var(--border)",
+                  background: font === f.value ? "var(--bg3)" : "transparent",
+                  color: font === f.value ? "var(--text)" : "var(--muted)",
                 }}
               >
                 <span style={{ fontFamily: f.value }}>{f.label}</span>
-                {font === f.value && (
-                  <i
-                    className="fa-solid fa-check"
-                    style={{ color: "var(--accent)" }}
-                  ></i>
-                )}
+                {font === f.value && <i className="fa-solid fa-check"></i>}
               </button>
             ))}
           </div>
         </div>
 
         {/* Background Animation Selection */}
-        <div className="mb-4">
-          <p className="text-sm font-semibold mb-3">
+        <div>
+          <p className="text-xs uppercase font-bold tracking-widest mb-4" style={{ color: "var(--muted2)" }}>
             {t("settings.bg_animation")}
           </p>
           <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => setBgAnim("blob")}
-              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
               style={{
-                borderColor:
-                  bgAnim === "blob" ? "var(--accent)" : "var(--border2)",
-                background:
-                  bgAnim === "blob" ? "var(--accent-glow)" : "transparent",
-                color: bgAnim === "blob" ? "var(--accent2)" : "var(--text)",
+                borderColor: bgAnim === "blob" ? "var(--text)" : "var(--border)",
+                background: bgAnim === "blob" ? "var(--bg3)" : "transparent",
+                color: bgAnim === "blob" ? "var(--text)" : "var(--muted)",
               }}
             >
               <i className="fa-solid fa-water"></i> {t("settings.bg_blob")}
             </button>
             <button
               onClick={() => setBgAnim("shapes")}
-              className="py-2.5 rounded-xl border flex justify-center gap-2 items-center text-sm transition"
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
               style={{
-                borderColor:
-                  bgAnim === "shapes" ? "var(--accent)" : "var(--border2)",
-                background:
-                  bgAnim === "shapes" ? "var(--accent-glow)" : "transparent",
-                color: bgAnim === "shapes" ? "var(--accent2)" : "var(--text)",
+                borderColor: bgAnim === "shapes" ? "var(--text)" : "var(--border)",
+                background: bgAnim === "shapes" ? "var(--bg3)" : "transparent",
+                color: bgAnim === "shapes" ? "var(--text)" : "var(--muted)",
               }}
             >
               <i className="fa-solid fa-shapes"></i> {t("settings.bg_shapes")}
+            </button>
+            <button
+              onClick={() => setBgAnim("rain")}
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
+              style={{
+                borderColor: bgAnim === "rain" ? "var(--text)" : "var(--border)",
+                background: bgAnim === "rain" ? "var(--bg3)" : "transparent",
+                color: bgAnim === "rain" ? "var(--text)" : "var(--muted)",
+              }}
+            >
+              <i className="fa-solid fa-cloud-rain"></i> {t("settings.bg_rain")}
+            </button>
+            <button
+              onClick={() => setBgAnim("particles")}
+              className="py-3 rounded-xl border flex justify-center gap-2 items-center text-sm font-semibold transition-all"
+              style={{
+                borderColor: bgAnim === "particles" ? "var(--text)" : "var(--border)",
+                background: bgAnim === "particles" ? "var(--bg3)" : "transparent",
+                color: bgAnim === "particles" ? "var(--text)" : "var(--muted)",
+              }}
+            >
+              <i className="fa-solid fa-sparkles"></i> {t("settings.bg_particles")}
             </button>
           </div>
         </div>
