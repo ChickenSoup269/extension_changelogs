@@ -15,15 +15,7 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
     <div
       className="rounded-3xl p-0 mb-16 overflow-hidden relative group border border-[var(--border)] bg-[var(--bg2)] shadow-2xl"
     >
-      {/* Background Preview with Blur */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={previewImg} 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-20 scale-105 group-hover:scale-110 transition-transform duration-1000 blur-sm"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg2)] via-[var(--bg2)]/80 to-transparent" />
-      </div>
+      <div className="absolute inset-0 z-0 bg-[var(--bg2)]" />
 
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_350px] gap-8 items-center p-8 md:p-12">
         <div>
@@ -48,8 +40,8 @@ export default function FeaturedBanner({ ext }: { ext: Extension }) {
               href={ext.homepage || "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3 rounded-xl text-white font-bold transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[var(--accent-glow)] flex items-center gap-2"
-              style={{ background: "linear-gradient(to bottom, var(--accent) 5%, var(--accent2) 95%)" }}
+              className="px-8 py-3 rounded-xl text-[var(--bg)] font-bold transition-all duration-300 transform hover:scale-105 shadow-sm flex items-center gap-2"
+              style={{ background: "var(--text)" }}
             >
               <i className="fa-brands fa-chrome text-lg"></i>
               {t("common.install_now").toUpperCase()}
