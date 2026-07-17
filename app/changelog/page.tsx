@@ -2,6 +2,7 @@
 
 import { Suspense, type ReactNode, useEffect, useRef, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import Link from "next/link"
 import { gsap } from "gsap"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
@@ -527,10 +528,11 @@ function ChangelogContent() {
                   </h2>
                   <div className="relative pl-5">
                     <div
-                      className="absolute left-0 top-0 bottom-0 w-px"
+                      className="absolute left-0 top-0 bottom-0 w-[2px]"
                       style={{
                         background:
-                          "linear-gradient(180deg, var(--text), var(--border) 60%, transparent)",
+                          "linear-gradient(180deg, #a594ff 0%, #3ecf8e 50%, var(--border) 90%, transparent)",
+                        boxShadow: "0 0 10px rgba(165,148,255,0.4)"
                       }}
                     />
 
@@ -544,40 +546,53 @@ function ChangelogContent() {
                             style={{ gridTemplateColumns: "1fr" }}
                           >
                             <div
-                              className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)] border border-[var(--border2)] hover:border-[var(--text)] hover:shadow-sm transition-all duration-300"
+                              className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)]/80 border border-[var(--border2)] hover:border-[var(--text)] transition-all duration-500 group/card overflow-hidden"
+                              style={{
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.05)"
+                              }}
                             >
+                              {/* Background glow on hover */}
+                              <div className="absolute inset-0 bg-gradient-to-br from-[var(--text)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                              
+                              {/* Glowing colorful dot */}
                               <div
-                                className="absolute -left-[27px] top-[24px] w-3 h-3 rounded-full z-10"
+                                className="absolute -left-[27.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/card:scale-125"
                                 style={{
-                                  background: item.releaseType === "major" ? "var(--text)" : "var(--bg)",
-                                  border: `2px solid ${item.releaseType === "major" ? "var(--text)" : "var(--border2)"}`,
+                                  background: item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"),
+                                  boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e")}`,
                                 }}
                               />
-                              <div className="flex items-center flex-wrap gap-2.5 mb-4">
+                              <div className="flex items-center flex-wrap gap-2.5 mb-4 relative z-10">
                                 <span
-                                  className="font-mono text-sm font-medium"
+                                  className="font-mono text-sm font-bold px-2 py-1 rounded-md"
                                   style={{
-                                    color: "var(--accent2)",
+                                    backgroundColor: "var(--bg3)",
+                                    color: "var(--text)",
                                     fontFamily: "var(--font-dm-mono)",
                                   }}
                                 >
                                   {item.version}
                                 </span>
                                 <span
-                                  className="text-xs font-semibold"
-                                  style={{ color: rel.color }}
+                                  className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full"
+                                  style={{ 
+                                    color: rel.color,
+                                    backgroundColor: `${rel.color}20`,
+                                    border: `1px solid ${rel.color}40`
+                                  }}
                                 >
                                   {rel.label}
                                 </span>
                                 <span
-                                  className="ml-auto text-xs"
+                                  className="ml-auto text-xs font-medium"
                                   style={{ color: "var(--muted2)" }}
                                 >
+                                  <i className="fa-regular fa-clock mr-1.5 opacity-70"></i>
                                   {item.date[locale]}
                                 </span>
                               </div>
 
-                              <ul className="space-y-2">
+                              <ul className="space-y-3 relative z-10">
                                 {item.changes
                                   .filter(
                                     (c) =>
@@ -588,13 +603,14 @@ function ChangelogContent() {
                                     return (
                                       <li
                                         key={j}
-                                        className="flex items-start gap-3"
+                                        className="flex items-start gap-3 p-2 -ml-2 rounded-lg transition-colors hover:bg-[var(--bg3)]"
                                       >
                                         <span
-                                          className="mt-[5px] text-[10px] font-bold px-2 py-[3px] rounded flex-shrink-0"
+                                          className="mt-[2px] text-[10px] font-extrabold px-2 py-1 rounded-md flex-shrink-0"
                                           style={{
                                             background: cfg.bg,
                                             color: cfg.color,
+                                            boxShadow: `0 0 8px ${cfg.bg}`
                                           }}
                                         >
                                           {cfg.label}
@@ -725,14 +741,32 @@ function ChangelogContent() {
         <div className="lg:w-[320px] flex flex-col gap-6">
           {/* Stats Card */}
           <div
-            className="rounded-2xl p-6 backdrop-blur-md bg-[var(--bg2)] border border-[var(--border2)] shadow-sm"
+            className="rounded-xl p-5"
+            style={{
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
+            }}
           >
-            <h3
-              className="font-syne font-semibold text-xs uppercase tracking-widest mb-5"
-              style={{ color: "var(--muted2)" }}
-            >
-              {t("changelog.sidebar.stats")}
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-syne font-semibold text-sm">
+                <i className="fa-solid fa-chart-pie mr-2 opacity-70" />
+                {t("changelog.sidebar.stats")}
+              </h3>
+            </div>
+
+            {/* Mini Chart */}
+            <div className="mb-5">
+              <div className="flex w-full h-2 rounded-full overflow-hidden mb-2" style={{ background: "var(--bg4)" }}>
+                <div style={{ width: `${(newFeatures / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#a594ff" }} />
+                <div style={{ width: `${(bugFixes / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#3ecf8e" }} />
+                <div style={{ width: `${(breakingChanges / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#ef4444" }} />
+              </div>
+              <div className="flex justify-between text-[9px] font-bold uppercase tracking-wider">
+                <span style={{ color: "#a594ff" }}>Feat {newFeatures}</span>
+                <span style={{ color: "#3ecf8e" }}>Fix {bugFixes}</span>
+                <span style={{ color: "#ef4444" }}>Break {breakingChanges}</span>
+              </div>
+            </div>
 
             <div className="grid grid-cols-2 gap-3">
               {[
@@ -891,33 +925,70 @@ function ChangelogContent() {
                   </div>
 
                   <div className="flex items-center gap-2 flex-wrap">
-                    {c.role && (
-                      <span
-                        className="text-[8px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider"
-                        style={{
-                          background: c.role[locale].includes("Bug Hunter")
-                            ? "rgba(239,68,68,0.12)"
-                            : "var(--bg4)",
-                          color: c.role[locale].includes("Bug Hunter")
-                            ? "#ef4444"
-                            : "var(--accent2)",
-                          border: c.role[locale].includes("Bug Hunter")
-                            ? "1px solid rgba(239,68,68,0.2)"
-                            : "1px solid var(--border)",
-                        }}
-                      >
-                        {c.role[locale]}
-                      </span>
-                    )}
-                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.2)]">
-                      <i className="fa-solid fa-bug text-[8px] text-[#ef4444]" />
-                      <span className="text-[9px] font-bold text-[#ef4444]">
+                    {c.role && (() => {
+                      const roleText = c.role[locale];
+                      const isBugHunter = roleText.includes("Bug Hunter");
+                      const isContributor = roleText.includes("Người đóng góp") || roleText.includes("Contributor");
+                      const isDual = isBugHunter && isContributor;
+                      
+                      const parsedBugs = parseInt(String(c.bugs).replace(/\D/g, "") || "0", 10);
+                      const parsedSuggestions = parseInt(String(c.suggestions).replace(/\D/g, "") || "0", 10);
+                      const isSuper = (parsedBugs > 3 || parsedSuggestions > 3 || (parsedBugs + parsedSuggestions) > 3);
+
+                      let color = "#60a5fa"; // Soft Blue for Contributor
+                      let bg = "rgba(96,165,250,0.15)";
+                      let border = "rgba(96,165,250,0.3)";
+                      let shadow = "rgba(96,165,250,0.2)";
+
+                      if (isDual) {
+                        color = "#eab308"; // Gold for both
+                        bg = "rgba(234,179,8,0.15)";
+                        border = "rgba(234,179,8,0.3)";
+                        shadow = "rgba(234,179,8,0.2)";
+                      } else if (isBugHunter) {
+                        color = "#c084fc"; // Soft Purple for Bug Hunter
+                        bg = "rgba(192,132,252,0.15)";
+                        border = "rgba(192,132,252,0.3)";
+                        shadow = "rgba(192,132,252,0.2)";
+                      }
+
+                      return (
+                        <span
+                          className={`text-[8px] px-2 py-[3px] rounded-md font-bold uppercase tracking-wider ${isSuper ? 'animate-pulse' : ''}`}
+                          style={{
+                            background: bg,
+                            color: color,
+                            border: `1px solid ${border}`,
+                            boxShadow: isSuper ? `0 0 15px 2px ${color}80` : `0 0 8px ${shadow}`
+                          }}
+                        >
+                          {roleText}
+                        </span>
+                      );
+                    })()}
+                    <div 
+                      className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
+                      style={{
+                        background: "rgba(34,197,94,0.1)", 
+                        border: "1px solid rgba(34,197,94,0.2)",
+                        boxShadow: "0 0 8px rgba(34,197,94,0.1)"
+                      }}
+                    >
+                      <i className="fa-solid fa-bug text-[8px] text-[#22c55e]" />
+                      <span className="text-[9px] font-extrabold text-[#22c55e]">
                         {c.bugs}
                       </span>
                     </div>
-                    <div className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[rgba(62,207,142,0.1)] border border-[rgba(62,207,142,0.2)]">
-                      <i className="fa-solid fa-lightbulb text-[8px] text-[#3ecf8e]" />
-                      <span className="text-[9px] font-bold text-[#3ecf8e]">
+                    <div 
+                      className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
+                      style={{
+                        background: "rgba(168,85,247,0.1)", 
+                        border: "1px solid rgba(168,85,247,0.2)",
+                        boxShadow: "0 0 8px rgba(168,85,247,0.1)"
+                      }}
+                    >
+                      <i className="fa-solid fa-lightbulb text-[8px] text-[#a855f7]" />
+                      <span className="text-[9px] font-extrabold text-[#a855f7]">
                         {c.suggestions}
                       </span>
                     </div>
@@ -1280,10 +1351,8 @@ function ChangelogContent() {
                 ? "Trung tâm bảo mật, quản lý quyền riêng tư của 2 extension"
                 : "Privacy Center for managing privacy settings of 2 extensions"}
             </div>
-            <a
+            <Link
               href="/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
               className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
               style={{
                 background: "var(--bg3)",
@@ -1292,7 +1361,7 @@ function ChangelogContent() {
               }}
             >
               {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}
-            </a>
+            </Link>
           </div>
           <div style={{ color: "var(--muted)" }}></div>
         </div>{" "}
