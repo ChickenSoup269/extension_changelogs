@@ -99,7 +99,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 color: theme === "yellow-black" ? "var(--text)" : "var(--muted)",
               }}
             >
-              <i className="fa-solid fa-bolt"></i> Vàng đen
+              <i className="fa-solid fa-bolt"></i> {t("settings.yellow_black")}
             </button>
             <button
               onClick={() => setTheme("green")}
@@ -110,7 +110,7 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 color: theme === "green" ? "var(--text)" : "var(--muted)",
               }}
             >
-              <i className="fa-solid fa-leaf"></i> Xanh lá
+              <i className="fa-solid fa-leaf"></i> {t("settings.green")}
             </button>
           </div>
         </div>
