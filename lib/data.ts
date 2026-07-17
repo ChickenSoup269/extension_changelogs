@@ -52,7 +52,7 @@ const RAW_EXTENSIONS: Extension[] = [
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
     downloads: "192",
-    stars: "3.7",
+    stars: "4.2",
     ratingCount: "3",
 
     author: "ChickenSoup269",
@@ -88,6 +88,78 @@ const RAW_EXTENSIONS: Extension[] = [
 ]
 
 export const CHANGELOG: ChangelogItem[] = [
+  {
+    version: "1.6.0",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "18 Tháng 7 2026", en: "July 18, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Siêu tối ưu tốc độ (BookmarkCache): Triển khai hệ thống bộ nhớ đệm thông minh, giải quyết triệt để tình trạng đơ/khựng giao diện (UI freezing) và giúp tải hàng ngàn bookmark nhanh ngay lập tức.",
+          en: "Performance Supercharge (BookmarkCache): Implemented a new caching service to completely eliminate UI freezing and drastically optimize bookmark loading times.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Lột xác giao diện Kanban & Bento: Thiết kế lại hoàn toàn chế độ xem Kanban và Bento Box sang phong cách thẻ Card sang xịn mịn; hỗ trợ thanh cuộn thông minh khi kéo thả và tự động tối ưu bố cục theo chiều dọc khi thu nhỏ popup.",
+          en: "Bento & Kanban Redesign: Completely overhauled Kanban and Bento views into a sleek Card style, improved drag-and-drop scroll behavior, and optimized responsiveness for popup modes.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu trang Cài đặt & Quản lý Theme: Thay đổi menu cài đặt sang dạng lưới nút bấm (Pill grids), ghi nhớ trạng thái đóng/mở; thiết kế lại khu vực chọn Theme dạng lưới trực quan và bổ sung 3 font chữ mới (Fira Code, Poppins, Montserrat).",
+          en: "Settings & Theme Switcher Overhaul: Redesigned the settings panel with pill grids and persistent collapse states, implemented a new grid-based theme selection card, and added Fira Code, Poppins, and Montserrat fonts.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thanh tìm kiếm Kính Mờ (Glassmorphism): Tích hợp hiệu ứng kính mờ nghệ thuật cho thanh tìm kiếm; thanh tìm kiếm và biểu tượng cài đặt sẽ tự động 'dính' (Sticky) lại phía trên và ẩn hiện mượt mà khi bạn cuộn trang.",
+          en: "Sticky Glassmorphic Header: Unified the search bar and settings icon into a single sticky blurred background that stays elegantly on top only when scrolling.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Thao tác Thư mục nâng cao: Cho phép kéo thả trực tiếp bookmark/thư mục từ màn hình chính vào thanh Sidebar; nâng cấp giao diện sắp xếp thư mục dạng danh sách phẳng kèm thanh điều hướng (Breadcrumbs) trực quan.",
+          en: "Advanced Folder Management: Allowed dragging bookmarks and folders directly from main views into sidebar folders, and refactored the organize folders UI with a flat list view and interactive breadcrumbs.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp Dọn dẹp thông minh (Smart Cleanup): Bổ sung các lệnh dọn dẹp hàng loạt (Bulk cleanup), tích hợp tính năng quét dọn vào khung chat AI và hỗ trợ Hoàn tác (Undo) lập tức nếu lỡ tay xóa nhầm thư mục.",
+          en: "Smart Cleanup Upgrades: Integrated bulk cleanup actions into the chat UI and added an instant Undo feature for accidental folder deletions.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Nâng cấp Quản lý Thẻ (Tags): Thêm thanh tìm kiếm bộ lọc ngay trong bảng chọn thẻ, bổ sung tính năng sửa/xóa tag trực tiếp và hiệu ứng mờ viền cho các nút bấm tag.",
+          en: "Tag Browser Enhancements: Added a live search filter inside the existing tags picker, alongside fully-featured edit and delete tag management controls.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng bộ Đám mây & Google Drive: Thiết kế lại toàn bộ giao diện đồng bộ Google Drive, cho phép tự đặt tên file backup theo ý muốn và thêm cảnh báo/link góp ý khi đồng bộ cloud.",
+          en: "Cloud Sync & Google Drive Redesign: Overhauled the Google Drive sync popup, added custom backup filename support, and introduced a testing warning link to the cloud sync modal.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi & Tối ưu trải nghiệm (UX): Cập nhật thư viện FontAwesome lên bản 6.7.2 sửa lỗi mất icon, sửa lỗi nhấn vào ảnh đại diện không mở được link, nâng cấp tooltip tự đổi màu theo theme và cải tiến các bước hướng dẫn (Tour) bằng bàn phím.",
+          en: "Bug Fixes & UX Polish: Upgraded FontAwesome to 6.7.2, fixed gallery card click actions, implemented theme-responsive global tooltips, and enhanced the first-run tour with keyboard support and back buttons.",
+        },
+      },
+    ],
+  },
   {
     version: "1.8.2",
     extension: "Zero Startpage - Newtab Replacement",
@@ -2293,11 +2365,13 @@ export const LAST_UPDATED = statsData.lastUpdated
 
 export const EXTENSIONS: Extension[] = RAW_EXTENSIONS.map((ext) => {
   let mergedExt = { ...ext }
-  
+
   // Merge live stats from webstore-stats.json
-  const liveStats = statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
+  const liveStats =
+    statsData.extensions[ext.webstoreId as keyof typeof statsData.extensions]
   if (liveStats) {
-    mergedExt.downloads = liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0"
+    mergedExt.downloads =
+      liveStats.users.replace(/,/g, "").replace(/\+/g, "") || "0"
     mergedExt.stars = liveStats.rating || "0"
     mergedExt.ratingCount = liveStats.ratingCount || "0"
   }
