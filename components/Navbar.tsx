@@ -112,7 +112,7 @@ export default function Navbar() {
           style={{
             background: "var(--accent-glow)",
             border: "1px solid var(--accent)",
-            color: "var(--accent2)",
+            color: "var(--accent-visible)",
           }}
         >
           v{latestVersion} {t("nav.new")}
@@ -120,8 +120,8 @@ export default function Navbar() {
 
         <Link
           href="/extensions"
-          className="cursor-target hidden sm:flex text-xs md:text-sm font-medium px-3 md:px-4 py-1.5 rounded-lg text-white transition-all duration-200 hover:opacity-90 hover:-translate-y-px items-center"
-          style={{ background: "var(--accent)" }}
+          className="cursor-target hidden sm:flex text-xs md:text-sm font-medium px-3 md:px-4 py-1.5 rounded-lg transition-all duration-200 hover:opacity-90 hover:-translate-y-px items-center"
+          style={{ background: "var(--accent)", color: "var(--accent-text)" }}
         >
           {t("nav.explore")}
         </Link>
@@ -170,7 +170,8 @@ export default function Navbar() {
           <div className="mt-4 pt-4 border-t border-[var(--border)]">
             <Link
               href="/extensions"
-              className="w-full flex items-center justify-center gap-2 py-4 bg-[var(--accent)] text-white font-bold rounded-xl shadow-lg"
+              className="w-full flex items-center justify-center gap-2 py-4 font-bold rounded-xl shadow-lg"
+              style={{ background: "var(--accent)", color: "var(--accent-text)" }}
               onClick={() => setIsMenuOpen(false)}
             >
               <i className="fa fa-rocket"></i>

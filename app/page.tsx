@@ -56,9 +56,10 @@ export default function HomePage() {
             className="flex-1 text-center lg:text-left"
           >
             <div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest mb-8 text-[var(--accent)] uppercase border border-[var(--border2)] bg-[var(--bg2)]/50 backdrop-blur-md shadow-[0_0_15px_var(--accent-glow)]"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-bold tracking-widest mb-8 uppercase border border-[var(--border2)] bg-[var(--bg2)]/50 backdrop-blur-md shadow-[0_0_15px_var(--accent-glow)]"
+              style={{ color: "var(--accent-visible)" }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--accent-visible)" }} />
               {t("hero.new_badge")}
             </div>
 
@@ -79,7 +80,8 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
               <Link
                 href="/extensions"
-                className="cursor-target px-8 py-3.5 bg-[var(--text)] text-[var(--bg)] font-bold rounded-full hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-[0_0_20px_var(--accent-glow)] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+                className="cursor-target px-8 py-3.5 font-bold rounded-full hover:scale-105 transition-all duration-300 flex items-center gap-2 shadow-[0_0_20px_var(--accent-glow)] hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+                style={{ backgroundColor: "var(--accent)", color: "var(--accent-text)" }}
               >
                 {t("hero.cta_explore")}
                 <i className="fas fa-arrow-right text-sm" />
