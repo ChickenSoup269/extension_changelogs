@@ -33,6 +33,8 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
     "#2ecc71",
     "#3498db",
     "#f97316",
+    "#ffffff",
+    "#000000",
   ]
   const fonts: { label: string; value: FontType }[] = [
     { label: t("settings.font_primary"), value: "var(--font-primary)" },
@@ -127,9 +129,10 @@ export default function SettingsModal({ onClose }: { onClose: () => void }) {
                 style={{
                   background: c,
                   boxShadow: accent === c ? `0 0 0 2px var(--bg2), 0 0 0 4px ${c}` : "none",
+                  border: c === "#000000" || c === "#ffffff" ? "1px solid var(--border)" : "none"
                 }}
               >
-                {accent === c && <i className="fa-solid fa-check text-white text-xs"></i>}
+                {accent === c && <i className={`fa-solid fa-check text-xs ${c === '#ffffff' ? 'text-black' : 'text-white'}`}></i>}
               </button>
             ))}
           </div>

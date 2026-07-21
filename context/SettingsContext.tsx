@@ -7,6 +7,8 @@ export type AccentColor =
   | "#2ecc71"
   | "#3498db"
   | "#f97316"
+  | "#ffffff"
+  | "#000000"
 export type FontType = "var(--font-primary)" | "var(--font-secondary)" | "sans-serif"
 export type BgAnimType = "blob" | "shapes" | "rain" | "particles"
 
@@ -30,16 +32,31 @@ const ACCENT_COLORS = {
     accent2: "#27ae60",
     glow: "rgba(46, 204, 113, 0.12)",
     selection: "rgba(46, 204, 113, 0.25)",
+    text: "#ffffff",
   },
   "#3498db": {
     accent2: "#2980b9",
     glow: "rgba(52, 152, 219, 0.12)",
     selection: "rgba(52, 152, 219, 0.25)",
+    text: "#ffffff",
   },
   "#f97316": {
     accent2: "#ea580c",
     glow: "rgba(249, 115, 22, 0.12)",
     selection: "rgba(249, 115, 22, 0.25)",
+    text: "#ffffff",
+  },
+  "#ffffff": {
+    accent2: "#d4d4d8",
+    glow: "rgba(255, 255, 255, 0.12)",
+    selection: "rgba(255, 255, 255, 0.25)",
+    text: "#000000",
+  },
+  "#000000": {
+    accent2: "#27272a",
+    glow: "rgba(0, 0, 0, 0.12)",
+    selection: "rgba(0, 0, 0, 0.25)",
+    text: "#ffffff",
   },
 }
 
@@ -126,6 +143,13 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty("--accent", accent)
     root.style.setProperty("--accent2", colorConfig.accent2)
     root.style.setProperty("--accent-glow", colorConfig.glow)
+    root.style.setProperty("--accent-text", colorConfig.text)
+    
+    let accentVisible = accent
+    if (accent === "#ffffff" || accent === "#000000") {
+      accentVisible = root.style.getPropertyValue("--text")
+    }
+    root.style.setProperty("--accent-visible", accentVisible)
 
     document.body.style.fontFamily = `${font}, "Segoe UI", sans-serif`
   }, [theme, accent, font, bgAnim, mounted])
