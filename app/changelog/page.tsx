@@ -526,13 +526,13 @@ function ChangelogContent() {
                     ></i>
                     {group.extension}
                   </h2>
-                  <div className="relative pl-5">
+                  <div className="relative pl-8">
                     <div
-                      className="absolute left-0 top-0 bottom-0 w-[2px]"
+                      className="absolute left-[5.5px] top-[30px] bottom-0 w-[2px]"
                       style={{
                         background:
-                          "linear-gradient(180deg, #a594ff 0%, #3ecf8e 50%, var(--border) 90%, transparent)",
-                        boxShadow: "0 0 10px rgba(165,148,255,0.4)"
+                          "linear-gradient(180deg, var(--accent) 0%, var(--accent2) 40%, var(--border) 80%, transparent 100%)",
+                        boxShadow: "0 0 10px var(--accent-glow)"
                       }}
                     />
 
@@ -542,9 +542,18 @@ function ChangelogContent() {
                         return (
                           <div
                             key={i}
-                            className="grid gap-4"
+                            className="grid gap-4 relative group/item"
                             style={{ gridTemplateColumns: "1fr" }}
                           >
+                            {/* Glowing colorful dot */}
+                            <div
+                              className="absolute -left-[32.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/item:scale-125 group-hover/item:brightness-110"
+                              style={{
+                                background: item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"),
+                                boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e")}`,
+                              }}
+                            />
+
                             <div
                               className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)]/80 border border-[var(--border2)] hover:border-[var(--text)] transition-all duration-500 group/card overflow-hidden"
                               style={{
@@ -553,16 +562,17 @@ function ChangelogContent() {
                             >
                               {/* Background glow on hover */}
                               <div className="absolute inset-0 bg-gradient-to-br from-[var(--text)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                              
-                              {/* Glowing colorful dot */}
-                              <div
-                                className="absolute -left-[27.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/card:scale-125"
-                                style={{
-                                  background: item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"),
-                                  boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e")}`,
-                                }}
-                              />
                               <div className="flex items-center flex-wrap gap-2.5 mb-4 relative z-10">
+                                <span
+                                  className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md"
+                                  style={{
+                                    backgroundColor: "var(--bg3)",
+                                    color: "var(--text)",
+                                  }}
+                                >
+                                  <i className={`${item.extensionIcon || 'fa-solid fa-puzzle-piece'} text-[10px] opacity-70`}></i>
+                                  {item.extension}
+                                </span>
                                 <span
                                   className="font-mono text-sm font-bold px-2 py-1 rounded-md"
                                   style={{
@@ -752,14 +762,17 @@ function ChangelogContent() {
                 <i className="fa-solid fa-chart-pie mr-2 opacity-70" />
                 {t("changelog.sidebar.stats")}
               </h3>
+              <span className="text-[10px] font-bold px-2 py-1 rounded bg-[var(--bg2)] text-[var(--accent)] border border-[var(--border)] shadow-sm">
+                {currentMonthStr}
+              </span>
             </div>
 
             {/* Mini Chart */}
             <div className="mb-5">
-              <div className="flex w-full h-2 rounded-full overflow-hidden mb-2" style={{ background: "var(--bg4)" }}>
-                <div style={{ width: `${(newFeatures / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#a594ff" }} />
-                <div style={{ width: `${(bugFixes / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#3ecf8e" }} />
-                <div style={{ width: `${(breakingChanges / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "#ef4444" }} />
+              <div className="flex w-full h-2 rounded-full overflow-hidden mb-2 shadow-inner" style={{ background: "var(--bg4)" }}>
+                <div style={{ width: `${(newFeatures / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #818cf8, #a594ff)" }} />
+                <div style={{ width: `${(bugFixes / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #34d399, #3ecf8e)" }} />
+                <div style={{ width: `${(breakingChanges / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #f87171, #ef4444)" }} />
               </div>
               <div className="flex justify-between text-[9px] font-bold uppercase tracking-wider">
                 <span style={{ color: "#a594ff" }}>Feat {newFeatures}</span>
@@ -775,40 +788,41 @@ function ChangelogContent() {
                   value: totalPatches,
                   color: "var(--text)",
                   icon: "fa-solid fa-layer-group",
-                  bg: "var(--bg)",
+                  bg: "var(--bg4)",
                 },
                 {
                   label: t("changelog.sidebar.new_features"),
                   value: newFeatures,
-                  color: "var(--text)",
+                  color: "#a594ff",
                   icon: "fa-solid fa-wand-magic-sparkles",
-                  bg: "var(--bg)",
+                  bg: "rgba(165,148,255,0.15)",
                 },
                 {
                   label: t("changelog.sidebar.bug_fixes"),
                   value: bugFixes,
-                  color: "var(--text)",
+                  color: "#3ecf8e",
                   icon: "fa-solid fa-bug",
-                  bg: "var(--bg)",
+                  bg: "rgba(62,207,142,0.15)",
                 },
                 {
                   label: t("changelog.sidebar.breaking"),
                   value: breakingChanges,
-                  color: "var(--text)",
+                  color: "#ef4444",
                   icon: "fa-solid fa-triangle-exclamation",
-                  bg: "var(--bg)",
+                  bg: "rgba(239,68,68,0.15)",
                 },
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--text)] group"
+                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--text)] group relative overflow-hidden"
                   style={{ background: "var(--bg)" }}
                 >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: s.color }} />
                   <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110"
+                    className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110 shadow-sm"
                     style={{ background: s.bg, color: s.color }}
                   >
-                    <i className={`${s.icon} text-xs`} />
+                    <i className={`${s.icon} text-xs drop-shadow-sm`} />
                   </div>
                   <span
                     className="text-xl font-bold font-syne"
@@ -1314,6 +1328,75 @@ function ChangelogContent() {
                   />
                 </a>
               ))}
+            </div>
+          </div>
+
+          {/* Firefox Store Card */}
+          <div
+            className="rounded-xl p-5"
+            style={{
+              background: "var(--bg3)",
+              border: "1px solid var(--border2)",
+            }}
+          >
+            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+              <i className="fa-brands fa-firefox-browser text-[#ff7139] text-base" />
+              Firefox Add-ons
+            </h3>
+
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://addons.mozilla.org/en-US/firefox/addon/zero-startpage-newtab/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/images/startpage_icon.png"
+                    alt="Zero Start Page"
+                    style={{ width: 24, height: 24, borderRadius: 4 }}
+                  />
+                  <span
+                    className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
+                    style={{ color: changelogTextColor }}
+                  >
+                    Zero Start Page
+                  </span>
+                </div>
+                <i
+                  className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--text)] transition-all"
+                  style={{ color: "var(--muted2)" }}
+                />
+              </a>
+
+              <div
+                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] opacity-70 cursor-not-allowed transition-all"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/images/bookmark_icon.png"
+                    alt="Zero Bookmark Manager"
+                    style={{ width: 24, height: 24, borderRadius: 4, filter: 'grayscale(100%)' }}
+                  />
+                  <span
+                    className="text-xs font-semibold"
+                    style={{ color: changelogTextColor }}
+                  >
+                    Zero Bookmark Manager
+                  </span>
+                </div>
+                <span
+                  className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                  style={{ 
+                    color: "var(--muted2)",
+                    backgroundColor: "var(--bg3)",
+                    border: "1px solid var(--border)"
+                  }}
+                >
+                  {locale === "vi" ? "Sắp ra mắt" : "Upcoming"}
+                </span>
+              </div>
             </div>
           </div>
 
