@@ -92,9 +92,16 @@ export const CHANGELOG: ChangelogItem[] = [
     version: "1.6.0",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
-    date: { vi: "18 Tháng 7 2026", en: "July 18, 2026" },
+    date: { vi: "22 Tháng 7 2026", en: "July 22, 2026" },
     releaseType: "minor",
     changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Phân loại tự động bằng AI (AI Auto-categorization): Thêm tùy chọn trong cài đặt cho phép AI tự động phân tích và sắp xếp bookmark vào các danh mục phù hợp ngay từ chạy ngầm (Background).",
+          en: "AI Auto-Categorization: Added a settings toggle allowing AI to automatically categorize and organize your bookmarks in the background.",
+        },
+      },
       {
         type: "feat",
         text: {
@@ -105,7 +112,7 @@ export const CHANGELOG: ChangelogItem[] = [
       {
         type: "feat",
         text: {
-          vi: "Lột xác giao diện Kanban & Bento: Thiết kế lại hoàn toàn chế độ xem Kanban và Bento Box sang phong cách thẻ Card sang xịn mịn; hỗ trợ thanh cuộn thông minh khi kéo thả và tự động tối ưu bố cục theo chiều dọc khi thu nhỏ popup.",
+          vi: "Lột xác giao diện Kanban & Bento: Thiết kế lại hoàn toàn chế độ xem Kanban và Bento Box sang phong cách thẻ Card hiện đại; hỗ trợ thanh cuộn thông minh khi kéo thả và tự động tối ưu bố cục theo chiều dọc khi thu nhỏ popup.",
           en: "Bento & Kanban Redesign: Completely overhauled Kanban and Bento views into a sleek Card style, improved drag-and-drop scroll behavior, and optimized responsiveness for popup modes.",
         },
       },
@@ -119,6 +126,13 @@ export const CHANGELOG: ChangelogItem[] = [
       {
         type: "feat",
         text: {
+          vi: "Thao tác Thư mục & Thẻ nâng cao: Gợi ý thẻ thông minh (Native Tag Suggestions) khi nhập, cho phép kéo thả trực tiếp bookmark/thư mục vào Sidebar và nâng cấp giao diện sắp xếp thư mục dạng danh sách phẳng kèm thanh điều hướng (Breadcrumbs).",
+          en: "Advanced Folders & Tag Suggestions: Added native tag suggestions datalist, allowed dragging items directly to sidebar folders, and refactored organize folders UI with breadcrumbs navigation.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
           vi: "Thanh tìm kiếm Kính Mờ (Glassmorphism): Tích hợp hiệu ứng kính mờ nghệ thuật cho thanh tìm kiếm; thanh tìm kiếm và biểu tượng cài đặt sẽ tự động 'dính' (Sticky) lại phía trên và ẩn hiện mượt mà khi bạn cuộn trang.",
           en: "Sticky Glassmorphic Header: Unified the search bar and settings icon into a single sticky blurred background that stays elegantly on top only when scrolling.",
         },
@@ -126,36 +140,15 @@ export const CHANGELOG: ChangelogItem[] = [
       {
         type: "feat",
         text: {
-          vi: "Thao tác Thư mục nâng cao: Cho phép kéo thả trực tiếp bookmark/thư mục từ màn hình chính vào thanh Sidebar; nâng cấp giao diện sắp xếp thư mục dạng danh sách phẳng kèm thanh điều hướng (Breadcrumbs) trực quan.",
-          en: "Advanced Folder Management: Allowed dragging bookmarks and folders directly from main views into sidebar folders, and refactored the organize folders UI with a flat list view and interactive breadcrumbs.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Nâng cấp Dọn dẹp thông minh (Smart Cleanup): Bổ sung các lệnh dọn dẹp hàng loạt (Bulk cleanup), tích hợp tính năng quét dọn vào khung chat AI và hỗ trợ Hoàn tác (Undo) lập tức nếu lỡ tay xóa nhầm thư mục.",
-          en: "Smart Cleanup Upgrades: Integrated bulk cleanup actions into the chat UI and added an instant Undo feature for accidental folder deletions.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Nâng cấp Quản lý Thẻ (Tags): Thêm thanh tìm kiếm bộ lọc ngay trong bảng chọn thẻ, bổ sung tính năng sửa/xóa tag trực tiếp và hiệu ứng mờ viền cho các nút bấm tag.",
-          en: "Tag Browser Enhancements: Added a live search filter inside the existing tags picker, alongside fully-featured edit and delete tag management controls.",
-        },
-      },
-      {
-        type: "feat",
-        text: {
-          vi: "Đồng bộ Đám mây & Google Drive: Thiết kế lại toàn bộ giao diện đồng bộ Google Drive, cho phép tự đặt tên file backup theo ý muốn và thêm cảnh báo/link góp ý khi đồng bộ cloud.",
-          en: "Cloud Sync & Google Drive Redesign: Overhauled the Google Drive sync popup, added custom backup filename support, and introduced a testing warning link to the cloud sync modal.",
+          vi: "Nâng cấp Dọn dẹp thông minh (Smart Cleanup): Bổ sung các lệnh dọn dẹp hàng loạt (Bulk cleanup), tích hợp tính năng quét dọn vào khung chat AI, tự động tải lại giao diện sau khi dọn dẹp và hỗ trợ Hoàn tác (Undo) lập tức.",
+          en: "Smart Cleanup Upgrades: Integrated bulk cleanup actions into the chat UI, added automatic UI reload after cleanup, and introduced instant Undo for accidental deletions.",
         },
       },
       {
         type: "fix",
         text: {
-          vi: "Sửa lỗi & Tối ưu trải nghiệm (UX): Cập nhật thư viện FontAwesome lên bản 6.7.2 sửa lỗi mất icon, sửa lỗi nhấn vào ảnh đại diện không mở được link, nâng cấp tooltip tự đổi màu theo theme và cải tiến các bước hướng dẫn (Tour) bằng bàn phím.",
-          en: "Bug Fixes & UX Polish: Upgraded FontAwesome to 6.7.2, fixed gallery card click actions, implemented theme-responsive global tooltips, and enhanced the first-run tour with keyboard support and back buttons.",
+          vi: "Sửa lỗi & Tinh chỉnh UI: Đặt cửa sổ Popup làm thao tác mở mặc định, tự động đóng các menu xổ xuống khi mở Cài đặt, điều chỉnh độ trong suốt của menu, sửa lỗi ẩn icon FontAwesome và nâng cấp hướng dẫn người dùng.",
+          en: "Bug Fixes & UI Refinement: Set popup as default open action, auto-close dropdown menus when opening settings, fixed dropdown transparency/backgrounds, updated FontAwesome 6.7.2, and improved onboarding tour.",
         },
       },
     ],
