@@ -145,7 +145,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     root.style.setProperty("--accent-glow", colorConfig.glow)
     root.style.setProperty("--accent-text", colorConfig.text)
     
-    let accentVisible = accent
+    let accentVisible: string = accent
     if (accent === "#ffffff" || accent === "#000000") {
       accentVisible = root.style.getPropertyValue("--text")
     }
