@@ -172,6 +172,9 @@ function ChangelogContent() {
   const { t, locale } = useLanguage()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   const [filter, setFilter] = useState<ChangeType | "all">(
     (searchParams.get("type") as ChangeType) || "all",
@@ -230,12 +233,34 @@ function ChangelogContent() {
     }))
     .filter((g) => g.items.length > 0)
 
-  const currentMonthStr = locale === "vi" ? "Tháng 4 2026" : "Apr"
-  const thisMonthChanges = CHANGELOG.filter(
-    (c) =>
-      c.date[locale]?.includes(currentMonthStr) ||
-      c.date["en"]?.includes("Apr"),
-  )
+  const today = new Date()
+  const currentMonthIndex = today.getMonth()
+  const currentYear = today.getFullYear()
+  const monthNamesEn = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]
+  const currentMonthStr =
+    locale === "vi"
+      ? `Tháng ${currentMonthIndex + 1} ${currentYear}`
+      : `${monthNamesEn[currentMonthIndex]} ${currentYear}`
+  const thisMonthChanges = CHANGELOG.filter((c) => {
+    const releaseDate = new Date(c.date.en)
+    return (
+      releaseDate.getMonth() === currentMonthIndex &&
+      releaseDate.getFullYear() === currentYear
+    )
+  })
 
   let totalPatches = 0
   let newFeatures = 0
@@ -292,12 +317,12 @@ function ChangelogContent() {
         vi: "Bug Hunter & Người đóng góp",
         en: "Bug Hunter & Contributor",
       },
-      bugs: "2+",
+      bugs: "3+",
       suggestions: 2,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi page title icon (1+) & gợi ý nhạc SoundCloud. Bookmark group không setting đúng",
-        en: "Page title icon bug (1+) & suggested SoundCloud music. Bookmark group not setting correctly.",
+        vi: "Báo lỗi page title icon (1+) & gợi ý nhạc SoundCloud, Bookmark group không setting đúng, Bookmark icon",
+        en: "Page title icon bug (1+) & suggested SoundCloud music. Bookmark group not setting correctly, Bookmark icon.",
       },
     },
     {
@@ -307,12 +332,27 @@ function ChangelogContent() {
         vi: "Bug Hunter",
         en: "Bug Hunter",
       },
-      bugs: "2+",
+      bugs: "3+",
       suggestions: 0,
       extension: "Zero Startpage",
       details: {
-        vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore và màn đen.",
-        en: "Page not working when abruptly closed during restore and black screen.",
+        vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore và màn đen, reload background, mở tab mới",
+        en: "Page not working when abruptly closed during restore and black screen, reload background, open new tab.",
+      },
+    },
+    {
+      name: "Lê Minh Thiện",
+      avatar: null,
+      role: {
+        vi: "Bug Hunter & Người đóng góp",
+        en: "Bug Hunter & Contributor",
+      },
+      bugs: "1+",
+      suggestions: 2,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Gợi ý thêm tính năng xem full text folder bookmark, data backup sync",
+        en: "Suggested full text folder bookmark viewing and data backup synchronization.",
       },
     },
     {
@@ -453,873 +493,1018 @@ function ChangelogContent() {
     return () => mediaQuery.removeEventListener("change", handler)
   }, [])
   const changelogTextColor = isLightTheme ? "#111" : "var(--text)"
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    scrollToTop()
+  }
+
+  const handleFilterChange = (type: ChangeType | "all") => {
+    setFilter(type)
+    setCurrentPage(1)
+    scrollToTop()
+  }
+
+  const handleExtensionChange = (extension: string) => {
+    setExtFilter(extension)
+    setCurrentPage(1)
+    scrollToTop()
+  }
   return (
     <div className="relative min-h-screen overflow-hidden">
-
       <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14 relative z-10">
-      <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
-        {/* Main */}
-        <div className="flex-1 min-w-0">
-          <div className="mb-8">
-            <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2 text-[var(--text)]">
-              Changelog
-            </h1>
-            <p style={{ color: "var(--muted)" }}>{t("changelog.subtitle")}</p>
-          </div>
+        <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
+          {/* Main */}
+          <div className="flex-1 min-w-0">
+            <div className="mb-8">
+              <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2 text-[var(--text)]">
+                Changelog
+              </h1>
+              <p style={{ color: "var(--muted)" }}>{t("changelog.subtitle")}</p>
+            </div>
 
-          {/* Filters */}
-          <div className="flex flex-wrap gap-2 mb-4">
-            {(["all", "feat", "fix", "perf", "break", "docs"] as const).map(
-              (type) => (
+            {/* Filters */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {(["all", "feat", "fix", "perf", "break", "docs"] as const).map(
+                (type) => (
+                  <button
+                    key={type}
+                    onClick={() => handleFilterChange(type)}
+                    className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200"
+                    style={{
+                      background:
+                        filter === type ? "var(--bg4)" : "transparent",
+                      border: `1px solid ${filter === type ? "var(--border2)" : "var(--border)"}`,
+                      color:
+                        filter === type ? changelogTextColor : "var(--muted)",
+                    }}
+                  >
+                    {type === "all" ? "All" : type.toUpperCase()}
+                  </button>
+                ),
+              )}
+            </div>
+
+            <div className="flex flex-wrap gap-2 mb-10">
+              {extensions.map((e) => (
                 <button
-                  key={type}
-                  onClick={() => {
-                    setFilter(type)
-                    setCurrentPage(1)
-                  }}
-                  className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200"
+                  key={e}
+                  onClick={() => handleExtensionChange(e)}
+                  className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
                   style={{
-                    background: filter === type ? "var(--bg4)" : "transparent",
-                    border: `1px solid ${filter === type ? "var(--border2)" : "var(--border)"}`,
-                    color:
-                      filter === type ? changelogTextColor : "var(--muted)",
+                    background: extFilter === e ? "var(--bg3)" : "transparent",
+                    border: `1px solid ${extFilter === e ? "var(--text)" : "var(--border)"}`,
+                    color: extFilter === e ? "var(--text)" : "var(--muted)",
                   }}
                 >
-                  {type === "all" ? "All" : type.toUpperCase()}
+                  {e === "all" ? t("extensions.all") : e}
                 </button>
-              ),
-            )}
-          </div>
+              ))}
+            </div>
 
-          <div className="flex flex-wrap gap-2 mb-10">
-            {extensions.map((e) => (
-              <button
-                key={e}
-                onClick={() => {
-                  setExtFilter(e)
-                  setCurrentPage(1)
-                }}
-                className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
-                style={{
-                  background:
-                    extFilter === e ? "var(--bg3)" : "transparent",
-                  border: `1px solid ${extFilter === e ? "var(--text)" : "var(--border)"}`,
-                  color: extFilter === e ? "var(--text)" : "var(--muted)",
-                }}
-              >
-                {e === "all" ? t("extensions.all") : e}
-              </button>
-            ))}
-          </div>
+            {/* Timeline */}
+            <div className="relative">
+              <div className="flex flex-col gap-12">
+                {grouped.map((group) => (
+                  <div key={group.extension} className="relative">
+                    <h2
+                      className="text-xl font-bold mb-6 flex items-center gap-2"
+                      style={{ color: changelogTextColor }}
+                    >
+                      <i
+                        className={`${group.items[0]?.extensionIcon} text-lg text-[var(--text)]`}
+                      ></i>
+                      {group.extension}
+                    </h2>
+                    <div className="relative pl-8">
+                      <div
+                        className="absolute left-[5.5px] top-[30px] bottom-0 w-[2px]"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, var(--accent) 0%, var(--accent2) 40%, var(--border) 80%, transparent 100%)",
+                          boxShadow: "0 0 10px var(--accent-glow)",
+                        }}
+                      />
 
-          {/* Timeline */}
-          <div className="relative">
-            <div className="flex flex-col gap-12">
-              {grouped.map((group) => (
-                <div key={group.extension} className="relative">
-                  <h2
-                    className="text-xl font-bold mb-6 flex items-center gap-2"
-                    style={{ color: changelogTextColor }}
-                  >
-                    <i
-                      className={`${group.items[0]?.extensionIcon} text-lg text-[var(--text)]`}
-                    ></i>
-                    {group.extension}
-                  </h2>
-                  <div className="relative pl-8">
-                    <div
-                      className="absolute left-[5.5px] top-[30px] bottom-0 w-[2px]"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, var(--accent) 0%, var(--accent2) 40%, var(--border) 80%, transparent 100%)",
-                        boxShadow: "0 0 10px var(--accent-glow)"
-                      }}
-                    />
-
-                    <div className="flex flex-col gap-8">
-                      {group.items.map((item, i) => {
-                        const rel = RELEASE_TYPE_LABELS[item.releaseType]
-                        return (
-                          <div
-                            key={i}
-                            className="grid gap-4 relative group/item"
-                            style={{ gridTemplateColumns: "1fr" }}
-                          >
-                            {/* Glowing colorful dot */}
+                      <div className="flex flex-col gap-8">
+                        {group.items.map((item, i) => {
+                          const rel = RELEASE_TYPE_LABELS[item.releaseType]
+                          return (
                             <div
-                              className="absolute -left-[32.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/item:scale-125 group-hover/item:brightness-110"
-                              style={{
-                                background: item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"),
-                                boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : (item.releaseType === "minor" ? "#a594ff" : "#3ecf8e")}`,
-                              }}
-                            />
-
-                            <div
-                              className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)]/80 border border-[var(--border2)] hover:border-[var(--text)] transition-all duration-500 group/card overflow-hidden"
-                              style={{
-                                boxShadow: "0 4px 20px rgba(0,0,0,0.05)"
-                              }}
+                              key={i}
+                              className="grid gap-4 relative group/item"
+                              style={{ gridTemplateColumns: "1fr" }}
                             >
-                              {/* Background glow on hover */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-[var(--text)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                              <div className="flex items-center flex-wrap gap-2.5 mb-4 relative z-10">
-                                <span
-                                  className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md"
-                                  style={{
-                                    backgroundColor: "var(--bg3)",
-                                    color: "var(--text)",
-                                  }}
-                                >
-                                  <i className={`${item.extensionIcon || 'fa-solid fa-puzzle-piece'} text-[10px] opacity-70`}></i>
-                                  {item.extension}
-                                </span>
-                                <span
-                                  className="font-mono text-sm font-bold px-2 py-1 rounded-md"
-                                  style={{
-                                    backgroundColor: "var(--bg3)",
-                                    color: "var(--text)",
-                                    fontFamily: "var(--font-dm-mono)",
-                                  }}
-                                >
-                                  {item.version}
-                                </span>
-                                <span
-                                  className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full"
-                                  style={{ 
-                                    color: rel.color,
-                                    backgroundColor: `${rel.color}20`,
-                                    border: `1px solid ${rel.color}40`
-                                  }}
-                                >
-                                  {rel.label}
-                                </span>
-                                <span
-                                  className="ml-auto text-xs font-medium"
-                                  style={{ color: "var(--muted2)" }}
-                                >
-                                  <i className="fa-regular fa-clock mr-1.5 opacity-70"></i>
-                                  {item.date[locale]}
-                                </span>
-                              </div>
+                              {/* Glowing colorful dot */}
+                              <div
+                                className="absolute -left-[32.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/item:scale-125 group-hover/item:brightness-110"
+                                style={{
+                                  background:
+                                    item.releaseType === "major"
+                                      ? "#ef4444"
+                                      : item.releaseType === "minor"
+                                        ? "#a594ff"
+                                        : "#3ecf8e",
+                                  boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"}`,
+                                }}
+                              />
 
-                              <ul className="space-y-3 relative z-10">
-                                {item.changes
-                                  .filter(
-                                    (c) =>
-                                      filter === "all" || c.type === filter,
-                                  )
-                                  .map((change, j) => {
-                                    const cfg = TYPE_CONFIG[change.type]
-                                    return (
-                                      <li
-                                        key={j}
-                                        className="flex items-start gap-3 p-2 -ml-2 rounded-lg transition-colors hover:bg-[var(--bg3)]"
-                                      >
-                                        <span
-                                          className="mt-[2px] text-[10px] font-extrabold px-2 py-1 rounded-md flex-shrink-0"
-                                          style={{
-                                            background: cfg.bg,
-                                            color: cfg.color,
-                                            boxShadow: `0 0 8px ${cfg.bg}`
-                                          }}
-                                        >
-                                          {cfg.label}
-                                        </span>
-                                        <p
-                                          className="text-[15px] leading-[1.8] text-[var(--text)] opacity-90"
-                                        >
-                                          {change.text[locale]}
-                                        </p>
-                                      </li>
+                              <div
+                                className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)]/80 border border-[var(--border2)] hover:border-[var(--text)] transition-all duration-500 group/card overflow-hidden"
+                                style={{
+                                  boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+                                }}
+                              >
+                                {/* Background glow on hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-[var(--text)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                                <div className="flex items-center flex-wrap gap-2.5 mb-4 relative z-10">
+                                  <span
+                                    className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md"
+                                    style={{
+                                      backgroundColor: "var(--bg3)",
+                                      color: "var(--text)",
+                                    }}
+                                  >
+                                    <i
+                                      className={`${item.extensionIcon || "fa-solid fa-puzzle-piece"} text-[10px] opacity-70`}
+                                    ></i>
+                                    {item.extension}
+                                  </span>
+                                  <span
+                                    className="font-mono text-sm font-bold px-2 py-1 rounded-md"
+                                    style={{
+                                      backgroundColor: "var(--bg3)",
+                                      color: "var(--text)",
+                                      fontFamily: "var(--font-dm-mono)",
+                                    }}
+                                  >
+                                    {item.version}
+                                  </span>
+                                  <span
+                                    className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full"
+                                    style={{
+                                      color: rel.color,
+                                      backgroundColor: `${rel.color}20`,
+                                      border: `1px solid ${rel.color}40`,
+                                    }}
+                                  >
+                                    {rel.label}
+                                  </span>
+                                  <span
+                                    className="ml-auto text-xs font-medium"
+                                    style={{ color: "var(--muted2)" }}
+                                  >
+                                    <i className="fa-regular fa-clock mr-1.5 opacity-70"></i>
+                                    {item.date[locale]}
+                                  </span>
+                                </div>
+
+                                <ul className="space-y-3 relative z-10">
+                                  {item.changes
+                                    .filter(
+                                      (c) =>
+                                        filter === "all" || c.type === filter,
                                     )
-                                  })}
-                              </ul>
+                                    .map((change, j) => {
+                                      const cfg = TYPE_CONFIG[change.type]
+                                      return (
+                                        <li
+                                          key={j}
+                                          className="flex items-start gap-3 p-2 -ml-2 rounded-lg transition-colors hover:bg-[var(--bg3)]"
+                                        >
+                                          <span
+                                            className="mt-[2px] text-[10px] font-extrabold px-2 py-1 rounded-md flex-shrink-0"
+                                            style={{
+                                              background: cfg.bg,
+                                              color: cfg.color,
+                                              boxShadow: `0 0 8px ${cfg.bg}`,
+                                            }}
+                                          >
+                                            {cfg.label}
+                                          </span>
+                                          <p className="text-[15px] leading-[1.8] text-[var(--text)] opacity-90">
+                                            {change.text[locale]}
+                                          </p>
+                                        </li>
+                                      )
+                                    })}
+                                </ul>
 
-                              {REPO_MAP[group.extension] && (
-                                <div
-                                  className="mt-6 pt-4 flex items-center justify-between"
-                                  style={{
-                                    borderTop: "1px solid var(--border)",
-                                  }}
-                                >
-                                  <div className="flex flex-wrap gap-4">
-                                    <a
-                                      href={`${REPO_MAP[group.extension]}/releases/tag/v${item.version}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="flex items-center gap-2 group/link"
-                                    >
-                                      <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
-                                      <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
-                                        {t("changelog.sidebar.source_code")}
-                                      </span>
-                                    </a>
-
-                                    {STORE_MAP[group.extension] && (
+                                {REPO_MAP[group.extension] && (
+                                  <div
+                                    className="mt-6 pt-4 flex items-center justify-between"
+                                    style={{
+                                      borderTop: "1px solid var(--border)",
+                                    }}
+                                  >
+                                    <div className="flex flex-wrap gap-4">
                                       <a
-                                        href={STORE_MAP[group.extension]}
+                                        href={`${REPO_MAP[group.extension]}/releases/tag/v${item.version}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-2 group/link"
                                       >
-                                        <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
+                                        <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
                                         <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
-                                          {t("changelog.sidebar.store")}
+                                          {t("changelog.sidebar.source_code")}
                                         </span>
                                       </a>
-                                    )}
+
+                                      {STORE_MAP[group.extension] && (
+                                        <a
+                                          href={STORE_MAP[group.extension]}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="flex items-center gap-2 group/link"
+                                        >
+                                          <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
+                                          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
+                                            {t("changelog.sidebar.store")}
+                                          </span>
+                                        </a>
+                                      )}
+                                    </div>
+
+                                    <i
+                                      className="fa-solid fa-arrow-up-right-from-square text-[10px] transition-colors"
+                                      style={{ color: "var(--muted2)" }}
+                                    />
                                   </div>
-
-                                  <i
-                                    className="fa-solid fa-arrow-up-right-from-square text-[10px] transition-colors"
-                                    style={{ color: "var(--muted2)" }}
-                                  />
-                                </div>
-                              )}
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-2 mt-12">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
-                  style={{
-                    background: "var(--bg3)",
-                    border: "1px solid var(--border2)",
-                    color: changelogTextColor,
-                  }}
-                >
-                  {t("common.prev")}
-                </button>
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className="w-10 h-10 rounded-lg text-sm font-bold transition-all"
-                        style={{
-                          background:
-                            currentPage === page
-                              ? "var(--bg3)"
-                              : "transparent",
-                          border: `1px solid ${
-                            currentPage === page
-                              ? "var(--text)"
-                              : "transparent"
-                          }`,
-                          color:
-                            currentPage === page
-                              ? "var(--text)"
-                              : "var(--muted)",
-                        }}
-                      >
-                        {page}
-                      </button>
-                    ),
-                  )}
-                </div>
-                <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(totalPages, p + 1))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
-                  style={{
-                    background: "var(--bg3)",
-                    border: "1px solid var(--border2)",
-                    color: changelogTextColor,
-                  }}
-                >
-                  {t("common.next")}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-        {/* Sidebar */}
-        <div className="lg:w-[320px] flex flex-col gap-6">
-          {/* Stats Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-syne font-semibold text-sm">
-                <i className="fa-solid fa-chart-pie mr-2 opacity-70" />
-                {t("changelog.sidebar.stats")}
-              </h3>
-              <span className="text-[10px] font-bold px-2 py-1 rounded bg-[var(--bg2)] text-[var(--accent)] border border-[var(--border)] shadow-sm">
-                {currentMonthStr}
-              </span>
-            </div>
-
-            {/* Mini Chart */}
-            <div className="mb-5">
-              <div className="flex w-full h-2 rounded-full overflow-hidden mb-2 shadow-inner" style={{ background: "var(--bg4)" }}>
-                <div style={{ width: `${(newFeatures / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #818cf8, #a594ff)" }} />
-                <div style={{ width: `${(bugFixes / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #34d399, #3ecf8e)" }} />
-                <div style={{ width: `${(breakingChanges / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`, background: "linear-gradient(90deg, #f87171, #ef4444)" }} />
-              </div>
-              <div className="flex justify-between text-[9px] font-bold uppercase tracking-wider">
-                <span style={{ color: "#a594ff" }}>Feat {newFeatures}</span>
-                <span style={{ color: "#3ecf8e" }}>Fix {bugFixes}</span>
-                <span style={{ color: "#ef4444" }}>Break {breakingChanges}</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                {
-                  label: t("changelog.sidebar.total_patch"),
-                  value: totalPatches,
-                  color: "var(--text)",
-                  icon: "fa-solid fa-layer-group",
-                  bg: "var(--bg4)",
-                },
-                {
-                  label: t("changelog.sidebar.new_features"),
-                  value: newFeatures,
-                  color: "#a594ff",
-                  icon: "fa-solid fa-wand-magic-sparkles",
-                  bg: "rgba(165,148,255,0.15)",
-                },
-                {
-                  label: t("changelog.sidebar.bug_fixes"),
-                  value: bugFixes,
-                  color: "#3ecf8e",
-                  icon: "fa-solid fa-bug",
-                  bg: "rgba(62,207,142,0.15)",
-                },
-                {
-                  label: t("changelog.sidebar.breaking"),
-                  value: breakingChanges,
-                  color: "#ef4444",
-                  icon: "fa-solid fa-triangle-exclamation",
-                  bg: "rgba(239,68,68,0.15)",
-                },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--text)] group relative overflow-hidden"
-                  style={{ background: "var(--bg)" }}
-                >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" style={{ background: s.color }} />
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110 shadow-sm"
-                    style={{ background: s.bg, color: s.color }}
-                  >
-                    <i className={`${s.icon} text-xs drop-shadow-sm`} />
-                  </div>
-                  <span
-                    className="text-xl font-bold font-syne"
-                    style={{ color: changelogTextColor }}
-                  >
-                    {s.value}
-                  </span>
-                  <span
-                    className="text-[10px] font-medium uppercase tracking-tighter mt-1"
-                    style={{ color: "var(--muted2)" }}
-                  >
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-
-              <div
-                className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--text)] group"
-                style={{ background: "var(--bg)" }}
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                    style={{
-                      background: "var(--bg4)",
-                      color: "var(--accent2)",
-                    }}
-                  >
-                    <i className="fa-solid fa-arrows-rotate text-xs" />
-                  </div>
-                  <span
-                    className="text-[10px] font-medium uppercase tracking-tighter"
-                    style={{ color: "var(--muted2)" }}
-                  >
-                    {t("changelog.sidebar.updated")}
-                  </span>
-                </div>
-                <span
-                  className="text-lg font-bold font-syne"
-                  style={{ color: changelogTextColor }}
-                >
-                  {extensionsUpdatedCount}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Contributors Card (Hall of Fame) */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3
-              className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2"
-              style={{ color: "var(--muted2)" }}
-            >
-              <i className="fa-solid fa-medal text-[var(--text)]" />
-              {t("changelog.contributors.title")}
-            </h3>
-            <p
-              className="text-[10px] mb-4 leading-relaxed"
-              style={{ color: "var(--muted2)" }}
-            >
-              {t("changelog.contributors.subtitle")}
-            </p>
-
-            <div className="flex flex-col gap-3">
-              {paginatedContributors.map((c, i) => (
-                <div
-                  key={i}
-                  className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--text)] group"
-                  style={{ background: "var(--bg)" }}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <div
-                      className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center border transition-transform duration-300 group-hover:scale-110"
-                      style={{
-                        background: "var(--bg4)",
-                        borderColor: "var(--border)",
-                      }}
-                    >
-                      {c.avatar ? (
-                        <img
-                          src={c.avatar}
-                          alt={
-                            typeof c.name === "string" ? c.name : c.name[locale]
-                          }
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <i
-                          className="fa-solid fa-user text-[10px]"
-                          style={{ color: "var(--accent2)" }}
-                        />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div
-                        className="font-bold text-xs truncate"
-                        style={{ color: changelogTextColor }}
-                      >
-                        {typeof c.name === "string" ? c.name : c.name[locale]}
-                      </div>
-                      <div
-                        className="text-[9px] uppercase tracking-tighter truncate"
-                        style={{ color: "var(--muted2)" }}
-                      >
-                        {c.extension}
+                          )
+                        })}
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {c.role && (() => {
-                      const roleText = c.role[locale];
-                      const isBugHunter = roleText.includes("Bug Hunter");
-                      const isContributor = roleText.includes("Người đóng góp") || roleText.includes("Contributor");
-                      const isDual = isBugHunter && isContributor;
-                      
-                      const parsedBugs = parseInt(String(c.bugs).replace(/\D/g, "") || "0", 10);
-                      const parsedSuggestions = parseInt(String(c.suggestions).replace(/\D/g, "") || "0", 10);
-                      const isSuper = (parsedBugs > 3 || parsedSuggestions > 3 || (parsedBugs + parsedSuggestions) > 3);
-
-                      let color = "#60a5fa"; // Soft Blue for Contributor
-                      let bg = "rgba(96,165,250,0.15)";
-                      let border = "rgba(96,165,250,0.3)";
-                      let shadow = "rgba(96,165,250,0.2)";
-
-                      if (isDual) {
-                        color = "#eab308"; // Gold for both
-                        bg = "rgba(234,179,8,0.15)";
-                        border = "rgba(234,179,8,0.3)";
-                        shadow = "rgba(234,179,8,0.2)";
-                      } else if (isBugHunter) {
-                        color = "#c084fc"; // Soft Purple for Bug Hunter
-                        bg = "rgba(192,132,252,0.15)";
-                        border = "rgba(192,132,252,0.3)";
-                        shadow = "rgba(192,132,252,0.2)";
-                      }
-
-                      return (
-                        <span
-                          className={`text-[8px] px-2 py-[3px] rounded-md font-bold uppercase tracking-wider ${isSuper ? 'animate-pulse' : ''}`}
-                          style={{
-                            background: bg,
-                            color: color,
-                            border: `1px solid ${border}`,
-                            boxShadow: isSuper ? `0 0 15px 2px ${color}80` : `0 0 8px ${shadow}`
-                          }}
-                        >
-                          {roleText}
-                        </span>
-                      );
-                    })()}
-                    <div 
-                      className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
-                      style={{
-                        background: "rgba(34,197,94,0.1)", 
-                        border: "1px solid rgba(34,197,94,0.2)",
-                        boxShadow: "0 0 8px rgba(34,197,94,0.1)"
-                      }}
-                    >
-                      <i className="fa-solid fa-bug text-[8px] text-[#22c55e]" />
-                      <span className="text-[9px] font-extrabold text-[#22c55e]">
-                        {c.bugs}
-                      </span>
-                    </div>
-                    <div 
-                      className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
-                      style={{
-                        background: "rgba(168,85,247,0.1)", 
-                        border: "1px solid rgba(168,85,247,0.2)",
-                        boxShadow: "0 0 8px rgba(168,85,247,0.1)"
-                      }}
-                    >
-                      <i className="fa-solid fa-lightbulb text-[8px] text-[#a855f7]" />
-                      <span className="text-[9px] font-extrabold text-[#a855f7]">
-                        {c.suggestions}
-                      </span>
-                    </div>
-                  </div>
-
-                  {c.details && (
-                    <div
-                      className="text-[10px] mt-2 pt-2 border-t leading-relaxed font-medium"
-                      style={{
-                        color: "var(--muted2)",
-                        borderColor: "var(--border)",
-                      }}
-                    >
-                      {typeof c.details === "string"
-                        ? c.details
-                        : c.details[locale]}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {totalContributorPages > 1 && (
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
-                <button
-                  onClick={() => setContributorPage((p) => Math.max(1, p - 1))}
-                  disabled={contributorPage === 1}
-                  className="p-2 rounded-lg transition-all disabled:opacity-30"
-                  style={{
-                    background: "var(--bg4)",
-                    color: changelogTextColor,
-                  }}
-                >
-                  <i className="fa-solid fa-chevron-left text-[10px]" />
-                </button>
-                <span
-                  className="text-[10px] font-bold"
-                  style={{ color: "var(--muted2)" }}
-                >
-                  {contributorPage} / {totalContributorPages}
-                </span>
-                <button
-                  onClick={() =>
-                    setContributorPage((p) =>
-                      Math.min(totalContributorPages, p + 1),
-                    )
-                  }
-                  disabled={contributorPage === totalContributorPages}
-                  className="p-2 rounded-lg transition-all disabled:opacity-30"
-                  style={{
-                    background: "var(--bg4)",
-                    color: changelogTextColor,
-                  }}
-                >
-                  <i className="fa-solid fa-chevron-right text-[10px]" />
-                </button>
+                ))}
               </div>
-            )}
-          </div>
 
-          {/* Latest Versions Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3 className="font-syne font-semibold text-sm mb-4">
-              {t("changelog.sidebar.latest_versions")}
-            </h3>
-            {latestVersions.map((c) => (
-              <div
-                key={c.extension}
-                className="flex items-center justify-between py-2.5 text-sm"
-                style={{ borderBottom: "1px solid var(--border)" }}
-              >
-                <span className="flex items-center gap-2 max-w-[70%] truncate">
-                  <i
-                    className={`${c.extensionIcon} text-xs text-[var(--text)] w-4 text-center shrink-0`}
-                  ></i>
-                  <span
-                    className="truncate"
-                    style={{ color: "var(--muted)" }}
-                    title={c.extension}
-                  >
-                    {c.extension}
-                  </span>
-                </span>
-                <span
-                  className="font-mono text-xs font-medium shrink-0"
-                  style={{
-                    color: "var(--accent2)",
-                    fontFamily: "var(--font-dm-mono)",
-                  }}
-                >
-                  {c.version}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Donation Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-solid fa-heart text-[#e84393] text-base" />
-              {locale === "vi" ? "Ủng hộ dự án" : "Support the project"}
-            </h3>
-
-            <div className="grid gap-3">
-              <a
-                href="https://ko-fi.com/chickensoup269"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="donate-card donate-card--kofi group"
-              >
-                <span className="donate-card__icon">
-                  <i className="fa-solid fa-mug-hot" />
-                </span>
-                <span className="min-w-0">
-                  <span
-                    className="donate-card__title"
-                    style={{ color: changelogTextColor }}
-                  >
-                    Ko-fi
-                  </span>
-                  <span className="donate-card__text">
-                    {locale === "vi"
-                      ? "Mời mình một ly cà phê"
-                      : "Buy me a coffee"}
-                  </span>
-                </span>
-                <i className="fa-solid fa-arrow-up-right-from-square donate-card__arrow" />
-              </a>
-
-              <PixelTransition
-                firstContent={
-                  <div className="momo-card__front">
-                    <img
-                      src={momoCover.src}
-                      alt=""
-                      className="momo-card__cover"
-                    />
-                    <div className="momo-card__shade" />
-                    <span className="momo-card__mark">MoMo</span>
-                    <span className="momo-card__copy">
-                      <span
-                        className="donate-card__title"
-                        style={{ color: "#fff" }}
-                      >
-                        MoMo
-                      </span>
-                      <span className="donate-card__text">
-                        {locale === "vi"
-                          ? "Hover để hiện mã QR"
-                          : "Hover to reveal QR"}
-                      </span>
-                    </span>
-                  </div>
-                }
-                secondContent={
-                  <div className="momo-card__qr">
-                    <img src={momoQr.src} alt="MoMo QR" />
-                  </div>
-                }
-                gridSize={8}
-                pixelColor="#ffffff"
-                animationStepDuration={0.4}
-                className="momo-pixel-card"
-              />
-            </div>
-          </div>
-
-          {/* Source Code Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-brands fa-github text-[var(--text)] text-base" />
-              {t("changelog.sidebar.source_code")}
-            </h3>
-
-            {sourceProjects
-              .filter((p) => p.name !== "Extension")
-              .map((project) => (
-                <div
-                  key={project.repo}
-                  className="flex items-start gap-3 py-3 group transition-all duration-200"
-                  style={{ borderBottom: "1px solid var(--border)" }}
-                >
-                  <span
-                    className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-12">
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.max(1, currentPage - 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
                     style={{
                       background: "var(--bg3)",
                       border: "1px solid var(--border2)",
+                      color: changelogTextColor,
                     }}
                   >
-                    <img
-                      src={
-                        project.repo.includes("Zero-Start-Page")
-                          ? "/images/startpage_icon.png"
-                          : project.repo.includes("Zero-Bookmark-Manager")
-                            ? "/images/bookmark_icon.png"
-                            : "/images/source-code.png"
-                      }
-                      alt={project.name}
-                      style={{ width: 20, height: 20, borderRadius: 4 }}
-                    />
+                    {t("common.prev")}
+                  </button>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page)}
+                          className="w-10 h-10 rounded-lg text-sm font-bold transition-all"
+                          style={{
+                            background:
+                              currentPage === page
+                                ? "var(--bg3)"
+                                : "transparent",
+                            border: `1px solid ${
+                              currentPage === page
+                                ? "var(--text)"
+                                : "transparent"
+                            }`,
+                            color:
+                              currentPage === page
+                                ? "var(--text)"
+                                : "var(--muted)",
+                          }}
+                        >
+                          {page}
+                        </button>
+                      ),
+                    )}
+                  </div>
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.min(totalPages, currentPage + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-50"
+                    style={{
+                      background: "var(--bg3)",
+                      border: "1px solid var(--border2)",
+                      color: changelogTextColor,
+                    }}
+                  >
+                    {t("common.next")}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+          {/* Sidebar */}
+          <div className="lg:w-[320px] flex flex-col gap-6">
+            {/* Stats Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-syne font-semibold text-sm">
+                  <i className="fa-solid fa-chart-pie mr-2 opacity-70" />
+                  {t("changelog.sidebar.stats")}
+                </h3>
+                <span className="text-[10px] font-bold px-2 py-1 rounded bg-[var(--bg2)] text-[var(--accent)] border border-[var(--border)] shadow-sm">
+                  {currentMonthStr}
+                </span>
+              </div>
+
+              {/* Mini Chart */}
+              <div className="mb-5">
+                <div
+                  className="flex w-full h-2 rounded-full overflow-hidden mb-2 shadow-inner"
+                  style={{ background: "var(--bg4)" }}
+                >
+                  <div
+                    style={{
+                      width: `${(newFeatures / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`,
+                      background: "linear-gradient(90deg, #818cf8, #a594ff)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: `${(bugFixes / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`,
+                      background: "linear-gradient(90deg, #34d399, #3ecf8e)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: `${(breakingChanges / (newFeatures + bugFixes + breakingChanges || 1)) * 100}%`,
+                      background: "linear-gradient(90deg, #f87171, #ef4444)",
+                    }}
+                  />
+                </div>
+                <div className="flex justify-between text-[9px] font-bold uppercase tracking-wider">
+                  <span style={{ color: "#a594ff" }}>Feat {newFeatures}</span>
+                  <span style={{ color: "#3ecf8e" }}>Fix {bugFixes}</span>
+                  <span style={{ color: "#ef4444" }}>
+                    Break {breakingChanges}
                   </span>
-                  <div className="flex-1 min-w-0">
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    label: t("changelog.sidebar.total_patch"),
+                    value: totalPatches,
+                    color: "var(--text)",
+                    icon: "fa-solid fa-layer-group",
+                    bg: "var(--bg4)",
+                  },
+                  {
+                    label: t("changelog.sidebar.new_features"),
+                    value: newFeatures,
+                    color: "#a594ff",
+                    icon: "fa-solid fa-wand-magic-sparkles",
+                    bg: "rgba(165,148,255,0.15)",
+                  },
+                  {
+                    label: t("changelog.sidebar.bug_fixes"),
+                    value: bugFixes,
+                    color: "#3ecf8e",
+                    icon: "fa-solid fa-bug",
+                    bg: "rgba(62,207,142,0.15)",
+                  },
+                  {
+                    label: t("changelog.sidebar.breaking"),
+                    value: breakingChanges,
+                    color: "#ef4444",
+                    icon: "fa-solid fa-triangle-exclamation",
+                    bg: "rgba(239,68,68,0.15)",
+                  },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="p-3 rounded-lg border border-[var(--border)] flex flex-col items-center text-center transition-all duration-300 hover:border-[var(--text)] group relative overflow-hidden"
+                    style={{ background: "var(--bg)" }}
+                  >
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                      style={{ background: s.color }}
+                    />
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-transform duration-300 group-hover:scale-110 shadow-sm"
+                      style={{ background: s.bg, color: s.color }}
+                    >
+                      <i className={`${s.icon} text-xs drop-shadow-sm`} />
+                    </div>
+                    <span
+                      className="text-xl font-bold font-syne"
+                      style={{ color: changelogTextColor }}
+                    >
+                      {s.value}
+                    </span>
+                    <span
+                      className="text-[10px] font-medium uppercase tracking-tighter mt-1"
+                      style={{ color: "var(--muted2)" }}
+                    >
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
+
+                <div
+                  className="col-span-2 p-3 rounded-lg border border-[var(--border)] flex items-center justify-between transition-all duration-300 hover:border-[var(--text)] group"
+                  style={{ background: "var(--bg)" }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                      style={{
+                        background: "var(--bg4)",
+                        color: "var(--accent2)",
+                      }}
+                    >
+                      <i className="fa-solid fa-arrows-rotate text-xs" />
+                    </div>
+                    <span
+                      className="text-[10px] font-medium uppercase tracking-tighter"
+                      style={{ color: "var(--muted2)" }}
+                    >
+                      {t("changelog.sidebar.updated")}
+                    </span>
+                  </div>
+                  <span
+                    className="text-lg font-bold font-syne"
+                    style={{ color: changelogTextColor }}
+                  >
+                    {extensionsUpdatedCount}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Contributors Card (Hall of Fame) */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3
+                className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2"
+                style={{ color: "var(--muted2)" }}
+              >
+                <i className="fa-solid fa-medal text-[var(--text)]" />
+                {t("changelog.contributors.title")}
+              </h3>
+              <p
+                className="text-[10px] mb-4 leading-relaxed"
+                style={{ color: "var(--muted2)" }}
+              >
+                {t("changelog.contributors.subtitle")}
+              </p>
+
+              <div className="flex flex-col gap-3">
+                {paginatedContributors.map((c, i) =>
+                  (() => {
+                    const globalRank =
+                      (contributorPage - 1) * CONTRIBUTORS_PER_PAGE + i + 1
+
+                    return (
+                      <div
+                        key={i}
+                        className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--text)] group"
+                        style={{ background: "var(--bg)" }}
+                      >
+                        <div className="flex items-center gap-3 mb-2">
+                          <div
+                            className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center border transition-transform duration-300 group-hover:scale-110"
+                            style={{
+                              background: "var(--bg4)",
+                              borderColor: "var(--border)",
+                            }}
+                          >
+                            {c.avatar ? (
+                              <img
+                                src={c.avatar}
+                                alt={
+                                  typeof c.name === "string"
+                                    ? c.name
+                                    : c.name[locale]
+                                }
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <i
+                                className="fa-solid fa-user text-[10px]"
+                                style={{ color: "var(--accent2)" }}
+                              />
+                            )}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className="font-bold text-xs truncate"
+                              style={{ color: changelogTextColor }}
+                            >
+                              {typeof c.name === "string"
+                                ? c.name
+                                : c.name[locale]}
+                            </div>
+                            <div
+                              className="text-[9px] uppercase tracking-tighter truncate"
+                              style={{ color: "var(--muted2)" }}
+                            >
+                              {c.extension}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {globalRank <= 3 && (
+                            <span
+                              className="relative overflow-hidden rounded-md px-2 py-[3px] text-[8px] font-extrabold uppercase tracking-[0.22em] text-[#f8fafc]"
+                              style={{
+                                background:
+                                  globalRank === 1
+                                    ? "linear-gradient(135deg, rgba(245,158,11,0.95), rgba(234,179,8,0.75))"
+                                    : globalRank === 2
+                                      ? "linear-gradient(135deg, rgba(148,163,184,0.9), rgba(100,116,139,0.7))"
+                                      : "linear-gradient(135deg, rgba(180,83,9,0.92), rgba(217,119,6,0.72))",
+                                border: "1px solid rgba(255,255,255,0.16)",
+                                boxShadow:
+                                  globalRank === 1
+                                    ? "0 0 12px rgba(245,158,11,0.32)"
+                                    : globalRank === 2
+                                      ? "0 0 10px rgba(148,163,184,0.22)"
+                                      : "0 0 10px rgba(217,119,6,0.26)",
+                              }}
+                            >
+                              <span className="absolute inset-0 bg-white/10" />
+                              <span className="relative z-10">
+                                TOP {globalRank}
+                              </span>
+                            </span>
+                          )}
+                          {c.role &&
+                            (() => {
+                              const roleText = c.role[locale]
+                              const isBugHunter =
+                                roleText.includes("Bug Hunter")
+                              const isContributor =
+                                roleText.includes("Người đóng góp") ||
+                                roleText.includes("Contributor")
+                              const isDual = isBugHunter && isContributor
+
+                              const parsedBugs = parseInt(
+                                String(c.bugs).replace(/\D/g, "") || "0",
+                                10,
+                              )
+                              const parsedSuggestions = parseInt(
+                                String(c.suggestions).replace(/\D/g, "") || "0",
+                                10,
+                              )
+                              const totalContributions =
+                                parsedBugs + parsedSuggestions
+                              const isSuper =
+                                parsedBugs > 3 ||
+                                parsedSuggestions > 3 ||
+                                totalContributions > 3
+                              const isLegendary =
+                                i < 3 && totalContributions >= 4
+
+                              let color = "#60a5fa" // Soft Blue for Contributor
+                              let bg = "rgba(96,165,250,0.15)"
+                              let border = "rgba(96,165,250,0.3)"
+                              let shadow = "rgba(96,165,250,0.2)"
+
+                              if (isDual) {
+                                color = "#eab308" // Gold for both
+                                bg = "rgba(234,179,8,0.15)"
+                                border = "rgba(234,179,8,0.3)"
+                                shadow = "rgba(234,179,8,0.2)"
+                              } else if (isBugHunter) {
+                                color = "#c084fc" // Soft Purple for Bug Hunter
+                                bg = "rgba(192,132,252,0.15)"
+                                border = "rgba(192,132,252,0.3)"
+                                shadow = "rgba(192,132,252,0.2)"
+                              }
+
+                              return (
+                                <span
+                                  className={`achievement-badge ${isLegendary ? "achievement-badge--legendary" : ""} text-[8px] px-2 py-[3px] rounded-md font-bold uppercase tracking-wider`}
+                                  style={{
+                                    ["--badge-color" as string]: color,
+                                    ["--badge-bg" as string]: bg,
+                                    ["--badge-border" as string]: border,
+                                    ["--badge-shadow" as string]: shadow,
+                                    ["--badge-legendary-shadow" as string]:
+                                      isLegendary ? `${color}66` : shadow,
+                                    background: bg,
+                                    color: color,
+                                    border: `1px solid ${border}`,
+                                    boxShadow: isLegendary
+                                      ? `0 0 16px ${color}55, 0 0 28px ${shadow}`
+                                      : `0 0 10px ${shadow}`,
+                                  }}
+                                >
+                                  {roleText}
+                                </span>
+                              )
+                            })()}
+                          <div
+                            className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
+                            style={{
+                              background: "rgba(34,197,94,0.1)",
+                              border: "1px solid rgba(34,197,94,0.2)",
+                              boxShadow: "0 0 8px rgba(34,197,94,0.1)",
+                            }}
+                          >
+                            <i className="fa-solid fa-bug text-[8px] text-[#22c55e]" />
+                            <span className="text-[9px] font-extrabold text-[#22c55e]">
+                              {c.bugs}
+                            </span>
+                          </div>
+                          <div
+                            className="flex items-center gap-1.5 px-2 py-[3px] rounded-md"
+                            style={{
+                              background: "rgba(168,85,247,0.1)",
+                              border: "1px solid rgba(168,85,247,0.2)",
+                              boxShadow: "0 0 8px rgba(168,85,247,0.1)",
+                            }}
+                          >
+                            <i className="fa-solid fa-lightbulb text-[8px] text-[#a855f7]" />
+                            <span className="text-[9px] font-extrabold text-[#a855f7]">
+                              {c.suggestions}
+                            </span>
+                          </div>
+                        </div>
+
+                        {c.details && (
+                          <div
+                            className="text-[10px] mt-2 pt-2 border-t leading-relaxed font-medium"
+                            style={{
+                              color: "var(--muted2)",
+                              borderColor: "var(--border)",
+                            }}
+                          >
+                            {typeof c.details === "string"
+                              ? c.details
+                              : c.details[locale]}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })(),
+                )}
+              </div>
+
+              {totalContributorPages > 1 && (
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border)]">
+                  <button
+                    onClick={() =>
+                      setContributorPage((p) => Math.max(1, p - 1))
+                    }
+                    disabled={contributorPage === 1}
+                    className="p-2 rounded-lg transition-all disabled:opacity-30"
+                    style={{
+                      background: "var(--bg4)",
+                      color: changelogTextColor,
+                    }}
+                  >
+                    <i className="fa-solid fa-chevron-left text-[10px]" />
+                  </button>
+                  <span
+                    className="text-[10px] font-bold"
+                    style={{ color: "var(--muted2)" }}
+                  >
+                    {contributorPage} / {totalContributorPages}
+                  </span>
+                  <button
+                    onClick={() =>
+                      setContributorPage((p) =>
+                        Math.min(totalContributorPages, p + 1),
+                      )
+                    }
+                    disabled={contributorPage === totalContributorPages}
+                    className="p-2 rounded-lg transition-all disabled:opacity-30"
+                    style={{
+                      background: "var(--bg4)",
+                      color: changelogTextColor,
+                    }}
+                  >
+                    <i className="fa-solid fa-chevron-right text-[10px]" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Latest Versions Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3 className="font-syne font-semibold text-sm mb-4">
+                {t("changelog.sidebar.latest_versions")}
+              </h3>
+              {latestVersions.map((c) => (
+                <div
+                  key={c.extension}
+                  className="flex items-center justify-between py-2.5 text-sm"
+                  style={{ borderBottom: "1px solid var(--border)" }}
+                >
+                  <span className="flex items-center gap-2 max-w-[70%] truncate">
+                    <i
+                      className={`${c.extensionIcon} text-xs text-[var(--text)] w-4 text-center shrink-0`}
+                    ></i>
+                    <span
+                      className="truncate"
+                      style={{ color: "var(--muted)" }}
+                      title={c.extension}
+                    >
+                      {c.extension}
+                    </span>
+                  </span>
+                  <span
+                    className="font-mono text-xs font-medium shrink-0"
+                    style={{
+                      color: "var(--accent2)",
+                      fontFamily: "var(--font-dm-mono)",
+                    }}
+                  >
+                    {c.version}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Donation Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+                <i className="fa-solid fa-heart text-[#e84393] text-base" />
+                {locale === "vi" ? "Ủng hộ dự án" : "Support the project"}
+              </h3>
+
+              <div className="grid gap-3">
+                <a
+                  href="https://ko-fi.com/chickensoup269"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="donate-card donate-card--kofi group"
+                >
+                  <span className="donate-card__icon">
+                    <i className="fa-solid fa-mug-hot" />
+                  </span>
+                  <span className="min-w-0">
+                    <span
+                      className="donate-card__title"
+                      style={{ color: changelogTextColor }}
+                    >
+                      Ko-fi
+                    </span>
+                    <span className="donate-card__text">
+                      {locale === "vi"
+                        ? "Mời mình một ly cà phê"
+                        : "Buy me a coffee"}
+                    </span>
+                  </span>
+                  <i className="fa-solid fa-arrow-up-right-from-square donate-card__arrow" />
+                </a>
+
+                <PixelTransition
+                  firstContent={
+                    <div className="momo-card__front">
+                      <img
+                        src={momoCover.src}
+                        alt=""
+                        className="momo-card__cover"
+                      />
+                      <div className="momo-card__shade" />
+                      <span className="momo-card__mark">MoMo</span>
+                      <span className="momo-card__copy">
+                        <span
+                          className="donate-card__title"
+                          style={{ color: "#fff" }}
+                        >
+                          MoMo
+                        </span>
+                        <span className="donate-card__text">
+                          {locale === "vi"
+                            ? "Hover để hiện mã QR"
+                            : "Hover to reveal QR"}
+                        </span>
+                      </span>
+                    </div>
+                  }
+                  secondContent={
+                    <div className="momo-card__qr">
+                      <img src={momoQr.src} alt="MoMo QR" />
+                    </div>
+                  }
+                  gridSize={8}
+                  pixelColor="#ffffff"
+                  animationStepDuration={0.4}
+                  className="momo-pixel-card"
+                />
+              </div>
+            </div>
+
+            {/* Source Code Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+                <i className="fa-brands fa-github text-[var(--text)] text-base" />
+                {t("changelog.sidebar.source_code")}
+              </h3>
+
+              {sourceProjects
+                .filter((p) => p.name !== "Extension")
+                .map((project) => (
+                  <div
+                    key={project.repo}
+                    className="flex items-start gap-3 py-3 group transition-all duration-200"
+                    style={{ borderBottom: "1px solid var(--border)" }}
+                  >
+                    <span
+                      className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{
+                        background: "var(--bg3)",
+                        border: "1px solid var(--border2)",
+                      }}
+                    >
+                      <img
+                        src={
+                          project.repo.includes("Zero-Start-Page")
+                            ? "/images/startpage_icon.png"
+                            : project.repo.includes("Zero-Bookmark-Manager")
+                              ? "/images/bookmark_icon.png"
+                              : "/images/source-code.png"
+                        }
+                        alt={project.name}
+                        style={{ width: 20, height: 20, borderRadius: 4 }}
+                      />
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <a
+                        href={project.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--text)]"
+                        style={{ color: changelogTextColor }}
+                      >
+                        {project.name}
+                      </a>
+                      <p
+                        className="text-xs truncate mt-0.5"
+                        style={{ color: "var(--muted2)" }}
+                      >
+                        {project.repo}
+                      </p>
+                    </div>
                     <a
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--text)]"
-                      style={{ color: changelogTextColor }}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                     >
-                      {project.name}
+                      <i
+                        className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1"
+                        style={{ color: "var(--text)" }}
+                      />
                     </a>
-                    <p
-                      className="text-xs truncate mt-0.5"
-                      style={{ color: "var(--muted2)" }}
-                    >
-                      {project.repo}
-                    </p>
                   </div>
+                ))}
+
+              <div className="mt-3 flex flex-col gap-2">
+                {sourceProjects
+                  .filter((p) => p.name !== "Extension")
+                  .map((project) => (
+                    <a
+                      key={project.releasesHref}
+                      href={project.releasesHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
+                      style={{
+                        background: "var(--bg3)",
+                        border: "1px solid var(--border2)",
+                      }}
+                    >
+                      <span style={{ color: "var(--muted)" }}>
+                        {project.name}
+                      </span>
+                      <span
+                        className="flex items-center gap-1"
+                        style={{ color: "var(--text)" }}
+                      >
+                        <i className="fa-solid fa-tag text-[10px]" />
+                        {locale === "vi" ? "Xem releases" : "View releases"}
+                      </span>
+                    </a>
+                  ))}
+              </div>
+            </div>
+
+            {/* Chrome Store Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+                <i className="fa-brands fa-chrome text-[#3498db] text-base" />
+                {t("changelog.sidebar.store")}
+              </h3>
+
+              <div className="flex flex-col gap-2">
+                {sourceProjects.map((project) => (
                   <a
-                    href={project.href}
+                    key={project.storeHref}
+                    href={project.storeHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
                   >
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={
+                          project.repo.includes("Zero-Start-Page")
+                            ? "/images/startpage_icon.png"
+                            : "/images/bookmark_icon.png"
+                        }
+                        alt={project.name}
+                        style={{ width: 24, height: 24, borderRadius: 4 }}
+                      />
+                      <span
+                        className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
+                        style={{ color: changelogTextColor }}
+                      >
+                        {project.name}
+                      </span>
+                    </div>
                     <i
-                      className="fa-solid fa-arrow-up-right-from-square text-xs flex-shrink-0 mt-1"
-                      style={{ color: "var(--text)" }}
+                      className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--text)] transition-all"
+                      style={{ color: "var(--muted2)" }}
                     />
                   </a>
-                </div>
-              ))}
-
-            <div className="mt-3 flex flex-col gap-2">
-              {sourceProjects
-                .filter((p) => p.name !== "Extension")
-                .map((project) => (
-                  <a
-                    key={project.releasesHref}
-                    href={project.releasesHref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
-                    style={{
-                      background: "var(--bg3)",
-                      border: "1px solid var(--border2)",
-                    }}
-                  >
-                    <span style={{ color: "var(--muted)" }}>
-                      {project.name}
-                    </span>
-                    <span
-                      className="flex items-center gap-1"
-                      style={{ color: "var(--text)" }}
-                    >
-                      <i className="fa-solid fa-tag text-[10px]" />
-                      {locale === "vi" ? "Xem releases" : "View releases"}
-                    </span>
-                  </a>
                 ))}
+              </div>
             </div>
-          </div>
 
-          {/* Chrome Store Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-brands fa-chrome text-[#3498db] text-base" />
-              {t("changelog.sidebar.store")}
-            </h3>
+            {/* Firefox Store Card */}
+            <div
+              className="rounded-xl p-5"
+              style={{
+                background: "var(--bg3)",
+                border: "1px solid var(--border2)",
+              }}
+            >
+              <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
+                <i className="fa-brands fa-firefox-browser text-[#ff7139] text-base" />
+                Firefox Add-ons
+              </h3>
 
-            <div className="flex flex-col gap-2">
-              {sourceProjects.map((project) => (
+              <div className="flex flex-col gap-2">
                 <a
-                  key={project.storeHref}
-                  href={project.storeHref}
+                  href="https://addons.mozilla.org/en-US/firefox/addon/zero-startpage-newtab/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <img
-                      src={
-                        project.repo.includes("Zero-Start-Page")
-                          ? "/images/startpage_icon.png"
-                          : "/images/bookmark_icon.png"
-                      }
-                      alt={project.name}
+                      src="/images/startpage_icon.png"
+                      alt="Zero Start Page"
                       style={{ width: 24, height: 24, borderRadius: 4 }}
                     />
                     <span
                       className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
                       style={{ color: changelogTextColor }}
                     >
-                      {project.name}
+                      Zero Start Page
                     </span>
                   </div>
                   <i
@@ -1327,130 +1512,91 @@ function ChangelogContent() {
                     style={{ color: "var(--muted2)" }}
                   />
                 </a>
-              ))}
-            </div>
-          </div>
 
-          {/* Firefox Store Card */}
-          <div
-            className="rounded-xl p-5"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
-              <i className="fa-brands fa-firefox-browser text-[#ff7139] text-base" />
-              Firefox Add-ons
-            </h3>
-
-            <div className="flex flex-col gap-2">
-              <a
-                href="https://addons.mozilla.org/en-US/firefox/addon/zero-startpage-newtab/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
-              >
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/images/startpage_icon.png"
-                    alt="Zero Start Page"
-                    style={{ width: 24, height: 24, borderRadius: 4 }}
-                  />
+                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] opacity-70 cursor-not-allowed transition-all">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/images/bookmark_icon.png"
+                      alt="Zero Bookmark Manager"
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 4,
+                        filter: "grayscale(100%)",
+                      }}
+                    />
+                    <span
+                      className="text-xs font-semibold"
+                      style={{ color: changelogTextColor }}
+                    >
+                      Zero Bookmark Manager
+                    </span>
+                  </div>
                   <span
-                    className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
-                    style={{ color: changelogTextColor }}
+                    className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                    style={{
+                      color: "var(--muted2)",
+                      backgroundColor: "var(--bg3)",
+                      border: "1px solid var(--border)",
+                    }}
                   >
-                    Zero Start Page
+                    {locale === "vi" ? "Sắp ra mắt" : "Upcoming"}
                   </span>
                 </div>
-                <i
-                  className="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-[var(--text)] transition-all"
-                  style={{ color: "var(--muted2)" }}
-                />
-              </a>
-
-              <div
-                className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] opacity-70 cursor-not-allowed transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/images/bookmark_icon.png"
-                    alt="Zero Bookmark Manager"
-                    style={{ width: 24, height: 24, borderRadius: 4, filter: 'grayscale(100%)' }}
-                  />
-                  <span
-                    className="text-xs font-semibold"
-                    style={{ color: changelogTextColor }}
-                  >
-                    Zero Bookmark Manager
-                  </span>
-                </div>
-                <span
-                  className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
-                  style={{ 
-                    color: "var(--muted2)",
-                    backgroundColor: "var(--bg3)",
-                    border: "1px solid var(--border)"
-                  }}
-                >
-                  {locale === "vi" ? "Sắp ra mắt" : "Upcoming"}
-                </span>
               </div>
             </div>
-          </div>
 
-          {/* Privacy Extension Card */}
-          <div
-            className="rounded-xl p-5 flex flex-col items-start gap-3"
-            style={{
-              background: "var(--bg3)",
-              border: "1px solid var(--border2)",
-            }}
-          >
-            <div className="flex items-center gap-3 mb-2">
-              <span
-                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                style={{
-                  background: "var(--bg3)",
-                  border: "1px solid var(--border2)",
-                }}
-              >
-                <img
-                  src="/images/icon.png"
-                  alt="Privacy Center"
-                  style={{ width: 24, height: 24, borderRadius: 4 }}
-                />
-              </span>
-              <span
-                className="font-syne font-bold text-base"
-                style={{ color: changelogTextColor }}
-              >
-                Privacy Center
-              </span>
-            </div>
-            <div className="text-xs mb-2" style={{ color: "var(--muted)" }}>
-              {locale === "vi"
-                ? "Trung tâm bảo mật, quản lý quyền riêng tư của 2 extension"
-                : "Privacy Center for managing privacy settings of 2 extensions"}
-            </div>
-            <Link
-              href="/privacy"
-              className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
+            {/* Privacy Extension Card */}
+            <div
+              className="rounded-xl p-5 flex flex-col items-start gap-3"
               style={{
                 background: "var(--bg3)",
                 border: "1px solid var(--border2)",
-                color: "var(--text)",
               }}
             >
-              {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}
-            </Link>
-          </div>
-          <div style={{ color: "var(--muted)" }}></div>
+              <div className="flex items-center gap-3 mb-2">
+                <span
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: "var(--bg3)",
+                    border: "1px solid var(--border2)",
+                  }}
+                >
+                  <img
+                    src="/images/icon.png"
+                    alt="Privacy Center"
+                    style={{ width: 24, height: 24, borderRadius: 4 }}
+                  />
+                </span>
+                <span
+                  className="font-syne font-bold text-base"
+                  style={{ color: changelogTextColor }}
+                >
+                  Privacy Center
+                </span>
+              </div>
+              <div className="text-xs mb-2" style={{ color: "var(--muted)" }}>
+                {locale === "vi"
+                  ? "Trung tâm bảo mật, quản lý quyền riêng tư của 2 extension"
+                  : "Privacy Center for managing privacy settings of 2 extensions"}
+              </div>
+              <Link
+                href="/privacy"
+                className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
+                style={{
+                  background: "var(--bg3)",
+                  border: "1px solid var(--border2)",
+                  color: "var(--text)",
+                }}
+              >
+                {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}
+              </Link>
+            </div>
+            <div style={{ color: "var(--muted)" }}></div>
+          </div>{" "}
+          {/* End Sidebar */}
         </div>{" "}
-        {/* End Sidebar */}
-      </div>{" "}
-      {/* End grid */}
+        {/* End grid */}
       </section>
     </div>
   )
