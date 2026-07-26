@@ -89,6 +89,71 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.9.0",
+    extension: "Zero Startpage - Newtab Replacement",
+    extensionIcon: "fa-solid fa-rocket",
+    date: { vi: "27 Tháng 7 2026", en: "July 27, 2026" },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Hệ thống Hình nền WebGL & Hiệu ứng mới: Bổ sung các hiệu ứng đồ họa đỉnh cao (Interactive Fluid, Black Hole, Frosted Glass Orbs, Neon Grid 3D Synthwave, Cinematic Bokeh, DVD Screen Saver), tích hợp kho ảnh Picsum và chế độ tự đổi nền ngẫu nhiên.",
+          en: "New WebGL Effects & Wallpaper Sources: Introduced high-end animated shaders (Interactive Fluid, Black Hole, Frosted Glass Orbs, Neon Grid 3D, Cinematic Bokeh, DVD Screen Saver), added Picsum photo integration, and local gallery auto-randomizer.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng hồ độc lạ & Tùy biến chữ (Custom Title): Bổ sung các kiểu đồng hồ mới (Audio Wave, Glass Float, Space Concentric, Dynamic Code, Matrix Word, Divergence Meter), hỗ trợ hiển thị giây, định dạng 12/24h và nâng cấp hiệu ứng chữ Cyberpunk Glitch, Neon, Rainbow.",
+          en: "New Clock Styles & Custom Title Overhaul: Added Audio Wave, Glass Float, Space Concentric, Dynamic Code, Matrix Word, and Divergence Meter clock styles, alongside Cyberpunk Glitch, Neon, and Rainbow custom title animations.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Widget Theo dõi Thói quen (Habit Tracker) & Tin tức RSS: Ra mắt Widget Habit Tracker hỗ trợ tiến trình dải màu (Segmented gradients), và đại tu Widget đọc tin RSS (hỗ trợ đọc tới 10 nguồn tin, phím cuộn lên đầu, danh sách mẫu phong phú).",
+          en: "Habit Tracker & Enhanced RSS Reader: Introduced a Habit Tracker widget with segmented gradient progress, and overhaul for the RSS reader (supports up to 10 feeds, scroll-to-top button, and rich presets).",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Tùy biến Font chữ & Trình phát nhạc: Bổ sung bộ sưu tập Font mới (Fira Code, Space Grotesk, Bungee Inline,...), hỗ trợ tìm kiếm font, trích xuất màu sắc từ ảnh đại diện bài hát (Thumbnail Color Extraction) và các kiểu Skin máy nghe nhạc mới.",
+          en: "Font Management & Music Skins: Added new fonts (Space Grotesk, Fira Code, Bungee Inline) with live search, song thumbnail color extraction, and new vertical/horizontal music player skins.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu trang Cài đặt (Settings UI): Thiết kế lại các thẻ cài đặt dạng xếp gọn (Collapsible cards), lưới chọn ngôn ngữ dạng nút bấm (Grid buttons), khu vực tải hình nền dạng thả kéo (Dropzone) và bảng chọn màu 32x32 gọn gàng.",
+          en: "Settings UI Redesign: Transformed settings sections into collapsible accordion cards, dynamic button grid language selectors, drag-and-drop local uploads, and streamlined 32x32 color pickers.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng bộ Đám mây & Google Drive: Nâng cấp luồng sao lưu Google Drive tự động, hiển thị ảnh đại diện tài khoản Google, hỗ trợ lọc danh sách file backup và đồng bộ mượt mà sang trình duyệt Firefox.",
+          en: "Cloud Sync & Firefox Support: Overhauled Google Drive auto-backup with account avatar display, backup file search filters, and synced host permissions for Firefox manifest.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Siêu tối ưu Hiệu năng (Performance Supercharge): Giảm tải RAM/CPU cho các máy cấu hình yếu, sửa triệt để lỗi giật Lag (INP/Layout thrashing), bổ sung cơ chế tạm dừng đồng hồ/hiệu ứng khi ẩn Tab và tăng tốc độ tải ảnh mượt mà không bị nháy đen.",
+          en: "Performance & Resource Optimization: Dramatically reduced INP lag and layout thrashing, added auto-pause for animations when tabs are hidden, optimized IndexedDB crossfade loading, and added a Performance HUD.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tinh chỉnh Giao diện & Thao tác: Nâng cấp hiệu ứng di chuột dock macOS, cho phép tạo thư mục lồng nhau không giới hạn (Deep nested folders), sửa lỗi vị trí thanh tìm kiếm và hiển thị lịch trình cuộc họp chính xác từ file ICS.",
+          en: "UI/UX Refinements: Improved macOS dock hover tooltips, enabled deep nested folder structures for bookmarks, fixed search bar shifting, and improved ICS calendar parsing for recurring events.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.6.0",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
