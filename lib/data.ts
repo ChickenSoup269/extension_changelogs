@@ -89,6 +89,50 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.6.1",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: { vi: "27 Tháng 7 2026", en: "July 27, 2026" },
+    releaseType: "patch",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Tăng tốc độ tải Favicon: Giảm kích thước Favicon mặc định từ 64px xuống 32px giúp tải icon siêu tốc, đồng thời bổ sung tùy chọn tùy chỉnh kích thước Favicon trong Cài đặt Popup và Sidebar.",
+          en: "Faster Favicon Loading: Reduced default Google favicon size from 64 to 32 for faster loading speed, and added custom Favicon Size settings for Popup and Sidebar.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Command Palette & Cẩm nang Dọn dẹp: Bổ sung các Tab bộ lọc tìm kiếm trong Command Palette, thu gọn kích thước thẻ báo cáo Smart Cleanup và tích hợp cẩm nang hướng dẫn sử dụng chi tiết.",
+          en: "Command Palette Filter Tabs & Smart Cleanup: Added intuitive filter tabs to the command palette, compacted the Smart Cleanup dashboard, and integrated a clear usage guide.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đồng bộ Google Drive & Tương thích Firefox: Chuẩn hóa logic sao lưu Google Drive tương thích với định dạng JSON, sửa lỗi cú pháp module và bổ sung tệp manifest tương thích hoàn toàn với trình duyệt Firefox.",
+          en: "Google Drive Sync & Firefox Support: Aligned Google Drive sync logic with JSON import/export, fixed module syntax errors, and added Firefox compatibility manifest.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi Thư mục rỗng & Kéo thả: Khôi phục khả năng hiển thị các thư mục rỗng trong chế độ Kanban/Bento giúp kéo thả sắp xếp dễ dàng hơn, đồng thời sửa triệt để lỗi nhân bản (clone bug) khi kéo thả.",
+          en: "Empty Folders Display & Drag-and-Drop: Restored deep empty folders rendering in Kanban and Bento views for better drag-and-drop organization while resolving drag-and-drop clone bugs.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Tối ưu Giao diện Sáng (Light Theme): Tăng độ tương phản cho Light Theme, làm nổi bật đường viền nút bấm/swatch đang chọn, cải thiện phản hồi kéo thả và cập nhật tài liệu README với 8 chế độ xem.",
+          en: "Light Theme Contrast & UI Polish: Improved contrast for light themes and active states, refined active swatches/buttons visibility, and updated README for 8 view modes.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.9.0",
     extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-rocket",
