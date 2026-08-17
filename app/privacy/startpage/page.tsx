@@ -114,35 +114,34 @@ export default function StartpagePrivacyPage() {
     : "To facilitate compliance with Chrome Web Store Developer Program Policies, the following declarations describe the extension's single purpose and permission usage."
 
   return (
-    <div className="min-h-screen py-10 md:py-20 px-4 md:px-10">
-      <div className="max-w-[800px] mx-auto">
+    <div className="min-h-screen py-10 md:py-16 px-6 sm:px-8 md:px-12">
+      <div className="max-w-[900px] mx-auto">
         <Link 
           href="/privacy" 
-          className="inline-flex items-center gap-2 mb-10 text-sm font-bold transition-all hover:-translate-x-1"
-          style={{ color: "var(--text)" }}
+          className="inline-flex items-center gap-2 mb-8 text-xs font-bold transition-all hover:-translate-x-1 p-2 rounded-xl bg-[var(--bg2)] border border-[var(--border)] text-[var(--muted)] hover:text-[var(--text)]"
         >
           <i className="fa-solid fa-arrow-left"></i>
-          {locale === "vi" ? "Trở về Trang chính sách" : "Back to Privacy Policy"}
+          {locale === "vi" ? "Trở về Trung tâm bảo mật" : "Back to Privacy Center"}
         </Link>
         
-        <div className="bg-[var(--bg)] md:bg-[var(--bg2)] rounded-3xl md:p-12 md:border border-[var(--border)] md:shadow-lg">
-          <div className="flex flex-col md:flex-row md:items-center gap-6 mb-10 md:border-b border-[var(--border)] pb-8">
+        <div className="bg-[var(--bg2)]/80 rounded-3xl p-6 sm:p-10 md:p-12 border border-[var(--border2)] shadow-2xl backdrop-blur-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5 mb-8 border-b border-[var(--border)] pb-8">
             <div 
-              className="w-16 h-16 rounded-[1rem] flex items-center justify-center flex-shrink-0 bg-[var(--bg)] border border-[var(--border)] shadow-sm p-3"
+              className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 bg-[var(--bg)] border border-[var(--border)] shadow-inner p-3"
             >
               <img src="/images/startpage_icon.png" alt="Zero Startpage" className="w-full h-full object-contain" />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-syne font-bold tracking-tight mb-2" style={{ color: "var(--text)" }}>
+              <h1 className="text-2xl sm:text-3xl font-syne font-bold tracking-tight text-[var(--text)] mb-1">
                 {title}
               </h1>
-              <div className="text-xs font-bold text-[var(--muted2)] uppercase tracking-widest">
-                <i className="fa-solid fa-shield-halved text-[var(--text)] mr-2"></i> {subtitle}
+              <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
+                <i className="fa-solid fa-shield-check"></i> {subtitle}
               </div>
             </div>
           </div>
           
-          <p className="text-lg leading-[1.8] text-[var(--text)] opacity-90 font-medium mb-12">
+          <p className="text-sm sm:text-base leading-relaxed text-[var(--muted)] mb-10 p-5 rounded-2xl bg-[var(--bg)] border border-[var(--border)]">
             {desc}
           </p>
 
@@ -150,26 +149,26 @@ export default function StartpagePrivacyPage() {
             {sections.map((section, index) => (
               <motion.div
                 key={section.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="flex flex-col"
               >
-                <h2 className="text-2xl font-syne font-bold mb-6 flex items-center gap-3 text-[var(--text)]">
-                  <span className="w-8 h-8 rounded-lg flex items-center justify-center text-sm bg-[var(--text)] text-[var(--bg)] shadow-sm">
+                <h2 className="text-lg sm:text-xl font-syne font-bold mb-5 flex items-center gap-3 text-[var(--text)] pb-3 border-b border-[var(--border)]">
+                  <span className="w-7 h-7 rounded-xl flex items-center justify-center text-xs glow-pill">
                     {index + 1}
                   </span>
                   {section.title[locale]}
                 </h2>
                 
-                <div className="flex flex-col gap-6 pl-0 md:pl-11">
+                <div className="grid grid-cols-1 gap-4">
                   {section.items.map((item, i) => (
-                    <div key={i} className="flex flex-col gap-2">
-                      <h4 className="font-bold text-[17px] text-[var(--text)] flex items-start gap-3 leading-snug">
-                        <i className="fa-solid fa-caret-right text-[var(--text)] opacity-50 mt-1"></i>
+                    <div key={i} className="p-4 sm:p-5 rounded-2xl bg-[var(--bg)] border border-[var(--border)] flex flex-col gap-1.5">
+                      <h4 className="font-bold text-sm text-[var(--text)] flex items-center gap-2">
+                        <i className="fa-solid fa-circle-check text-xs" style={{ color: "var(--accent-visible)" }}></i>
                         {typeof item.name === 'string' ? item.name : item.name[locale]}
                       </h4>
-                      <p className="text-base leading-[1.8] text-[var(--text)] opacity-80 pl-6">
+                      <p className="text-xs sm:text-sm leading-relaxed text-[var(--muted)] pl-5">
                         {item.desc[locale]}
                       </p>
                     </div>
@@ -183,3 +182,4 @@ export default function StartpagePrivacyPage() {
     </div>
   )
 }
+

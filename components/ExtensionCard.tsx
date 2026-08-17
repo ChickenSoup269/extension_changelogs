@@ -8,24 +8,24 @@ import { useLanguage } from "@/context/LanguageContext"
 const STATUS_CONFIG = {
   stable: {
     key: "common.stable",
-    bg: "rgba(46,204,113,0.1)",
-    border: "rgba(46,204,113,0.2)",
-    color: "#2ecc71",
-    prefix: "●",
+    bg: "rgba(16,185,129,0.15)",
+    border: "rgba(16,185,129,0.35)",
+    color: "#10b981",
+    icon: "fa-circle-check",
   },
   beta: {
     key: "common.beta",
-    bg: "rgba(245,158,11,0.1)",
-    border: "rgba(245,158,11,0.2)",
+    bg: "rgba(245,158,11,0.15)",
+    border: "rgba(245,158,11,0.35)",
     color: "#f59e0b",
-    prefix: "◐",
+    icon: "fa-flask",
   },
   new: {
     key: "common.new",
-    bg: "rgba(46,204,113,0.15)",
-    border: "rgba(46,204,113,0.3)",
-    color: "#2ecc71",
-    prefix: "✦",
+    bg: "rgba(99,102,241,0.18)",
+    border: "rgba(99,102,241,0.4)",
+    color: "#818cf8",
+    icon: "fa-sparkles",
   },
 }
 
@@ -38,7 +38,7 @@ interface Props {
 export default function ExtensionCard({ ext, onClick, compact = false }: Props) {
   const cardRef = useRef<HTMLDivElement>(null)
   const { t, locale } = useLanguage()
-  const status = STATUS_CONFIG[ext.status]
+  const status = STATUS_CONFIG[ext.status] || STATUS_CONFIG.stable
   
   const previewImg = ext.slug === "zero-startpage" 
     ? "/images/starpage/1.png" 
@@ -48,32 +48,37 @@ export default function ExtensionCard({ ext, onClick, compact = false }: Props) 
     <div
       ref={cardRef}
       onClick={() => onClick?.(ext)}
-      className="cursor-target flex flex-col bg-[var(--bg2)] border border-[var(--border)] rounded-[2rem] relative overflow-hidden group transition-all duration-300 hover:border-[var(--text)] hover:shadow-[0_15px_40px_-10px_var(--accent-glow)] h-full"
+      className="cursor-target flex flex-col bg-[var(--bg2)] border border-[var(--border)] rounded-3xl relative overflow-hidden group transition-all duration-300 hover:border-[var(--border2)] hover:-translate-y-1 shadow-sm hover:shadow-xl h-full"
+      style={{
+        boxShadow: "0 10px 30px -10px rgba(0,0,0,0.3)",
+      }}
     >
-      {/* Background Glow on hover */}
+      {/* Background Ambient Glow on hover */}
       <div 
-        className="absolute top-[-20%] right-[-10%] w-64 h-64 rounded-full blur-[100px] opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
+        className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
         style={{ background: "var(--accent)" }}
       />
 
       {/* TOP MEDIA SECTION */}
-      <div className="w-full aspect-video border-b border-[var(--border)] overflow-hidden bg-[var(--bg)] relative">
+      <div className="w-full aspect-[16/9] border-b border-[var(--border)] overflow-hidden bg-[var(--bg)] relative">
         <img 
           src={previewImg} 
           alt={`${ext.name} Preview`} 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg2)]/60 via-transparent to-transparent pointer-events-none" />
         
         {/* Status Badge overlaid */}
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-3.5 right-3.5 z-10">
           <span
-            className="text-[10px] font-bold px-3 py-1.5 rounded-xl uppercase tracking-wider backdrop-blur-md shadow-sm"
+            className="inline-flex items-center gap-1.5 text-[10px] font-bold px-3 py-1 rounded-xl uppercase tracking-wider backdrop-blur-md shadow-sm"
             style={{
               background: status.bg,
               border: `1px solid ${status.border}`,
               color: status.color,
             }}
           >
+            <i className={`fa-solid ${status.icon} text-[9px]`}></i>
             {t(status.key)}
           </span>
         </div>
@@ -81,33 +86,33 @@ export default function ExtensionCard({ ext, onClick, compact = false }: Props) 
 
       {/* BOTTOM INFO PANEL */}
       <div className="p-5 md:p-6 flex flex-col flex-1 relative z-10">
-        <div className="flex items-start gap-4 mb-4">
-          <div className="w-12 h-12 rounded-2xl bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center p-2 shadow-sm group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+        <div className="flex items-start gap-3.5 mb-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center p-2 shadow-sm group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
             <img src={ext.icon} alt={ext.name} className="w-full h-full object-contain" />
           </div>
-          <div className="pt-0.5">
-            <h3 className="text-lg font-syne font-bold text-[var(--text)] mb-1 line-clamp-1">
+          <div className="pt-0.5 min-w-0 flex-1">
+            <h3 className="text-base md:text-lg font-syne font-bold text-[var(--text)] mb-1 truncate">
               {ext.name}
             </h3>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-[var(--muted2)] uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-[var(--muted2)] uppercase tracking-wider">
               <span>v{ext.version}</span>
               <span className="w-1 h-1 rounded-full bg-[var(--border2)]"></span>
-              <span>{ext.category}</span>
+              <span className="truncate">{ext.category}</span>
             </div>
           </div>
         </div>
 
-        <p className="text-[15px] leading-[1.8] text-[var(--text)] opacity-80 mb-6 line-clamp-3">
+        <p className="text-xs md:text-sm leading-relaxed text-[var(--muted)] mb-5 line-clamp-2">
           {ext.description[locale]}
         </p>
 
-        <div className="mt-auto flex items-center justify-between pt-5 border-t border-[var(--border)]">
-          <div className="flex items-center gap-4 text-xs font-bold text-[var(--muted2)]">
-            <span className="flex items-center gap-1.5">
-              <i className="fas fa-star text-[var(--text)]"></i> {ext.stars}
+        <div className="mt-auto flex items-center justify-between pt-4 border-t border-[var(--border)]">
+          <div className="flex items-center gap-3 text-xs font-bold text-[var(--muted)]">
+            <span className="flex items-center gap-1">
+              <i className="fa-solid fa-star text-amber-400 text-[11px]"></i> {ext.stars}
             </span>
-            <span className="flex items-center gap-1.5">
-              <i className="fas fa-download text-[var(--text)]"></i> {ext.downloads}
+            <span className="flex items-center gap-1">
+              <i className="fa-solid fa-download text-[var(--muted2)] text-[11px]"></i> {ext.downloads}
             </span>
           </div>
 
@@ -115,22 +120,31 @@ export default function ExtensionCard({ ext, onClick, compact = false }: Props) 
             <Link
               href={`/about/${ext.slug}`}
               onClick={(e) => e.stopPropagation()}
-              className="px-4 py-2.5 bg-[var(--bg)] text-[var(--text)] border border-[var(--border)] text-xs font-bold rounded-xl hover:bg-[var(--bg3)] transition-colors"
+              className="px-3.5 py-2 bg-[var(--bg)] text-[var(--text)] border border-[var(--border)] text-xs font-bold rounded-xl hover:bg-[var(--bg3)] hover:border-[var(--border2)] transition-all"
             >
-              {t("common.details").toUpperCase()}
+              {t("common.details")}
             </Link>
-            <a
-              href={ext.homepage || "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="w-10 h-10 bg-[var(--text)] text-[var(--bg)] rounded-xl flex items-center justify-center hover:-translate-y-0.5 transition-transform shadow-[0_5px_15px_var(--accent-glow)]"
-            >
-              <i className="fa-brands fa-chrome"></i>
-            </a>
+            {ext.homepage && (
+              <a
+                href={ext.homepage}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                title="Chrome Web Store"
+                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:scale-105 shadow-sm"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--accent-text)",
+                  boxShadow: "0 2px 10px var(--accent-glow)"
+                }}
+              >
+                <i className="fa-brands fa-chrome text-sm"></i>
+              </a>
+            )}
           </div>
         </div>
       </div>
     </div>
   )
 }
+
