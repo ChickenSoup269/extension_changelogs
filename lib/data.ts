@@ -51,9 +51,9 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Next-gen bookmark manager featuring smart search, scientific folder organization, and superior performance for your browser.",
     },
     tags: ["bookmark", "manager", "productivity", "organizer"],
-    downloads: "192",
+    downloads: "217",
     stars: "4.2",
-    ratingCount: "3",
+    ratingCount: "6",
 
     author: "ChickenSoup269",
     homepage:
@@ -74,9 +74,9 @@ const RAW_EXTENSIONS: Extension[] = [
       en: "Transform your New Tab into a minimalist, inspiring workspace with smart widgets and stunning visual effects.",
     },
     tags: ["startpage", "newtab", "minimalist", "ui"],
-    downloads: "997",
-    stars: "4.9",
-    ratingCount: "3",
+    downloads: "976",
+    stars: "5.0",
+    ratingCount: "10",
     featured: true,
 
     author: "ChickenSoup269",
