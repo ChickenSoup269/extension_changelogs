@@ -34,17 +34,18 @@ export default function Background() {
   if (bgAnim === "rain") {
     return (
       <div className="bg-container">
-        {Array.from({ length: 40 }).map((_, i) => (
+        {Array.from({ length: 30 }).map((_, i) => (
           <div
             key={`rain-${i}`}
-            className="absolute bg-[var(--accent)] pointer-events-none"
+            className="absolute pointer-events-none"
             style={{
+              background: "var(--accent)",
               width: "1px",
               height: Math.random() * 20 + 20 + "px",
               left: Math.random() * 100 + "%",
               top: "-50px",
-              opacity: Math.random() * 0.4 + 0.1,
-              animation: `fall-rain ${Math.random() * 1 + 1}s linear infinite ${Math.random() * 2}s`,
+              opacity: Math.random() * 0.25 + 0.05,
+              animation: `fall-rain ${Math.random() * 1.5 + 1.2}s linear infinite ${Math.random() * 2}s`,
             }}
           ></div>
         ))}
@@ -55,18 +56,19 @@ export default function Background() {
   if (bgAnim === "particles") {
     return (
       <div className="bg-container">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 24 }).map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-[var(--accent)] pointer-events-none"
+            className="absolute rounded-full pointer-events-none"
             style={{
-              width: Math.random() * 4 + 2 + "px",
-              height: Math.random() * 4 + 2 + "px",
+              background: "var(--accent)",
+              width: Math.random() * 3 + 2 + "px",
+              height: Math.random() * 3 + 2 + "px",
               left: Math.random() * 100 + "%",
               top: Math.random() * 100 + "%",
-              opacity: Math.random() * 0.5 + 0.1,
-              boxShadow: "0 0 10px var(--accent)",
-              animation: `float-particle ${Math.random() * 10 + 15}s infinite ease-in-out ${Math.random() * -20}s`,
+              opacity: Math.random() * 0.35 + 0.1,
+              boxShadow: "0 0 8px var(--accent-glow)",
+              animation: `float-particle ${Math.random() * 12 + 18}s infinite ease-in-out ${Math.random() * -20}s`,
             }}
           ></div>
         ))}
@@ -76,3 +78,4 @@ export default function Background() {
 
   return <div className="bg-container"></div>
 }
+

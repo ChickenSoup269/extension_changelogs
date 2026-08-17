@@ -3,24 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --bg: #050607;
-  --bg2: #0b0c0e;
-  --bg3: #111215;
-  --bg4: #17181c;
-  --bg-glass: rgba(8, 9, 10, 0.85);
-  --border: rgba(255, 255, 255, 0.06);
-  --border2: rgba(255, 255, 255, 0.11);
+  --bg: #080a0f;
+  --bg2: #0f121a;
+  --bg3: #161b26;
+  --bg4: #1e2433;
+  --bg-glass: rgba(8, 10, 15, 0.85);
+  --border: rgba(255, 255, 255, 0.08);
+  --border2: rgba(255, 255, 255, 0.15);
   --text: #f8fafc;
   --muted: #94a3b8;
-  --muted2: #475569;
-  --accent: #ffffff;
-  --accent2: #a1a1aa;
-  --accent-rgb: 255, 255, 255;
-  --accent-glow: rgba(255, 255, 255, 0.05);
-  --green: #2ecc71;
+  --muted2: #64748b;
+  --accent: #10b981;
+  --accent2: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.2);
+  --accent-text: #ffffff;
+  --accent-border: rgba(16, 185, 129, 0.35);
+  --accent-visible: #10b981;
+  --green: #10b981;
   --amber: #f59e0b;
   --red: #ef4444;
-  --blue: #3498db;
+  --blue: #0ea5e9;
 }
 
 * {
@@ -40,6 +42,7 @@ body {
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .font-syne {
@@ -49,13 +52,14 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg2);
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--bg4);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--muted2);
@@ -63,9 +67,43 @@ body {
 
 /* Selection */
 ::selection {
-  background: rgba(46, 204, 113, 0.25);
-  color: #fff;
+  background: var(--accent-glow);
+  color: var(--text);
 }
+
+/* Modern Card Utilities */
+.card-elevated {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.card-elevated:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5), 0 0 20px -5px var(--accent-glow);
+}
+
+.card-elevated::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  pointer-events: none;
+}
+
+.glow-pill {
+  background: var(--accent-glow);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-visible);
+}
+
 
 /* Background Animation */
 .bg-container {
