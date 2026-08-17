@@ -7,6 +7,7 @@ import Background from "@/components/Background"
 import { LanguageProvider } from "@/context/LanguageContext"
 import { SettingsProvider } from "@/context/SettingsContext"
 import StatsUpdater from "@/components/StatsUpdater"
+import Link from "next/link"
 
 const primaryFont = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -21,7 +22,7 @@ const secondaryFont = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: "Zero extension",
+  title: "ExtHub - Browser Extensions Hub",
   description:
     "Không gian lưu trữ, chia sẻ và theo dõi cập nhật các extension do chính mình phát triển.",
   icons: {
@@ -56,20 +57,44 @@ export default function RootLayout({
             <Navbar />
             <main>{children}</main>
             <ScrollToTop />
-            <footer className="border-t border-[var(--border)] mt-20">
-              <div className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0">
+            <footer className="border-t border-[var(--border)] mt-24 bg-[var(--bg2)]/60 backdrop-blur-xl">
+              <div className="max-w-[1240px] mx-auto px-6 sm:px-8 md:px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0">
                 <div className="flex flex-col items-center md:items-start gap-2">
-                  <img
-                    src="/images/logo2.png"
-                    alt="ExtHub Logo"
-                    className="h-7 md:h-8 logo-img"
-                  />
-                  <p className="text-[10px] md:text-xs text-[var(--muted)] mt-1 text-center md:text-left">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="/images/logo2.png"
+                      alt="ExtHub Logo"
+                      className="h-7 md:h-8 logo-img"
+                    />
+                    <span className="font-syne font-bold text-base text-[var(--text)]">
+                      Ext<span style={{ color: "var(--accent-visible)" }}>Hub</span>
+                    </span>
+                  </div>
+                  <p className="text-xs text-[var(--muted)] mt-1 text-center md:text-left">
                     Bộ sưu tập extension cá nhân • Made with ♥ in Vietnam
                   </p>
                 </div>
-                <p className="text-[10px] md:text-xs text-[var(--muted2)]">
-                  © 2026 My Extensions. All rights reserved.
+
+                <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-[var(--muted)]">
+                  <Link href="/extensions" className="hover:text-[var(--text)] transition-colors">
+                    Extensions
+                  </Link>
+                  <Link href="/about" className="hover:text-[var(--text)] transition-colors">
+                    About
+                  </Link>
+                  <Link href="/changelog" className="hover:text-[var(--text)] transition-colors">
+                    Changelog
+                  </Link>
+                  <Link href="/docs" className="hover:text-[var(--text)] transition-colors">
+                    Docs
+                  </Link>
+                  <Link href="/privacy" className="hover:text-[var(--text)] transition-colors">
+                    Privacy
+                  </Link>
+                </div>
+
+                <p className="text-[11px] font-medium text-[var(--muted2)]">
+                  © 2026 ExtHub. All rights reserved.
                 </p>
               </div>
             </footer>
@@ -79,3 +104,4 @@ export default function RootLayout({
     </html>
   )
 }
+

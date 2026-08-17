@@ -6,8 +6,6 @@ import Link from "next/link"
 import { gsap } from "gsap"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
-import momoQr from "@/app/images/momo_qr_Thien.jpg"
-import momoCover from "@/app/images/cat.png"
 
 type TypeConfigValue = { label: string; bg: string; color: string }
 
@@ -1291,7 +1289,7 @@ function ChangelogContent() {
                   firstContent={
                     <div className="momo-card__front">
                       <img
-                        src={momoCover.src}
+                        src="/images/cat.png"
                         alt=""
                         className="momo-card__cover"
                       />
@@ -1314,7 +1312,7 @@ function ChangelogContent() {
                   }
                   secondContent={
                     <div className="momo-card__qr">
-                      <img src={momoQr.src} alt="MoMo QR" />
+                      <img src="/images/momo_qr_Thien.png" alt="MoMo QR" />
                     </div>
                   }
                   gridSize={8}
