@@ -89,6 +89,60 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "1.7.0",
+    extension: "Zero Bookmark Manager",
+    extensionIcon: "fa-solid fa-bookmark",
+    date: {
+      vi: "21 Tháng 8 2026",
+      en: "August 21, 2026",
+    },
+    releaseType: "minor",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Analytics & Insights Hub: Bổ sung dashboard phân tích 5 tab chi tiết, kiểm tra sức khỏe liên kết (link health), tối ưu bố cục modal toàn màn hình và hỗ trợ đa ngôn ngữ.",
+          en: "Analytics & Insights Hub: Introduced a comprehensive 5-tab analytics hub with link health tracking, fullscreen modal toggle, and complete multi-language localization.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Folder Studio & Sắp xếp Thông minh: Tích hợp công cụ quản lý thư mục nâng cao, kiểm tra cấu trúc cây, gộp thư mục trùng lặp, tự động sắp xếp và hoàn tác thao tác (Undo).",
+          en: "Folder Studio & Smart Organization: Added Folder Studio with hierarchy inspection, duplicate merging, auto-sort, and undo toast actions with countdown progress.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Lưu nhanh & AI Tags: Hỗ trợ lưu đồng thời nhiều tab đang mở, gợi ý tag thông minh bằng Local AI/AI provider, và cải tiến menu chọn/tạo nhanh thư mục.",
+          en: "Multi-Tab Quick Save & AI Tags: Added support for saving multiple open tabs simultaneously, smart AI tag suggestions, and quick folder creation within the save modal.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Hướng dẫn Onboarding & Context Menu: Bổ sung tour hướng dẫn chi tiết cho tính năng Thư mục và Dashboard, kèm menu chuột phải tiện lợi và tooltip tên dài.",
+          en: "Onboarding Tour & Context Menus: Added guided walkthroughs for Folders and Analytics, plus folder context menus with rename actions and hover tooltips.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Đồng bộ Giao diện & Sửa lỗi Cuộn: Khắc phục lỗi cuộn thanh tìm kiếm dính (sticky search), đồng bộ theme màu Synthwave/Catppuccin, và sửa triệt để các lỗi hiển thị CSS.",
+          en: "UI Sync & Scroll Fixes: Resolved sticky search scroll behavior, synced accent colors for Synthwave/Catppuccin themes, and cleaned up modal CSS clipping issues.",
+        },
+      },
+      {
+        type: "perf",
+        text: {
+          vi: "Tối ưu Hiệu năng Popup: Loại bỏ độ trễ mở popup (1-3s), tải trễ (lazy-load) cây thư mục và hoãn kết xuất chạy nền để mở giao diện tức thì.",
+          en: "Popup Performance Optimization: Eliminated 1-3s popup opening delay, lazy-loaded folder trees, and deferred background rendering for instant startup.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.6.1",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
