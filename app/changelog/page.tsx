@@ -7,8 +7,6 @@ import { gsap } from "gsap"
 import { CHANGELOG, type ChangeType } from "@/lib/data"
 import { useLanguage } from "@/context/LanguageContext"
 
-type TypeConfigValue = { label: string; bg: string; color: string }
-
 type PixelTransitionProps = {
   firstContent: ReactNode
   secondContent: ReactNode
@@ -152,18 +150,20 @@ function PixelTransition({
   )
 }
 
+type TypeConfigValue = { label: string; icon: string; bg: string; color: string; border: string }
+
 const TYPE_CONFIG: { [K in ChangeType]: TypeConfigValue } = {
-  feat: { label: "FEAT", bg: "rgba(124,106,247,0.15)", color: "#a594ff" },
-  fix: { label: "FIX", bg: "rgba(62,207,142,0.12)", color: "#3ecf8e" },
-  perf: { label: "PERF", bg: "rgba(96,165,250,0.12)", color: "#60a5fa" },
-  break: { label: "BREAK", bg: "rgba(239,68,68,0.12)", color: "#ef4444" },
-  docs: { label: "DOCS", bg: "rgba(245,158,11,0.12)", color: "#f59e0b" },
+  feat: { label: "FEAT", icon: "fa-wand-magic-sparkles", bg: "rgba(124,106,247,0.12)", color: "#a594ff", border: "rgba(124,106,247,0.25)" },
+  fix: { label: "FIX", icon: "fa-bug-slash", bg: "rgba(62,207,142,0.12)", color: "#3ecf8e", border: "rgba(62,207,142,0.25)" },
+  perf: { label: "PERF", icon: "fa-bolt", bg: "rgba(96,165,250,0.12)", color: "#60a5fa", border: "rgba(96,165,250,0.25)" },
+  break: { label: "BREAK", icon: "fa-triangle-exclamation", bg: "rgba(239,68,68,0.12)", color: "#ef4444", border: "rgba(239,68,68,0.25)" },
+  docs: { label: "DOCS", icon: "fa-book-open", bg: "rgba(245,158,11,0.12)", color: "#f59e0b", border: "rgba(245,158,11,0.25)" },
 }
 
 const RELEASE_TYPE_LABELS = {
-  major: { label: "Major", color: "#a594ff" },
-  minor: { label: "Minor", color: "#3ecf8e" },
-  patch: { label: "Patch", color: "var(--muted)" },
+  major: { label: "Major Release", color: "#a594ff", bg: "rgba(165,148,255,0.12)", border: "rgba(165,148,255,0.3)" },
+  minor: { label: "Minor Update", color: "#3ecf8e", bg: "rgba(62,207,142,0.12)", border: "rgba(62,207,142,0.3)" },
+  patch: { label: "Patch Fix", color: "#94a3b8", bg: "rgba(148,163,184,0.12)", border: "rgba(148,163,184,0.3)" },
 }
 
 function ChangelogContent() {
@@ -175,13 +175,13 @@ function ChangelogContent() {
   }
 
   const [filter, setFilter] = useState<ChangeType | "all">(
-    (searchParams.get("type") as ChangeType) || "all",
+    (searchParams?.get("type") as ChangeType) || "all",
   )
   const [extFilter, setExtFilter] = useState<string>(
-    searchParams.get("ext") || "all",
+    searchParams?.get("ext") || "all",
   )
   const [currentPage, setCurrentPage] = useState(
-    Number(searchParams.get("page")) || 1,
+    Number(searchParams?.get("page")) || 1,
   )
   const [contributorPage, setContributorPage] = useState(1)
 
@@ -354,6 +354,21 @@ function ChangelogContent() {
       },
     },
     {
+      name: "Ty Wood",
+      avatar: null,
+      role: {
+        vi: "Người đóng góp",
+        en: "Contributor",
+      },
+      bugs: "0+",
+      suggestions: 2,
+      extension: "Zero Bookmark Manager",
+      details: {
+        vi: "Gợi ý tính năng Quick Save và hiển thị tags, notes cho các chế độ xem.",
+        en: "Suggested Quick Save feature and displaying tags and notes across views.",
+      },
+    },
+    {
       name: "Cong Truong",
       avatar: null,
       role: {
@@ -510,177 +525,196 @@ function ChangelogContent() {
   }
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <section className="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-14 relative z-10">
+      <section className="max-w-[1280px] mx-auto px-6 md:px-10 py-10 md:py-16 relative z-10">
+        {/* Header Hero */}
+        <div className="mb-10 max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl text-[10px] font-bold uppercase tracking-widest glow-pill mb-4">
+            <i className="fa-solid fa-clock-rotate-left text-[9px]"></i>
+            Release Notes & Updates
+          </div>
+          <h1 className="font-syne font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight mb-3 text-[var(--text)]">
+            {locale === "vi" ? "Nhật Ký Cập Nhật" : "Changelog"}
+          </h1>
+          <p className="text-sm sm:text-base text-[var(--muted)] leading-relaxed">
+            {t("changelog.subtitle")}
+          </p>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-10 lg:items-start">
-          {/* Main */}
+          {/* Main Content Area */}
           <div className="flex-1 min-w-0">
-            <div className="mb-8">
-              <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-2 text-[var(--text)]">
-                Changelog
-              </h1>
-              <p style={{ color: "var(--muted)" }}>{t("changelog.subtitle")}</p>
+            {/* Filter Controls Bar */}
+            <div className="p-4 sm:p-5 rounded-3xl bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm mb-8 backdrop-blur-xl flex flex-col gap-4">
+              {/* Extension Selector Tabs */}
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted2)] mb-2.5 block">
+                  {locale === "vi" ? "Lọc theo Tiện ích" : "Filter by Extension"}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {extensions.map((e) => {
+                    const isSelected = extFilter === e
+                    const icon = e.includes("Bookmark")
+                      ? "fa-solid fa-bookmark"
+                      : e.includes("Startpage") || e.includes("Start Page")
+                        ? "fa-solid fa-rocket"
+                        : "fa-solid fa-shapes"
+
+                    return (
+                      <button
+                        key={e}
+                        onClick={() => handleExtensionChange(e)}
+                        className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2"
+                        style={{
+                          background: isSelected ? "var(--bg4)" : "var(--bg)",
+                          border: `1px solid ${isSelected ? "var(--accent-border)" : "var(--border)"}`,
+                          color: isSelected ? "var(--text)" : "var(--muted)",
+                          boxShadow: isSelected ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                        }}
+                      >
+                        <i className={`${icon} text-[11px]`} style={{ color: isSelected ? "var(--accent-visible)" : undefined }} />
+                        {e === "all" ? t("extensions.all") : e}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Change Type Filter Chips */}
+              <div className="pt-3 border-t border-[var(--border)]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--muted2)] mb-2.5 block">
+                  {locale === "vi" ? "Loại cập nhật" : "Change Type"}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(["all", "feat", "fix", "perf", "break", "docs"] as const).map((type) => {
+                    const isSelected = filter === type
+                    const cfg = type !== "all" ? TYPE_CONFIG[type] : null
+
+                    return (
+                      <button
+                        key={type}
+                        onClick={() => handleFilterChange(type)}
+                        className="px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide transition-all flex items-center gap-1.5"
+                        style={{
+                          background: isSelected
+                            ? cfg ? cfg.bg : "var(--bg4)"
+                            : "var(--bg)",
+                          border: `1px solid ${
+                            isSelected
+                              ? cfg ? cfg.border : "var(--accent-border)"
+                              : "var(--border)"
+                          }`,
+                          color: isSelected
+                            ? cfg ? cfg.color : "var(--text)"
+                            : "var(--muted)",
+                          boxShadow: isSelected ? "0 2px 6px rgba(0,0,0,0.1)" : "none",
+                        }}
+                      >
+                        {cfg && <i className={`fa-solid ${cfg.icon} text-[10px]`} />}
+                        {type === "all" ? (locale === "vi" ? "Tất cả thay đổi" : "All Types") : cfg?.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
 
-            {/* Filters */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {(["all", "feat", "fix", "perf", "break", "docs"] as const).map(
-                (type) => (
-                  <button
-                    key={type}
-                    onClick={() => handleFilterChange(type)}
-                    className="px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200"
-                    style={{
-                      background:
-                        filter === type ? "var(--bg4)" : "transparent",
-                      border: `1px solid ${filter === type ? "var(--border2)" : "var(--border)"}`,
-                      color:
-                        filter === type ? changelogTextColor : "var(--muted)",
-                    }}
-                  >
-                    {type === "all" ? "All" : type.toUpperCase()}
-                  </button>
-                ),
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-2 mb-10">
-              {extensions.map((e) => (
-                <button
-                  key={e}
-                  onClick={() => handleExtensionChange(e)}
-                  className="px-3.5 py-1.5 rounded-full text-xs transition-all duration-200"
-                  style={{
-                    background: extFilter === e ? "var(--bg3)" : "transparent",
-                    border: `1px solid ${extFilter === e ? "var(--text)" : "var(--border)"}`,
-                    color: extFilter === e ? "var(--text)" : "var(--muted)",
-                  }}
-                >
-                  {e === "all" ? t("extensions.all") : e}
-                </button>
-              ))}
-            </div>
-
-            {/* Timeline */}
+            {/* Timeline & Release Cards */}
             <div className="relative">
               <div className="flex flex-col gap-12">
                 {grouped.map((group) => (
                   <div key={group.extension} className="relative">
-                    <h2
-                      className="text-xl font-bold mb-6 flex items-center gap-2"
-                      style={{ color: changelogTextColor }}
-                    >
-                      <i
-                        className={`${group.items[0]?.extensionIcon} text-lg text-[var(--text)]`}
-                      ></i>
-                      {group.extension}
-                    </h2>
-                    <div className="relative pl-8">
+                    {/* Extension Group Header */}
+                    <div className="flex items-center gap-3 mb-6 pb-3 border-b border-[var(--border)]">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[var(--bg3)] border border-[var(--border2)] text-base" style={{ color: "var(--accent-visible)" }}>
+                        <i className={group.items[0]?.extensionIcon || "fa-solid fa-puzzle-piece"} />
+                      </div>
+                      <div>
+                        <h2 className="text-xl font-syne font-bold text-[var(--text)]">
+                          {group.extension}
+                        </h2>
+                        <span className="text-[11px] font-medium text-[var(--muted2)]">
+                          {group.items.length} {locale === "vi" ? "phiên bản được ghi nhận" : "releases listed"}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="relative pl-6 sm:pl-8">
+                      {/* Timeline Vertical Guide Line */}
                       <div
-                        className="absolute left-[5.5px] top-[30px] bottom-0 w-[2px]"
+                        className="absolute left-[7px] top-[28px] bottom-4 w-[2px]"
                         style={{
-                          background:
-                            "linear-gradient(180deg, var(--accent) 0%, var(--accent2) 40%, var(--border) 80%, transparent 100%)",
+                          background: "linear-gradient(180deg, var(--accent) 0%, var(--accent2) 40%, var(--border2) 80%, transparent 100%)",
                           boxShadow: "0 0 10px var(--accent-glow)",
                         }}
                       />
 
                       <div className="flex flex-col gap-8">
                         {group.items.map((item, i) => {
-                          const rel = RELEASE_TYPE_LABELS[item.releaseType]
+                          const rel = RELEASE_TYPE_LABELS[item.releaseType] || RELEASE_TYPE_LABELS.patch
+                          const dotColor = item.releaseType === "major" ? "#a594ff" : item.releaseType === "minor" ? "#3ecf8e" : "#94a3b8"
+
                           return (
-                            <div
-                              key={i}
-                              className="grid gap-4 relative group/item"
-                              style={{ gridTemplateColumns: "1fr" }}
-                            >
-                              {/* Glowing colorful dot */}
+                            <div key={i} className="relative group/item">
+                              {/* Glowing Timeline Marker Dot */}
                               <div
-                                className="absolute -left-[32.5px] top-[24px] w-3.5 h-3.5 rounded-full z-10 transition-all duration-300 group-hover/item:scale-125 group-hover/item:brightness-110"
+                                className="absolute -left-[27px] sm:-left-[31px] top-[26px] w-4 h-4 rounded-full z-10 transition-all duration-300 group-hover/item:scale-125 border-2 border-[var(--bg)]"
                                 style={{
-                                  background:
-                                    item.releaseType === "major"
-                                      ? "#ef4444"
-                                      : item.releaseType === "minor"
-                                        ? "#a594ff"
-                                        : "#3ecf8e",
-                                  boxShadow: `0 0 12px ${item.releaseType === "major" ? "#ef4444" : item.releaseType === "minor" ? "#a594ff" : "#3ecf8e"}`,
+                                  background: dotColor,
+                                  boxShadow: `0 0 12px ${dotColor}`,
                                 }}
                               />
 
-                              <div
-                                className="rounded-2xl p-6 relative backdrop-blur-md bg-[var(--bg2)]/80 border border-[var(--border2)] hover:border-[var(--text)] transition-all duration-500 group/card overflow-hidden"
-                                style={{
-                                  boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
-                                }}
-                              >
-                                {/* Background glow on hover */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-[var(--text)]/5 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                                <div className="flex items-center flex-wrap gap-2.5 mb-4 relative z-10">
-                                  <span
-                                    className="flex items-center gap-1.5 text-xs font-bold px-2 py-1 rounded-md"
-                                    style={{
-                                      backgroundColor: "var(--bg3)",
-                                      color: "var(--text)",
-                                    }}
-                                  >
-                                    <i
-                                      className={`${item.extensionIcon || "fa-solid fa-puzzle-piece"} text-[10px] opacity-70`}
-                                    ></i>
-                                    {item.extension}
-                                  </span>
-                                  <span
-                                    className="font-mono text-sm font-bold px-2 py-1 rounded-md"
-                                    style={{
-                                      backgroundColor: "var(--bg3)",
-                                      color: "var(--text)",
-                                      fontFamily: "var(--font-dm-mono)",
-                                    }}
-                                  >
-                                    {item.version}
-                                  </span>
-                                  <span
-                                    className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full"
-                                    style={{
-                                      color: rel.color,
-                                      backgroundColor: `${rel.color}20`,
-                                      border: `1px solid ${rel.color}40`,
-                                    }}
-                                  >
-                                    {rel.label}
-                                  </span>
-                                  <span
-                                    className="ml-auto text-xs font-medium"
-                                    style={{ color: "var(--muted2)" }}
-                                  >
-                                    <i className="fa-regular fa-clock mr-1.5 opacity-70"></i>
+                              {/* Release Card */}
+                              <div className="rounded-3xl p-6 sm:p-7 bg-[var(--bg2)]/90 border border-[var(--border2)] hover:border-[var(--accent-border)] transition-all duration-300 shadow-xl backdrop-blur-xl group/card overflow-hidden">
+                                {/* Release Meta Header */}
+                                <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-5 border-b border-[var(--border)]">
+                                  <div className="flex flex-wrap items-center gap-2.5">
+                                    <span className="font-mono text-sm sm:text-base font-extrabold px-3 py-1 rounded-xl bg-[var(--bg)] border border-[var(--border2)] text-[var(--text)] tracking-wider shadow-inner">
+                                      v{item.version}
+                                    </span>
+                                    <span
+                                      className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg flex items-center gap-1.5"
+                                      style={{
+                                        color: rel.color,
+                                        backgroundColor: rel.bg,
+                                        border: `1px solid ${rel.border}`,
+                                      }}
+                                    >
+                                      <i className="fa-solid fa-tag text-[9px]" />
+                                      {rel.label}
+                                    </span>
+                                  </div>
+
+                                  <div className="text-xs font-semibold text-[var(--muted2)] flex items-center gap-1.5">
+                                    <i className="fa-regular fa-calendar-days text-[11px]" />
                                     {item.date[locale]}
-                                  </span>
+                                  </div>
                                 </div>
 
-                                <ul className="space-y-3 relative z-10">
+                                {/* List of Changes */}
+                                <ul className="space-y-3 mb-6">
                                   {item.changes
-                                    .filter(
-                                      (c) =>
-                                        filter === "all" || c.type === filter,
-                                    )
+                                    .filter((c) => filter === "all" || c.type === filter)
                                     .map((change, j) => {
                                       const cfg = TYPE_CONFIG[change.type]
                                       return (
                                         <li
                                           key={j}
-                                          className="flex items-start gap-3 p-2 -ml-2 rounded-lg transition-colors hover:bg-[var(--bg3)]"
+                                          className="p-3 sm:p-3.5 rounded-2xl bg-[var(--bg)] border border-[var(--border)] flex items-start gap-3 transition-colors hover:bg-[var(--bg3)] hover:border-[var(--border2)]"
                                         >
                                           <span
-                                            className="mt-[2px] text-[10px] font-extrabold px-2 py-1 rounded-md flex-shrink-0"
+                                            className="mt-0.5 text-[10px] font-extrabold px-2.5 py-1 rounded-md flex items-center gap-1.5 flex-shrink-0"
                                             style={{
                                               background: cfg.bg,
                                               color: cfg.color,
+                                              border: `1px solid ${cfg.border}`,
                                               boxShadow: `0 0 8px ${cfg.bg}`,
                                             }}
                                           >
+                                            <i className={`fa-solid ${cfg.icon} text-[9px]`} />
                                             {cfg.label}
                                           </span>
-                                          <p className="text-[15px] leading-[1.8] text-[var(--text)] opacity-90">
+                                          <p className="text-sm sm:text-[15px] leading-relaxed text-[var(--text)] font-normal pt-0.5">
                                             {change.text[locale]}
                                           </p>
                                         </li>
@@ -688,24 +722,19 @@ function ChangelogContent() {
                                     })}
                                 </ul>
 
+                                {/* Release Card Action Footer */}
                                 {REPO_MAP[group.extension] && (
-                                  <div
-                                    className="mt-6 pt-4 flex items-center justify-between"
-                                    style={{
-                                      borderTop: "1px solid var(--border)",
-                                    }}
-                                  >
-                                    <div className="flex flex-wrap gap-4">
+                                  <div className="pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3">
+                                    <div className="flex flex-wrap gap-2.5">
                                       <a
                                         href={`${REPO_MAP[group.extension]}/releases/tag/v${item.version}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-2 group/link"
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-[var(--bg)] border border-[var(--border2)] hover:border-[var(--accent-border)] text-[var(--text)] transition-all"
                                       >
-                                        <i className="fa-brands fa-github text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
-                                        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
-                                          {t("changelog.sidebar.source_code")}
-                                        </span>
+                                        <i className="fa-brands fa-github text-xs" />
+                                        GitHub Release
+                                        <i className="fa-solid fa-arrow-up-right-from-square text-[9px] text-[var(--muted2)]" />
                                       </a>
 
                                       {STORE_MAP[group.extension] && (
@@ -713,20 +742,18 @@ function ChangelogContent() {
                                           href={STORE_MAP[group.extension]}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="flex items-center gap-2 group/link"
+                                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold bg-[var(--bg)] border border-[var(--border2)] hover:border-[var(--accent-border)] text-[var(--text)] transition-all"
                                         >
-                                          <i className="fa-brands fa-chrome text-xs text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]" />
-                                          <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--muted2)] transition-colors group-hover/link:text-[var(--text)]">
-                                            {t("changelog.sidebar.store")}
-                                          </span>
+                                          <i className="fa-brands fa-chrome text-xs text-[#3498db]" />
+                                          Chrome Store
+                                          <i className="fa-solid fa-arrow-up-right-from-square text-[9px] text-[var(--muted2)]" />
                                         </a>
                                       )}
                                     </div>
 
-                                    <i
-                                      className="fa-solid fa-arrow-up-right-from-square text-[10px] transition-colors"
-                                      style={{ color: "var(--muted2)" }}
-                                    />
+                                    <span className="text-[11px] font-medium text-[var(--muted2)]">
+                                      {item.changes.length} {locale === "vi" ? "điểm cập nhật" : "changes logged"}
+                                    </span>
                                   </div>
                                 )}
                               </div>
@@ -803,15 +830,9 @@ function ChangelogContent() {
             </div>
           </div>
           {/* Sidebar */}
-          <div className="lg:w-[320px] flex flex-col gap-6">
+          <div className="lg:w-[340px] flex flex-col gap-6">
             {/* Stats Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-syne font-semibold text-sm">
                   <i className="fa-solid fa-chart-pie mr-2 opacity-70" />
@@ -949,13 +970,7 @@ function ChangelogContent() {
             </div>
 
             {/* Contributors Card (Hall of Fame) */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3
                 className="font-syne font-semibold text-xs uppercase tracking-widest mb-4 flex items-center gap-2"
                 style={{ color: "var(--muted2)" }}
@@ -979,7 +994,7 @@ function ChangelogContent() {
                     return (
                       <div
                         key={i}
-                        className="p-3 rounded-lg border border-[var(--border)] transition-all duration-300 hover:border-[var(--text)] group"
+                        className="p-3 rounded-2xl border border-[var(--border)] transition-all duration-300 hover:border-[var(--text)] group"
                         style={{ background: "var(--bg)" }}
                       >
                         <div className="flex items-center gap-3 mb-2">
@@ -1071,10 +1086,6 @@ function ChangelogContent() {
                               )
                               const totalContributions =
                                 parsedBugs + parsedSuggestions
-                              const isSuper =
-                                parsedBugs > 3 ||
-                                parsedSuggestions > 3 ||
-                                totalContributions > 3
                               const isLegendary =
                                 i < 3 && totalContributions >= 4
 
@@ -1205,13 +1216,7 @@ function ChangelogContent() {
             </div>
 
             {/* Latest Versions Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3 className="font-syne font-semibold text-sm mb-4">
                 {t("changelog.sidebar.latest_versions")}
               </h3>
@@ -1226,34 +1231,27 @@ function ChangelogContent() {
                       className={`${c.extensionIcon} text-xs text-[var(--text)] w-4 text-center shrink-0`}
                     ></i>
                     <span
-                      className="truncate"
-                      style={{ color: "var(--muted)" }}
+                      className="truncate font-medium text-xs sm:text-sm"
+                      style={{ color: "var(--text)" }}
                       title={c.extension}
                     >
                       {c.extension}
                     </span>
                   </span>
                   <span
-                    className="font-mono text-xs font-medium shrink-0"
+                    className="font-mono text-xs font-bold px-2 py-0.5 rounded-lg bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] shrink-0"
                     style={{
-                      color: "var(--accent2)",
                       fontFamily: "var(--font-dm-mono)",
                     }}
                   >
-                    {c.version}
+                    v{c.version}
                   </span>
                 </div>
               ))}
             </div>
 
             {/* Donation Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
                 <i className="fa-solid fa-heart text-[#e84393] text-base" />
                 {locale === "vi" ? "Ủng hộ dự án" : "Support the project"}
@@ -1324,13 +1322,7 @@ function ChangelogContent() {
             </div>
 
             {/* Source Code Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
                 <i className="fa-brands fa-github text-[var(--text)] text-base" />
                 {t("changelog.sidebar.source_code")}
@@ -1347,7 +1339,7 @@ function ChangelogContent() {
                     <span
                       className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                       style={{
-                        background: "var(--bg3)",
+                        background: "var(--bg)",
                         border: "1px solid var(--border2)",
                       }}
                     >
@@ -1368,13 +1360,13 @@ function ChangelogContent() {
                         href={project.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm font-medium truncate block transition-colors duration-200 hover:text-[var(--text)]"
-                        style={{ color: changelogTextColor }}
+                        className="text-xs sm:text-sm font-bold truncate block transition-colors duration-200 hover:text-[var(--text)]"
+                        style={{ color: "var(--text)" }}
                       >
                         {project.name}
                       </a>
                       <p
-                        className="text-xs truncate mt-0.5"
+                        className="text-[11px] truncate mt-0.5 font-mono"
                         style={{ color: "var(--muted2)" }}
                       >
                         {project.repo}
@@ -1394,7 +1386,7 @@ function ChangelogContent() {
                   </div>
                 ))}
 
-              <div className="mt-3 flex flex-col gap-2">
+              <div className="mt-4 flex flex-col gap-2">
                 {sourceProjects
                   .filter((p) => p.name !== "Extension")
                   .map((project) => (
@@ -1403,20 +1395,16 @@ function ChangelogContent() {
                       href={project.releasesHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 hover:brightness-110"
-                      style={{
-                        background: "var(--bg3)",
-                        border: "1px solid var(--border2)",
-                      }}
+                      className="flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all duration-200 hover:border-[var(--accent-border)] bg-[var(--bg)] border border-[var(--border)]"
                     >
                       <span style={{ color: "var(--muted)" }}>
                         {project.name}
                       </span>
                       <span
-                        className="flex items-center gap-1"
+                        className="flex items-center gap-1.5"
                         style={{ color: "var(--text)" }}
                       >
-                        <i className="fa-solid fa-tag text-[10px]" />
+                        <i className="fa-solid fa-tag text-[10px]" style={{ color: "var(--accent-visible)" }} />
                         {locale === "vi" ? "Xem releases" : "View releases"}
                       </span>
                     </a>
@@ -1425,26 +1413,20 @@ function ChangelogContent() {
             </div>
 
             {/* Chrome Store Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
                 <i className="fa-brands fa-chrome text-[#3498db] text-base" />
                 {t("changelog.sidebar.store")}
               </h3>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2.5">
                 {sourceProjects.map((project) => (
                   <a
                     key={project.storeHref}
                     href={project.storeHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
+                    className="flex items-center justify-between p-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent-border)] hover:bg-[var(--bg3)] transition-all group"
                   >
                     <div className="flex items-center gap-3">
                       <img
@@ -1457,7 +1439,7 @@ function ChangelogContent() {
                         style={{ width: 24, height: 24, borderRadius: 4 }}
                       />
                       <span
-                        className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
+                        className="text-xs font-bold group-hover:text-[var(--text)] transition-colors"
                         style={{ color: changelogTextColor }}
                       >
                         {project.name}
@@ -1473,24 +1455,18 @@ function ChangelogContent() {
             </div>
 
             {/* Firefox Store Card */}
-            <div
-              className="rounded-xl p-5"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl">
               <h3 className="font-syne font-semibold text-sm mb-4 flex items-center gap-2">
                 <i className="fa-brands fa-firefox-browser text-[#ff7139] text-base" />
                 Firefox Add-ons
               </h3>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2.5">
                 <a
                   href="https://addons.mozilla.org/en-US/firefox/addon/zero-startpage-newtab/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] hover:bg-[var(--bg2)] transition-all group"
+                  className="flex items-center justify-between p-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--accent-border)] hover:bg-[var(--bg3)] transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <img
@@ -1499,7 +1475,7 @@ function ChangelogContent() {
                       style={{ width: 24, height: 24, borderRadius: 4 }}
                     />
                     <span
-                      className="text-xs font-semibold group-hover:text-[var(--text)] transition-colors"
+                      className="text-xs font-bold group-hover:text-[var(--text)] transition-colors"
                       style={{ color: changelogTextColor }}
                     >
                       Zero Start Page
@@ -1511,7 +1487,7 @@ function ChangelogContent() {
                   />
                 </a>
 
-                <div className="flex items-center justify-between p-3 rounded-lg border border-[var(--border)] bg-[var(--bg)] opacity-70 cursor-not-allowed transition-all">
+                <div className="flex items-center justify-between p-3 rounded-2xl border border-[var(--border)] bg-[var(--bg)] opacity-70 cursor-not-allowed transition-all">
                   <div className="flex items-center gap-3">
                     <img
                       src="/images/bookmark_icon.png"
@@ -1524,7 +1500,7 @@ function ChangelogContent() {
                       }}
                     />
                     <span
-                      className="text-xs font-semibold"
+                      className="text-xs font-bold"
                       style={{ color: changelogTextColor }}
                     >
                       Zero Bookmark Manager
@@ -1545,18 +1521,12 @@ function ChangelogContent() {
             </div>
 
             {/* Privacy Extension Card */}
-            <div
-              className="rounded-xl p-5 flex flex-col items-start gap-3"
-              style={{
-                background: "var(--bg3)",
-                border: "1px solid var(--border2)",
-              }}
-            >
+            <div className="rounded-3xl p-6 bg-[var(--bg2)]/90 border border-[var(--border2)] shadow-sm backdrop-blur-xl flex flex-col items-start gap-3">
               <div className="flex items-center gap-3 mb-2">
                 <span
-                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                  className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{
-                    background: "var(--bg3)",
+                    background: "var(--bg)",
                     border: "1px solid var(--border2)",
                   }}
                 >
@@ -1573,27 +1543,21 @@ function ChangelogContent() {
                   Privacy Center
                 </span>
               </div>
-              <div className="text-xs mb-2" style={{ color: "var(--muted)" }}>
+              <div className="text-xs mb-2 leading-relaxed" style={{ color: "var(--muted)" }}>
                 {locale === "vi"
                   ? "Trung tâm bảo mật, quản lý quyền riêng tư của 2 extension"
                   : "Privacy Center for managing privacy settings of 2 extensions"}
               </div>
               <Link
                 href="/privacy"
-                className="px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200"
-                style={{
-                  background: "var(--bg3)",
-                  border: "1px solid var(--border2)",
-                  color: "var(--text)",
-                }}
+                className="w-full py-2.5 rounded-xl text-xs font-bold text-center transition-all bg-[var(--bg)] border border-[var(--border2)] hover:border-[var(--accent-border)] text-[var(--text)] hover:bg-[var(--bg3)]"
               >
-                {locale === "vi" ? "Xem Privacy Center" : "View Privacy Center"}
+                {locale === "vi" ? "Xem Privacy Center →" : "View Privacy Center →"}
               </Link>
             </div>
-            <div style={{ color: "var(--muted)" }}></div>
-          </div>{" "}
+          </div>
           {/* End Sidebar */}
-        </div>{" "}
+        </div>
         {/* End grid */}
       </section>
     </div>

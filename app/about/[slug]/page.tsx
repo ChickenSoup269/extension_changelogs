@@ -9,7 +9,8 @@ import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function DynamicAboutPage() {
-  const { slug } = useParams()
+  const params = useParams()
+  const slug = (params?.slug as string) || ""
   const { t, locale } = useLanguage()
   const [activeMedia, setActiveMedia] = useState<"screenshots" | "video">("screenshots")
   const [isLoaded, setIsLoaded] = useState(false)

@@ -186,20 +186,68 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
       root.style.setProperty("--muted2", "#64748b")
     }
 
+    // Calculate dynamic adaptive accent styles based on theme & selected color
     const colorConfig = ACCENT_COLORS[accent] || ACCENT_COLORS["#10b981"]
-    root.style.setProperty("--accent", accent)
-    root.style.setProperty("--accent2", colorConfig.accent2)
-    root.style.setProperty("--accent-glow", colorConfig.glow)
-    root.style.setProperty("--accent-text", colorConfig.text)
-    root.style.setProperty("--accent-border", colorConfig.border)
-    
-    let accentVisible: string = accent
+    let finalAccent: string = accent
+    let finalAccent2: string = colorConfig.accent2
+    let finalAccentGlow: string = colorConfig.glow
+    let finalAccentText: string = colorConfig.text
+    let finalAccentBorder: string = colorConfig.border
+    let finalAccentVisible: string = accent
+
+    const isDarkBg = theme !== "light"
+
     if (accent === "#ffffff") {
-      accentVisible = theme === "light" ? "#0f172a" : "#ffffff"
+      if (theme === "light") {
+        // High contrast dark monochrome on light background
+        finalAccent = "#0f172a"
+        finalAccent2 = "#334155"
+        finalAccentGlow = "rgba(15, 23, 42, 0.15)"
+        finalAccentText = "#ffffff"
+        finalAccentBorder = "rgba(15, 23, 42, 0.25)"
+        finalAccentVisible = "#0f172a"
+      } else {
+        // Pure crisp white on dark background
+        finalAccent = "#ffffff"
+        finalAccent2 = "#e2e8f0"
+        finalAccentGlow = "rgba(255, 255, 255, 0.25)"
+        finalAccentText = "#090a0f"
+        finalAccentBorder = "rgba(255, 255, 255, 0.45)"
+        finalAccentVisible = "#ffffff"
+      }
     } else if (accent === "#000000") {
-      accentVisible = theme === "light" ? "#000000" : "#ffffff"
+      if (theme === "light") {
+        // Deep obsidian black on light background
+        finalAccent = "#000000"
+        finalAccent2 = "#1e293b"
+        finalAccentGlow = "rgba(0, 0, 0, 0.18)"
+        finalAccentText = "#ffffff"
+        finalAccentBorder = "rgba(0, 0, 0, 0.35)"
+        finalAccentVisible = "#000000"
+      } else {
+        // Adapts to platinum/white on dark background so buttons don't disappear
+        finalAccent = "#f8fafc"
+        finalAccent2 = "#cbd5e1"
+        finalAccentGlow = "rgba(255, 255, 255, 0.25)"
+        finalAccentText = "#090a0f"
+        finalAccentBorder = "rgba(255, 255, 255, 0.45)"
+        finalAccentVisible = "#f8fafc"
+      }
+    } else {
+      // For colored accents, ensure high text visibility on light vs dark themes
+      if (theme === "light") {
+        finalAccentVisible = colorConfig.accent2 // slightly deeper tone for crisp text/icons on light mode
+      } else {
+        finalAccentVisible = accent
+      }
     }
-    root.style.setProperty("--accent-visible", accentVisible)
+
+    root.style.setProperty("--accent", finalAccent)
+    root.style.setProperty("--accent2", finalAccent2)
+    root.style.setProperty("--accent-glow", finalAccentGlow)
+    root.style.setProperty("--accent-text", finalAccentText)
+    root.style.setProperty("--accent-border", finalAccentBorder)
+    root.style.setProperty("--accent-visible", finalAccentVisible)
 
     document.body.style.fontFamily = `${font}, "Segoe UI", sans-serif`
   }, [theme, accent, font, bgAnim, mounted])

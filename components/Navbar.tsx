@@ -68,7 +68,7 @@ export default function Navbar() {
           const active =
             link.href === "/"
               ? pathname === "/"
-              : pathname.startsWith(link.href)
+              : pathname?.startsWith(link.href) ?? false
           return (
             <Link
               key={link.href}
@@ -160,7 +160,7 @@ export default function Navbar() {
             const active =
               link.href === "/"
                 ? pathname === "/"
-                : pathname.startsWith(link.href)
+                : pathname?.startsWith(link.href) ?? false
             return (
               <Link
                 key={link.href}

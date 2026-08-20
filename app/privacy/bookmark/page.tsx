@@ -60,6 +60,20 @@ export default function BookmarkPrivacyPage() {
             en: "Required to track user interactions with bookmarks. It allows the extension to monitor when users navigate to bookmarked URLs, ensuring accurate tracking of bookmark usage.",
             vi: "Cần thiết để theo dõi tương tác với dấu trang. Cho phép tiện ích ghi nhận khi người dùng truy cập các URL được đánh dấu trang, đảm bảo theo dõi chính xác."
           }
+        },
+        {
+          name: "Alarms",
+          desc: {
+            en: "The 'alarms' permission is required to schedule user-initiated reminders (\"Snooze / Read Later\" feature) for specific bookmarks. When a user chooses to snooze a bookmark for a designated period (e.g., 1 hour, tomorrow, next week), the extension creates a lightweight alarm to trigger a reminder callback at the scheduled time without keeping background pages constantly running.",
+            vi: "Quyền 'alarms' (báo thức/hẹn giờ) được yêu cầu để lên lịch cho tính năng nhắc nhở do người dùng thiết lập (\"Tạm ẩn / Đọc sau\") cho các dấu trang cụ thể. Khi người dùng chọn tạm ẩn một dấu trang trong một khoảng thời gian nhất định (ví dụ: 1 giờ, ngày mai, tuần tới), tiện ích sẽ tạo một bộ hẹn giờ nhẹ để kích hoạt thông báo nhắc nhở vào đúng thời điểm đã lên lịch mà không cần duy trì các tiến trình nền chạy liên tục."
+          }
+        },
+        {
+          name: "Notifications",
+          desc: {
+            en: "The 'notifications' permission is used to display desktop notifications when a scheduled bookmark reminder (\"Snooze / Read Later\") expires. It informs the user about the bookmarked webpage they planned to revisit and allows them to click directly on the notification to open that bookmark URL in a new tab.",
+            vi: "Quyền 'notifications' (thông báo) được sử dụng để hiển thị thông báo trên màn hình khi lời nhắc dấu trang đã lên lịch (\"Tạm ẩn / Đọc sau\") đến hạn. Tiện ích sẽ thông báo cho người dùng về trang web đã lưu mà họ dự định xem lại và cho phép nhấp trực tiếp vào thông báo để mở URL dấu trang đó trong tab mới."
+          }
         }
       ]
     },
