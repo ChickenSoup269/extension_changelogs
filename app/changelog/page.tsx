@@ -324,6 +324,21 @@ function ChangelogContent() {
       },
     },
     {
+      name: "Lê Minh Thiện",
+      avatar: null,
+      role: {
+        vi: "Bug Hunter & Người đóng góp",
+        en: "Bug Hunter & Contributor",
+      },
+      bugs: "2+",
+      suggestions: 2,
+      extension: "Zero Startpage",
+      details: {
+        vi: "Báo lỗi bookmark layout sidebar bị tràn viền & gợi ý tính năng xem full text folder bookmark, data backup sync",
+        en: "Bookmark sidebar layout overflow bug & suggested full text folder bookmark viewing, data backup synchronization.",
+      },
+    },
+    {
       name: "Mhale",
       avatar: null,
       role: {
@@ -336,21 +351,6 @@ function ChangelogContent() {
       details: {
         vi: "Báo lỗi page không hoạt động khi tắt đội ngột khi restore và màn đen, reload background, mở tab mới",
         en: "Page not working when abruptly closed during restore and black screen, reload background, open new tab.",
-      },
-    },
-    {
-      name: "Lê Minh Thiện",
-      avatar: null,
-      role: {
-        vi: "Bug Hunter & Người đóng góp",
-        en: "Bug Hunter & Contributor",
-      },
-      bugs: "1+",
-      suggestions: 2,
-      extension: "Zero Startpage",
-      details: {
-        vi: "Gợi ý thêm tính năng xem full text folder bookmark, data backup sync",
-        en: "Suggested full text folder bookmark viewing and data backup synchronization.",
       },
     },
     {

@@ -90,7 +90,7 @@ const RAW_EXTENSIONS: Extension[] = [
 export const CHANGELOG: ChangelogItem[] = [
   {
     version: "2.0.0",
-    extension: "Zero Startpage",
+    extension: "Zero Startpage - Newtab Replacement",
     extensionIcon: "fa-solid fa-house-chimney",
     date: {
       vi: "31 Tháng 8 2026",
