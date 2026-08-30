@@ -89,6 +89,67 @@ const RAW_EXTENSIONS: Extension[] = [
 
 export const CHANGELOG: ChangelogItem[] = [
   {
+    version: "2.0.0",
+    extension: "Zero Startpage",
+    extensionIcon: "fa-solid fa-house-chimney",
+    date: {
+      vi: "31 Tháng 8 2026",
+      en: "August 31, 2026",
+    },
+    releaseType: "major",
+    changes: [
+      {
+        type: "feat",
+        text: {
+          vi: "Trợ lý Gemini AI & Âm thanh Ambient: Tích hợp trợ lý Gemini AI kích hoạt từ thanh tìm kiếm cùng bộ phát âm thanh nền nhẹ procedural (tiếng sấm, chim rừng, quán cà phê, tiếng xe cộ Doppler và sóng 432Hz).",
+          en: "Gemini AI & Ambient Sound Engine: Integrated a minimalist Gemini AI assistant via the search bar and a procedural ambient sound generator (thunder, birds, cafe, Doppler traffic, and 432Hz drone).",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Đại tu Đồng hồ 3D & Phong cách Terminal: Giới thiệu giao diện đồng hồ 3D floating glass cubes khối voxel, hiệu ứng tilt tương tác, cùng kiểu dáng terminal Oh My Posh và đồng hồ Split-Pill mới.",
+          en: "3D Clocks & Terminal Aesthetics: Introduced 3D floating glass cube clocks with volumetric pedestals, interactive tilt effects, Oh My Posh terminal style, and Split-Pill clock layouts.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Visualizer & Mini Game Retro: Nâng cấp hiệu ứng sóng nhạc Aurora fluid harmonic, visualizer phản hồi âm thanh thời gian thực (FFT), hiệu ứng sinh vật biển phát quang và mini game Cyber Tetris tự động chơi bằng AI.",
+          en: "Visualizers & Retro Gaming: Upgraded fluid harmonic Aurora music visualizer with real-time audio FFT capture, bioluminescent jellyfish engine, and Cyber Tetris with AI autoplay.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Trung tâm Cài đặt & Xem trước Thời gian thực: Tái cấu trúc thanh cài đặt với TOC thông minh, xem trước trực tiếp (Live Preview) cho hình nền/dấu trang/tiêu đề, hỗ trợ nút reset từng nhóm và bộ chọn icon FontAwesome.",
+          en: "Modern Settings & Live Preview: Redesigned settings panel with smart TOC navigation, instant live preview sync for wallpapers/bookmarks/titles, section reset buttons, and FontAwesome icon picker.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Quản lý Bookmark Stack & Đa ngôn ngữ: Nâng cấp popup ngăn xếp bookmark hỗ trợ kéo thả ra ngoài, phân nhóm thu gọn thông minh, tối ưu giao diện Mobile PWA và bổ sung ngôn ngữ Đức (DE), Thụy Điển (SV).",
+          en: "Bookmark Stacks & Expanded i18n: Enhanced bookmark stack popups with fluid drag-and-drop, smart group collapse, Mobile PWA drawer layout, and 100% translations for German (DE) and Swedish (SV).",
+        },
+      },
+      {
+        type: "perf",
+        text: {
+          vi: "Tối ưu Hiệu năng & Kéo thả Siêu mượt: Loại bỏ hoàn toàn độ trễ kéo thả widget bằng requestAnimationFrame, animation mở đóng widget dạng cubic-bezier spring và tách nhỏ các module khởi động để chống giật trang.",
+          en: "Performance & Responsive Dragging: Eliminated drag lag via requestAnimationFrame, snappy cubic-bezier spring widget animations, and modularized boot scripts to prevent FOUC.",
+        },
+      },
+      {
+        type: "fix",
+        text: {
+          vi: "Sửa lỗi Giao diện & Đồng bộ Media: Khắc phục lỗi hiển thị widget media-orb, chuẩn hóa độ tương phản context menu ở các theme sáng/macos/transparent và sửa lỗi đồng bộ bài hát thời gian thực.",
+          en: "UI Consistency & Media Sync: Resolved media-orb span rendering and GIF reset bugs, stabilized context menu theme contrasts, and fixed real-time audio track progress synchronization.",
+        },
+      },
+    ],
+  },
+  {
     version: "1.7.0",
     extension: "Zero Bookmark Manager",
     extensionIcon: "fa-solid fa-bookmark",
