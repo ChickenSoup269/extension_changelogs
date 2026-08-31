@@ -61,6 +61,20 @@ export default function StartpagePrivacyPage() {
           }
         },
         {
+          name: "tabCapture",
+          desc: {
+            en: "Required to capture audio streams from active media tabs only when the user enables the Audio Visualizer widget on the Startpage. The audio stream is analyzed locally in real-time to generate visual wave/bar animations and is never recorded, stored, or transmitted to any server.",
+            vi: "Cần thiết để bắt luồng âm thanh từ các tab phát phương tiện đang hoạt động, chỉ khi người dùng bật tiện ích Sóng nhạc (Audio Visualizer) trên Startpage. Luồng âm thanh được phân tích cục bộ theo thời gian thực để tạo hiệu ứng sóng/thanh nhạc động và hoàn toàn không bao giờ bị ghi âm, lưu trữ hay truyền đến bất kỳ máy chủ nào."
+          }
+        },
+        {
+          name: "offscreen",
+          desc: {
+            en: "Used to create a lightweight, headless offscreen document to process real-time Web Audio frequency analysis for the visualizer without degrading the performance or responsiveness of the main new tab interface.",
+            vi: "Dùng để tạo một tài liệu chạy ngầm (offscreen document) nhẹ và không giao diện nhằm xử lý phân tích tần số âm thanh (Web Audio) theo thời gian thực cho visualizer mà không làm ảnh hưởng đến hiệu năng hay độ phản hồi của giao diện tab mới chính."
+          }
+        },
+        {
           name: "Host permission",
           desc: {
             en: "Required for: requesting search suggestions from Google, reading media state/controls on supported sites, and supporting optional media detection. All access is feature-scoped and initiated by extension functionality.",
