@@ -90,18 +90,18 @@ const RAW_EXTENSIONS: Extension[] = [
 export const CHANGELOG: ChangelogItem[] = [
   {
     version: "2.0.0",
-    extension: "Zero Startpage - Newtab Replacement",
+    extension: "Zero Startpage",
     extensionIcon: "fa-solid fa-house-chimney",
     date: {
-      vi: "31 Tháng 8 2026",
-      en: "August 31, 2026",
+      vi: "1 Tháng 9 2026",
+      en: "September 1, 2026",
     },
     releaseType: "major",
     changes: [
       {
         type: "feat",
         text: {
-          vi: "Trợ lý Gemini AI & Âm thanh Ambient: Tích hợp trợ lý Gemini AI kích hoạt từ thanh tìm kiếm cùng bộ phát âm thanh nền nhẹ procedural (tiếng sấm, chim rừng, quán cà phê, tiếng xe cộ Doppler và sóng 432Hz).",
+          vi: "Trợ lý Gemini AI & Âm thanh Ambient: Tích hợp trợ lý Gemini AI kích hoạt từ thanh tìm kiếm cùng bộ phát âm thanh nền procedural (tiếng sấm, chim rừng, quán cà phê, tiếng xe cộ Doppler và sóng 432Hz).",
           en: "Gemini AI & Ambient Sound Engine: Integrated a minimalist Gemini AI assistant via the search bar and a procedural ambient sound generator (thunder, birds, cafe, Doppler traffic, and 432Hz drone).",
         },
       },
@@ -122,8 +122,15 @@ export const CHANGELOG: ChangelogItem[] = [
       {
         type: "feat",
         text: {
-          vi: "Trung tâm Cài đặt & Xem trước Thời gian thực: Tái cấu trúc thanh cài đặt với TOC thông minh, xem trước trực tiếp (Live Preview) cho hình nền/dấu trang/tiêu đề, hỗ trợ nút reset từng nhóm và bộ chọn icon FontAwesome.",
-          en: "Modern Settings & Live Preview: Redesigned settings panel with smart TOC navigation, instant live preview sync for wallpapers/bookmarks/titles, section reset buttons, and FontAwesome icon picker.",
+          vi: "Đại tu Cài đặt, Live Preview & LoremFlickr: Tái cấu trúc thanh cài đặt với TOC, xem trước trực tiếp (Live Preview) cho hình nền/dấu trang/tiêu đề, hỗ trợ nút reset từng nhóm, xem trước live mã QR và tích hợp nguồn ảnh LoremFlickr.",
+          en: "Modern Settings, Live Preview & LoremFlickr: Overhauled settings with TOC navigation, instant live preview sync for wallpapers/bookmarks/titles, section reset buttons, live hover QR preview, and LoremFlickr background provider.",
+        },
+      },
+      {
+        type: "feat",
+        text: {
+          vi: "Popup Cập nhật Tối giản & Tối ưu Trải nghiệm: Thiết kế lại modal cập nhật phiên bản phong cách Dark Minimalist với badge FEAT/FIX tinh tế, tối ưu quy trình Onboarding và bổ sung tùy chọn Giảm hiệu ứng chuyển động (Reduce animations).",
+          en: "Minimalist Update Popup & UX Polish: Redesigned the update dialog with clean dark minimalism and subtle badges, streamlined first-run onboarding, and added a Reduce Hover Animations accessibility mode.",
         },
       },
       {
@@ -136,15 +143,15 @@ export const CHANGELOG: ChangelogItem[] = [
       {
         type: "perf",
         text: {
-          vi: "Tối ưu Hiệu năng & Kéo thả Siêu mượt: Loại bỏ hoàn toàn độ trễ kéo thả widget bằng requestAnimationFrame, animation mở đóng widget dạng cubic-bezier spring và tách nhỏ các module khởi động để chống giật trang.",
-          en: "Performance & Responsive Dragging: Eliminated drag lag via requestAnimationFrame, snappy cubic-bezier spring widget animations, and modularized boot scripts to prevent FOUC.",
+          vi: "Tối ưu Hiệu năng & Kéo thả Siêu mượt: Loại bỏ hoàn toàn độ trễ kéo thả widget bằng requestAnimationFrame, animation mở đóng dạng lò xo spring, loại bỏ hiện tượng can thiệp cuộn chuột (wheel hijacking) và chống FOUC khi khởi động.",
+          en: "Performance & Smooth Interactions: Eliminated drag lag via requestAnimationFrame, snappy cubic-bezier spring widget animations, removed JS wheel hijacking, and modularized boot scripts to prevent FOUC.",
         },
       },
       {
         type: "fix",
         text: {
-          vi: "Sửa lỗi Giao diện & Đồng bộ Media: Khắc phục lỗi hiển thị widget media-orb, chuẩn hóa độ tương phản context menu ở các theme sáng/macos/transparent và sửa lỗi đồng bộ bài hát thời gian thực.",
-          en: "UI Consistency & Media Sync: Resolved media-orb span rendering and GIF reset bugs, stabilized context menu theme contrasts, and fixed real-time audio track progress synchronization.",
+          vi: "Sửa lỗi Giao diện, Lịch & Chuông Báo: Cải thiện bố cục form thêm sự kiện Calendar neo chuẩn xác theo context menu, sửa lỗi cập nhật ảnh bìa/metadata trình phát nhạc, căn chỉnh lưới bookmark và bổ sung Web Audio API fallback cho chuông hẹn giờ.",
+          en: "UI, Calendar & Alarm Audio Fixes: Fixed calendar event form positioning against context menus, resolved music player artwork/metadata desync, aligned bookmark grids, and added Web Audio API oscillator fallback for timer alarms.",
         },
       },
     ],
